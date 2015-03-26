@@ -265,7 +265,7 @@ class Algorithm {
 			System.exit(4);
 		}
 		for (int i = 0; i < action_chains.size(); i++) {
-			if (!action_chains.get(i).isEmpty()) {
+			if (action_chains.get(i).size() > 3) {
 				System.out.print("Action \"" + action_chains.get(i).get(0)
 						+ "\" :");
 				for (int j = 1; j < action_chains.get(i).size(); j++) {
@@ -274,32 +274,6 @@ class Algorithm {
 				System.out.println(" found " + nb_occ.get(i) + " time(s)");
 			}
 		}
-
-		/*
-		 * m_delegateChain = new SimpleDirectedWeightedGraph<String,
-		 * DefaultWeightedEdge>( DefaultWeightedEdge.class); for (int i = 0; i <
-		 * m_traces.size(); i++) { Trace t = m_traces.get(i); if
-		 * (t.getPerformative().equals("delegate")) { String case_ =
-		 * t.getCaseID(); String sender = t.getSender(); String receiver =
-		 * t.getReceiver(); String activity = t.getActivity();
-		 * 
-		 * for (int j = 0; j < m_traces.size(); j++) { if (i != j) {
-		 * 
-		 * } }
-		 * 
-		 * 
-		 * 
-		 * 
-		 * if (!m_delegateChain.containsVertex(sender)) {
-		 * m_delegateChain.addVertex(sender); } if
-		 * (!m_delegateChain.containsVertex(receiver)) {
-		 * m_delegateChain.addVertex(receiver); } if
-		 * (m_delegateChain.containsEdge(sender, receiver)) {
-		 * DefaultWeightedEdge previous_edge = m_delegateChain.getEdge( sender,
-		 * receiver); m_delegateChain.setEdgeWeight(previous_edge,
-		 * m_delegateChain.getEdgeWeight(previous_edge) + 1.0); } else {
-		 * m_delegateChain.addEdge(sender, receiver); } } }
-		 */
 	}
 
 	public void buildExecuteList() {
