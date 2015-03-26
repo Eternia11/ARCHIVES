@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><graphml xmlns="http://graphml.graphdrawing.org/xmlns" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<key id="vertex_label" for="node" attr.name="Vertex Label" attr.type="string"/>
+<key id="edge_label" for="edge" attr.name="Edge Label" attr.type="string"/>
+<graph edgedefault="directed">
+<node id="TTaGL">
+<data key="vertex_label">TTaGL</data>
+</node>
+<node id="LyCL">
+<data key="vertex_label">LyCL</data>
+</node>
+<node id="TLGT">
+<data key="vertex_label">TLGT</data>
+</node>
+<node id="TLDT">
+<data key="vertex_label">TLDT</data>
+</node>
+<node id="ATTP">
+<data key="vertex_label">ATTP</data>
+</node>
+<node id="RFBN">
+<data key="vertex_label">RFBN</data>
+</node>
+<node id="THGL">
+<data key="vertex_label">THGL</data>
+</node>
+<node id="TLCL">
+<data key="vertex_label">TLCL</data>
+</node>
+<node id="TLDD">
+<data key="vertex_label">TLDD</data>
+</node>
+<node id="LyLD">
+<data key="vertex_label">LyLD</data>
+</node>
+<node id="NoAM">
+<data key="vertex_label">NoAM</data>
+</node>
+<node id="ACGL">
+<data key="vertex_label">ACGL</data>
+</node>
+<node id="LyGT">
+<data key="vertex_label">LyGT</data>
+</node>
+<node id="LyDT">
+<data key="vertex_label">LyDT</data>
+</node>
+<node id="LyDD">
+<data key="vertex_label">LyDD</data>
+</node>
+<node id="machin">
+<data key="vertex_label">machin</data>
+</node>
+<edge id="(TTaGL : LyCL)" source="TTaGL" target="LyCL">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TTaGL : TLGT)" source="TTaGL" target="TLGT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TTaGL : TLDT)" source="TTaGL" target="TLDT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(ATTP : TLDT)" source="ATTP" target="TLDT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : THGL)" source="RFBN" target="THGL">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(THGL : TLGT)" source="THGL" target="TLGT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(THGL : TLCL)" source="THGL" target="TLCL">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(THGL : TLDT)" source="THGL" target="TLDT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(THGL : TLDD)" source="THGL" target="TLDD">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(THGL : TTaGL)" source="THGL" target="TTaGL">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TTaGL : LyLD)" source="TTaGL" target="LyLD">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TTaGL : NoAM)" source="TTaGL" target="NoAM">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TTaGL : ACGL)" source="TTaGL" target="ACGL">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : TLGT)" source="RFBN" target="TLGT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : TLCL)" source="RFBN" target="TLCL">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : TLDT)" source="RFBN" target="TLDT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : TLDD)" source="RFBN" target="TLDD">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : LyGT)" source="RFBN" target="LyGT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : LyCL)" source="RFBN" target="LyCL">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : LyDT)" source="RFBN" target="LyDT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : LyDD)" source="RFBN" target="LyDD">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : TTaGL)" source="RFBN" target="TTaGL">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TTaGL : machin)" source="TTaGL" target="machin">
+<data key="edge_label">1</data>
+</edge>
+</graph>
+</graphml>
