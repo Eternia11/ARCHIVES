@@ -1,3 +1,5 @@
+/* Author : Alan BENIER */
+
 package archives.log;
 
 // represent a line of a log
