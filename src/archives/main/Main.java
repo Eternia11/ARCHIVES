@@ -3,6 +3,7 @@
 package archives.main;
 
 import archives.algorithm.Algorithm;
+import archives.alphaminer.AlphaMiner;
 
 import java.util.List;
 
@@ -37,5 +38,6 @@ class Main {
 		m_IE_rules = algo.buildInform_ExecuteRules();
 		for (int i = 0; i < m_IE_rules.size(); i++)
 			System.out.println(m_IE_rules.get(i));
+		algo.runAlphaMiner();
 	}
 }
