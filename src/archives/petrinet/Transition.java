@@ -40,10 +40,6 @@ public class Transition {
 		return m_ysize;
 	}
 	
-	public boolean equals(Transition t) {
-		return (t.get_id() == m_id);
-	}
-	
 	public String toPNML() {
 		return "\t\t\t<transition id=\""
 				+ m_id

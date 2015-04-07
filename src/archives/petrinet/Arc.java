@@ -31,10 +31,6 @@ public class Arc {
 		return m_inscription;
 	}
 	
-	public boolean equals(Arc a) {
-		return (a.get_id() == m_id);
-	}
-	
 	public String toPNML() {
 		return "\t\t\t<arc id=\"" + m_id + "\" source=\"" + m_sourceId
 				+ "\" target=\"" + m_targetId

@@ -43,27 +43,27 @@ public class PetriNet {
 		return m_arcs;
 	}
 
-	public boolean contains(Place p) {
-		for (Place pl : m_places) {
-			if (p.equals(pl)) {
+	public boolean containsPlace(String place_id) {
+		for (Place p : m_places) {
+			if (p.get_id().equals(place_id)) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public boolean contains(Transition t) {
-		for (Transition tr : m_transitions) {
-			if (t.equals(tr)) {
+	public boolean containsTransition(String transition_id) {
+		for (Transition t : m_transitions) {
+			if (t.get_id().equals(transition_id)) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public boolean contains(Arc a) {
-		for (Arc ar : m_arcs) {
-			if (a.equals(ar)) {
+	public boolean containsArc(String arc_id) {
+		for (Arc a : m_arcs) {
+			if (a.get_id().equals(arc_id)) {
 				return true;
 			}
 		}
@@ -71,15 +71,21 @@ public class PetriNet {
 	}
 	
 	public void addPlace(String id, String name, int initialMarking) {
-		m_places.add(new Place(id, name, initialMarking));
+		if (!containsPlace(id)) {
+			m_places.add(new Place(id, name, initialMarking));
+		}
 	}
 	
 	public void addTransition(String id, String name) {
-		m_transitions.add(new Transition(id, name));
+		if (!containsTransition(id)) {
+			m_transitions.add(new Transition(id, name));
+		}
 	}
 	
 	public void addArc(String id, String source, String target) {
-		m_arcs.add(new Arc(id, source, target));
+		if (!containsArc(id)) {
+			m_arcs.add(new Arc(id, source, target));
+		}
 	}
 	
 	public String toPNML() {

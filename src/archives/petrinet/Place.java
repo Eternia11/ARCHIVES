@@ -46,10 +46,6 @@ public class Place {
 	public int get_ysize() {
 		return m_ysize;
 	}
-	
-	public boolean equals(Place p) {
-		return (p.get_id() == m_id);
-	}
 
 	public String toPNML() {
 		if (m_initialMarking <= 0) {
