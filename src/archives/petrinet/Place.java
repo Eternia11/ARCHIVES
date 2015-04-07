@@ -46,38 +46,42 @@ public class Place {
 	public int get_ysize() {
 		return m_ysize;
 	}
+	
+	public boolean equals(Place p) {
+		return (p.get_id() == m_id);
+	}
 
 	public String toPNML() {
 		if (m_initialMarking <= 0) {
-			return "\t<place id=\""
+			return "\t\t\t<place id=\""
 					+ m_id
-					+ "\">\n\t\t<name>\n\t\t\t<text>"
+					+ "\">\n\t\t\t\t<name>\n\t\t\t\t\t<text>"
 					+ m_name
-					+ "</text>\n\t\t\t<graphics>\n\t\t\t\t<offset x=\""
+					+ "</text>\n\t\t\t\t\t<graphics>\n\t\t\t\t\t\t<offset x=\""
 					+ Integer.toString(m_xsize)
 					+ "\" y=\""
 					+ Integer.toString(m_ysize)
-					+ "\">\n\t\t\t</offset></graphics>\n\t\t</name>\n\t\t<graphics>\n\t\t\t<position x=\""
+					+ "\">\n\t\t\t\t\t</offset></graphics>\n\t\t\t\t</name>\n\t\t\t\t<graphics>\n\t\t\t\t\t<position x=\""
 					+ Integer.toString(m_xpos) + "\" y=\""
 					+ Integer.toString(m_ypos)
-					+ "\">\n\t\t</position></graphics>\n\t</place>";
+					+ "\">\n\t\t\t\t</position></graphics>\n\t\t\t</place>";
 		} else {
-			return "\t<place id=\""
+			return "\t\t\t<place id=\""
 					+ m_id
-					+ "\">\n\t\t<name>\n\t\t\t<text>"
+					+ "\">\n\t\t\t\t<name>\n\t\t\t\t\t<text>"
 					+ m_name
-					+ "</text>\n\t\t\t<graphics>\n\t\t\t\t<offset x=\""
+					+ "</text>\n\t\t\t\t\t<graphics>\n\t\t\t\t\t\t<offset x=\""
 					+ Integer.toString(m_xsize)
 					+ "\" y=\""
 					+ Integer.toString(m_ysize)
-					+ "\">\n\t\t\t</offset></graphics>\n\t\t</name>\n\t\t<graphics>\n\t\t\t<position x=\""
+					+ "\">\n\t\t\t\t\t</offset></graphics>\n\t\t\t\t</name>\n\t\t\t\t<graphics>\n\t\t\t\t\t<position x=\""
 					+ Integer.toString(m_xpos) + "\" y=\""
 					+ Integer.toString(m_ypos)
-					+ "\">\n\t\t</position></graphics>\n\t\t<initialmarking>\n\t\t\t<text>"+Integer.toBinaryString(m_initialMarking)+"</text>\n\t\t\t<graphics>\n\t\t\t\t<offset x=\""
+					+ "\">\n\t\t\t\t</position></graphics>\n\t\t\t\t<initialmarking>\n\t\t\t\t\t<text>"+Integer.toBinaryString(m_initialMarking)+"</text>\n\t\t\t\t\t<graphics>\n\t\t\t\t\t\t<offset x=\""
 					+ Integer.toString(m_xsize)
 					+ "\" y=\""
 					+ Integer.toString(m_ysize)
-					+ "\">\n\t\t\t</offset></graphics>\n\t\t</initialmarking>\n\t</place>";		
+					+ "\">\n\t\t\t\t\t</offset></graphics>\n\t\t\t\t</initialmarking>\n\t\t\t</place>";		
 		}
 	}
 }

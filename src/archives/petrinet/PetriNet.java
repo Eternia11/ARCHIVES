@@ -14,7 +14,7 @@ public class PetriNet {
 		m_transitions = new ArrayList<Transition>();
 		m_arcs = new ArrayList<Arc>();
 	}
-	
+
 	public PetriNet(String id, String name) {
 		m_id = id;
 		m_name = name;
@@ -43,4 +43,60 @@ public class PetriNet {
 		return m_arcs;
 	}
 
+	public boolean contains(Place p) {
+		for (Place pl : m_places) {
+			if (p.equals(pl)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean contains(Transition t) {
+		for (Transition tr : m_transitions) {
+			if (t.equals(tr)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean contains(Arc a) {
+		for (Arc ar : m_arcs) {
+			if (a.equals(ar)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void addPlace(String id, String name, int initialMarking) {
+		m_places.add(new Place(id, name, initialMarking));
+	}
+	
+	public void addTransition(String id, String name) {
+		m_transitions.add(new Transition(id, name));
+	}
+	
+	public void addArc(String id, String source, String target) {
+		m_arcs.add(new Arc(id, source, target));
+	}
+	
+	public String toPNML() {
+		String ret = "<pnml xmlns=\"http://www.pnml.org/version-2009/grammar/pnml\">\n\t<net id=\""
+				+ m_id
+				+ "\" type=\"http://www.pnml.org/version-2009/grammar/ptnet\">\n\t\t<name>\n\t\t\t<text>"
+				+ m_name + "</text>\n\t\t</name>\n\t\t<page id=\"unique-page\"";
+		for (Place p : m_places) {
+			ret += "\n"+p.toPNML();
+		}
+		for (Transition t : m_transitions) {
+			ret += "\n"+t.toPNML();
+		}
+		for (Arc a : m_arcs) {
+			ret += "\n"+a.toPNML();
+		}
+		ret += "\n\t\t</page>\n\t</net>\n</pnml>";
+		return ret;
+	}
 }

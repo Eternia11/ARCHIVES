@@ -30,13 +30,17 @@ public class Arc {
 	public int get_inscription() {
 		return m_inscription;
 	}
-
+	
+	public boolean equals(Arc a) {
+		return (a.get_id() == m_id);
+	}
+	
 	public String toPNML() {
-		return "\t<arc id=\"" + m_id + "\" source=\"" + m_sourceId
+		return "\t\t\t<arc id=\"" + m_id + "\" source=\"" + m_sourceId
 				+ "\" target=\"" + m_targetId
-				+ "\">\n\t\t<inscription>\n\t\t\t<text>"
+				+ "\">\n\t\t\t\t<inscription>\n\t\t\t\t\t<text>"
 				+ Integer.toString(m_inscription)
-				+ "</text>\n\t\t</inscription>\n\t</arc>";
+				+ "</text>\n\t\t\t\t</inscription>\n\t\t\t</arc>";
 	}
 
 }

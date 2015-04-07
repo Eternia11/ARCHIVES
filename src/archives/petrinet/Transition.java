@@ -39,19 +39,23 @@ public class Transition {
 	public int get_ysize() {
 		return m_ysize;
 	}
-
+	
+	public boolean equals(Transition t) {
+		return (t.get_id() == m_id);
+	}
+	
 	public String toPNML() {
-		return "\t<transition id=\""
+		return "\t\t\t<transition id=\""
 				+ m_id
-				+ "\">\n\t\t<name>\n\t\t\t<text>"
+				+ "\">\n\t\t\t\t<name>\n\t\t\t\t\t<text>"
 				+ m_name
-				+ "</text>\n\t\t\t<graphics>\n\t\t\t\t<offset x=\""
+				+ "</text>\n\t\t\t\t\t<graphics>\n\t\t\t\t\t\t<offset x=\""
 				+ Integer.toString(m_xsize)
 				+ "\" y=\""
 				+ Integer.toString(m_ysize)
-				+ "\">\n\t\t\t</offset></graphics>\n\t\t</name>\n\t\t<graphics>\n\t\t\t<position x=\""
+				+ "\">\n\t\t\t\t\t</offset></graphics>\n\t\t\t\t</name>\n\t\t\t\t<graphics>\n\t\t\t\t\t<position x=\""
 				+ Integer.toString(m_xpos) + "\" y=\""
 				+ Integer.toString(m_ypos)
-				+ "\">\n\t\t</position></graphics>\n\t</transition>";
+				+ "\">\n\t\t\t\t</position></graphics>\n\t\t\t</transition>";
 	}
 }
