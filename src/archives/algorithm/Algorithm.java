@@ -2,6 +2,7 @@
 
 package archives.algorithm;
 
+import archives.alphaminer.AlphaMiner;
 import archives.log.Trace;
 
 import java.io.FileNotFoundException;
@@ -329,5 +330,10 @@ public class Algorithm {
 		}
 		
 		return IE_rules;
+	}
+	
+	public void runAlphaMiner() {
+		AlphaMiner alpha = new AlphaMiner();
+		alpha.run(m_traces);
 	}
 }
