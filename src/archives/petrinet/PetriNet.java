@@ -61,9 +61,9 @@ public class PetriNet {
 		return false;
 	}
 	
-	public boolean containsArc(String arc_id) {
+	public boolean containsArc(String arc_source, String arc_target) {
 		for (Arc a : m_arcs) {
-			if (a.get_id().equals(arc_id)) {
+			if ((a.get_sourceId().equals(arc_source)) && (a.get_targetId().equals(arc_target))) {
 				return true;
 			}
 		}
@@ -83,7 +83,7 @@ public class PetriNet {
 	}
 	
 	public void addArc(String id, String source, String target) {
-		if (!containsArc(id)) {
+		if (!containsArc(source, target)) {
 			m_arcs.add(new Arc(id, source, target));
 		}
 	}
@@ -92,7 +92,7 @@ public class PetriNet {
 		String ret = "<pnml xmlns=\"http://www.pnml.org/version-2009/grammar/pnml\">\n\t<net id=\""
 				+ m_id
 				+ "\" type=\"http://www.pnml.org/version-2009/grammar/ptnet\">\n\t\t<name>\n\t\t\t<text>"
-				+ m_name + "</text>\n\t\t</name>\n\t\t<page id=\"unique-page\"";
+				+ m_name + "</text>\n\t\t</name>\n\t\t<page id=\"unique-page\">";
 		for (Place p : m_places) {
 			ret += "\n"+p.toPNML();
 		}
