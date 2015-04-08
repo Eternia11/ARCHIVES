@@ -1,43 +1,13 @@
 package archives.alphaminer;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import org.jgrapht.ext.MatrixExporter;
+import org.apache.commons.lang3.tuple.Pair;
 
 import archives.log.Trace;
 import archives.petrinet.*;
 
-/*
-import fr.lip6.move.pnml.framework.general.PnmlExport;
-import fr.lip6.move.pnml.framework.utils.ModelRepository;
-import fr.lip6.move.pnml.framework.utils.exception.InvalidIDException;
-import fr.lip6.move.pnml.framework.utils.exception.VoidRepositoryException;
-
-import fr.lip6.move.pnml.ptnet.hlapi.ArcHLAPI;
-import fr.lip6.move.pnml.ptnet.hlapi.NameHLAPI;
-import fr.lip6.move.pnml.ptnet.hlapi.PNTypeHLAPI;
-import fr.lip6.move.pnml.ptnet.hlapi.PageHLAPI;
-import fr.lip6.move.pnml.ptnet.hlapi.PetriNetDocHLAPI;
-import fr.lip6.move.pnml.ptnet.hlapi.PetriNetHLAPI;
-import fr.lip6.move.pnml.ptnet.hlapi.PlaceHLAPI;
-import fr.lip6.move.pnml.ptnet.hlapi.RefPlaceHLAPI;
-import fr.lip6.move.pnml.ptnet.hlapi.TransitionHLAPI;
-*/
-/*
-import fr.lip6.move.pnml.pnmlcoremodel.hlapi.ArcHLAPI;
-import fr.lip6.move.pnml.pnmlcoremodel.hlapi.NameHLAPI;
-import fr.lip6.move.pnml.pnmlcoremodel.hlapi.PNTypeHLAPI;
-import fr.lip6.move.pnml.pnmlcoremodel.hlapi.PageHLAPI;
-import fr.lip6.move.pnml.pnmlcoremodel.hlapi.PetriNetDocHLAPI;
-import fr.lip6.move.pnml.pnmlcoremodel.hlapi.PetriNetHLAPI;
-import fr.lip6.move.pnml.pnmlcoremodel.hlapi.PlaceHLAPI;
-import fr.lip6.move.pnml.pnmlcoremodel.hlapi.RefPlaceHLAPI;
-import fr.lip6.move.pnml.pnmlcoremodel.hlapi.TransitionHLAPI;
-*/
 public class AlphaMiner {
 	private PetriNet m_net = null;
 	
@@ -52,6 +22,69 @@ public class AlphaMiner {
 			}
 		}
 		return false;
+	}
+	
+	private class YClass {
+		ArrayList<Pair<ArrayList<Integer>, ArrayList<Integer>>> m_Y = null;
+		
+		protected YClass() {
+			m_Y = new ArrayList<Pair<ArrayList<Integer>, ArrayList<Integer>>>();
+		}
+		
+		protected ArrayList<Pair<ArrayList<Integer>, ArrayList<Integer>>> get_Y() {
+			return m_Y;
+		}
+		
+		protected void add(Integer left, Integer right) {
+			m_Y.add(Pair.of(new ArrayList<Integer>(), new ArrayList<Integer>()));
+			m_Y.get(m_Y.size()-1).getLeft().add(left);
+			m_Y.get(m_Y.size()-1).getRight().add(right);
+		}
+		
+		protected YClass mergeLeft() {
+			YClass new_Y = new YClass();
+			for(int i = 0; i < m_Y.size(); i++) {
+				ArrayList<Integer> curr_left = m_Y.get(i).getLeft();
+				ArrayList<Integer> new_right = new ArrayList<Integer>();
+				
+				for(int j = 0; j < m_Y.size(); j++) {
+					if (curr_left.containsAll(m_Y.get(j).getLeft())) {
+						new_right.addAll(m_Y.get(j).getRight());
+						m_Y.remove(j);
+						j--;
+					}
+				}
+				
+				new_Y.get_Y().add(Pair.of(new ArrayList<Integer>(curr_left), new ArrayList<Integer>(new_right)));
+			}
+			return new_Y;
+		}
+		
+		protected YClass mergeRight() {
+			YClass new_Y = new YClass();
+			for(int i = 0; i < m_Y.size(); i++) {
+				ArrayList<Integer> curr_right = m_Y.get(i).getRight();
+				ArrayList<Integer> new_left = new ArrayList<Integer>();
+				
+				for(int j = 0; j < m_Y.size(); j++) {
+					if (curr_right.containsAll(m_Y.get(j).getRight())) {
+						new_left.addAll(m_Y.get(j).getLeft());
+						m_Y.remove(j);
+						j--;
+					}
+				}
+				
+				new_Y.get_Y().add(Pair.of(new ArrayList<Integer>(new_left), new ArrayList<Integer>(curr_right)));
+			}
+			return new_Y;
+		}
+		
+		protected void display() {
+			for (Pair<ArrayList<Integer>, ArrayList<Integer>> p : m_Y) {
+				System.out.println(p.getLeft()+" | "+p.getRight());
+			}
+			System.out.println();
+		}
 	}
 	
 	public void run(List<Trace> logs) {
@@ -114,6 +147,9 @@ public class AlphaMiner {
 					X[i][j] = -1;
 					X[j][i] = 1;
 				}
+				if (i == j) {
+					X[i][j] = 0;
+				}
 			}
 		}
 		
@@ -125,6 +161,21 @@ public class AlphaMiner {
 		}
 		
 		// Yw
+		YClass Y = new YClass();
+		
+		for (int i = 0; i < T.size(); i++) {
+			for (int j = i; j < T.size(); j++) {
+				if (X[i][j] == 1) {
+					Y.add(i, j);
+				}
+				if (X[i][j] == -1) {
+					Y.add(j, i);
+				}
+			}
+		}
+		Y = Y.mergeLeft();
+		Y = Y.mergeRight();
+		Y.display();
 		
 		//Pw
 		
@@ -134,45 +185,4 @@ public class AlphaMiner {
 		
 		System.out.println(m_net.toPNML());
 	}
-	
-	/*public AlphaMiner() throws InvalidIDException, VoidRepositoryException {
-		
-		ModelRepository.getInstance().createDocumentWorkspace("void");
-		System.out.println("a");
-		
-		PetriNetDocHLAPI doc = new PetriNetDocHLAPI();
-		System.out.println("d");
-		PetriNetHLAPI net = new PetriNetHLAPI("net0", PNTypeHLAPI.COREMODEL,new NameHLAPI("PetriNet"), doc);
-		PageHLAPI page = new PageHLAPI("toppage", new NameHLAPI("Page"),null, net); //use of "null" is authorized but not encouraged 
-		PageHLAPI subpage = new PageHLAPI("subpage", new NameHLAPI("Subpage"),null, page); //same
-		System.out.println("c");
-		PlaceHLAPI p1 = new PlaceHLAPI("place1");
-		PlaceHLAPI p2 = new PlaceHLAPI("place2");
-		PlaceHLAPI p3 = new PlaceHLAPI("place3");
-
-		TransitionHLAPI t1 = new TransitionHLAPI("transistion1");
-		TransitionHLAPI t2 = new TransitionHLAPI("transistion2");
-		System.out.println("b");
-		RefPlaceHLAPI r1 = new RefPlaceHLAPI("reftop3", p3);
-
-		new ArcHLAPI("a1", p1, t1, page);
-		new ArcHLAPI("a2", t1, r1, page);
-		new ArcHLAPI("a3", p3, t2, subpage);
-		new ArcHLAPI("a4", t2, p2, subpage);
-
-		p1.setContainerPageHLAPI(page);
-		t1.setContainerPageHLAPI(page);
-		r1.setContainerPageHLAPI(page);
-
-		p3.setContainerPageHLAPI(subpage);
-		p2.setContainerPageHLAPI(subpage);
-		t2.setContainerPageHLAPI(subpage);
-
-	  PnmlExport pex = new PnmlExport();
-	  System.out.println(doc.toPNML());
-	  //pex.exportObject(doc, System.getenv("fpath") + "exporttest.pnml");
-
-		ModelRepository.getInstance().destroyCurrentWorkspace();
-	}*/
-
 }
