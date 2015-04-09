@@ -16,9 +16,6 @@
 				<name>
 					<text>_out_</text>
 				</name>
-				<initialmarking>
-					<text>1</text>
-				</initialmarking>
 			</place>
 			<place id="p0">
 				<name>
@@ -53,6 +50,16 @@
 			<place id="p6">
 				<name>
 					<text>p6</text>
+				</name>
+			</place>
+			<place id="p7">
+				<name>
+					<text>p7</text>
+				</name>
+			</place>
+			<place id="p8">
+				<name>
+					<text>p8</text>
 				</name>
 			</place>
 			<transition id="debordement">
@@ -130,117 +137,192 @@
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a0-0" source="p0" target="construire diguette">
+			<arc id="out_a0-0" source="p0" target="mobiliser coolies">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a0-1" source="p0" target="demande de materiel">
+			<arc id="out_a0-1" source="p0" target="envoyer police">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="in_a1-0" source="debordement" target="p1">
+			<arc id="out_a0-2" source="p0" target="ordres non respectes">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="in_a1-1" source="rencontre" target="p1">
+			<arc id="in_a1-0" source="construire diguette" target="p1">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a1-0" source="p1" target="mobiliser coolies">
+			<arc id="out_a1-0" source="p1" target="construire diguette">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a1-1" source="p1" target="demande de materiel">
+			<arc id="in_a2-0" source="construire diguette" target="p2">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="in_a2-0" source="mobiliser coolies" target="p2">
+			<arc id="out_a2-0" source="p2" target="surveiller">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a2-0" source="p2" target="eau monte">
+			<arc id="in_a3-0" source="demande de materiel" target="p3">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a2-1" source="p2" target="elever digue">
+			<arc id="out_a3-0" source="p3" target="construire diguette">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a2-2" source="p2" target="renouveler ordres">
+			<arc id="in_a4-0" source="demande de materiel" target="p4">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="in_a3-0" source="surveiller" target="p3">
+			<arc id="out_a4-0" source="p4" target="surveiller">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a3-0" source="p3" target="envoyer police">
+			<arc id="in_a5-0" source="mobiliser coolies" target="p5">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a3-1" source="p3" target="ordres non respectes">
+			<arc id="in_a5-1" source="demande de materiel" target="p5">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a3-2" source="p3" target="reparer digue">
+			<arc id="out_a5-0" source="p5" target="construire diguette">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="in_a4-0" source="surveiller" target="p4">
+			<arc id="in_a6-0" source="mobiliser coolies" target="p6">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a4-0" source="p4" target="ordres non respectes">
+			<arc id="in_a6-1" source="demande de materiel" target="p6">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a4-1" source="p4" target="reparer digue">
+			<arc id="out_a6-0" source="p6" target="surveiller">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="in_a5-0" source="surveiller" target="p5">
+			<arc id="in_a7-0" source="construire diguette" target="p7">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a5-0" source="p5" target="renouveler ordres">
+			<arc id="out_a7-0" source="p7" target="surveiller">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="in_a6-0" source="surveiller" target="p6">
+			<arc id="in_a8-0" source="rencontre" target="p8">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a6-0" source="p6" target="reparer digue">
+			<arc id="out_a8-0" source="p8" target="mobiliser coolies">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_in0" source="_in_" target="debordement">
+			<arc id="a_in-0_c0" source="_in_" target="debordement">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_in0" source="renouveler ordres" target="_out_">
+			<arc id="a_out-0_c0" source="mobiliser coolies" target="_out_">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_out-2_c0" source="envoyer police" target="_out_">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_out-4_c0" source="ordres non respectes" target="_out_">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_in-0_c1" source="_in_" target="construire diguette">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_out-0_c1" source="surveiller" target="_out_">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_in-0_c3" source="_in_" target="mobiliser coolies">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_in-3_c3" source="_in_" target="demande de materiel">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_out-0_c4" source="construire diguette" target="_out_">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_in-2_c5" source="_in_" target="surveiller">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_in-0_c6" source="_in_" target="rencontre">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_in-0_c7" source="_in_" target="verifier digue">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_out-0_c7" source="verifier digue" target="_out_">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_in-0_c9" source="_in_" target="renouveler ordres">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_out-0_c9" source="renouveler ordres" target="_out_">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_in-0_c10" source="_in_" target="reparer digue">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_out-0_c10" source="reparer digue" target="_out_">
 				<inscription>
 					<text>1</text>
 				</inscription>

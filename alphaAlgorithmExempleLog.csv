@@ -1,0 +1,12 @@
+Event ID,dd/MM/yyyy HH:mm,Performative,Sender,Receiver,Objet,Lieu
+1,28/07/1926 08:00,delegate,a,a,a,a
+1,28/07/1926 09:00,delegate,a,a,b,a
+1,28/07/1926 10:00,delegate,a,a,c,a
+1,28/07/1926 11:00,delegate,a,a,d,a
+2,28/07/1926 08:00,delegate,a,a,a,a
+2,28/07/1926 09:00,delegate,a,a,c,a
+2,28/07/1926 10:00,delegate,a,a,b,a
+2,28/07/1926 11:00,delegate,a,a,d,a
+3,28/07/1926 10:00,delegate,a,a,a,a
+3,28/07/1926 11:00,delegate,a,a,e,a
+3,28/07/1926 12:00,delegate,a,a,d,a

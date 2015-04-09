@@ -26,7 +26,7 @@ class Main {
 	// them into graphML format files
 	public static void main(String[] args) {
 		Algorithm algo = new Algorithm();
-		algo.readLogFile(m_csvFile);
+		algo.readLogFile(m_csvFile);/*
 		m_informGraph = algo.buildPerformativeGraph("inform");
 		m_delegateGraph = algo.buildPerformativeGraph("delegate");
 		algo.exportGraphsToGraphml(m_informGraph, m_informGraphFileName);
@@ -37,7 +37,7 @@ class Main {
 		m_delegateChain = algo.buildPerformativeChainList("delegate");
 		m_IE_rules = algo.buildInform_ExecuteRules();
 		for (int i = 0; i < m_IE_rules.size(); i++)
-			System.out.println(m_IE_rules.get(i));
+			System.out.println(m_IE_rules.get(i));*/
 		algo.runAlphaMiner();
 	}
 }

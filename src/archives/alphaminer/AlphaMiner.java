@@ -45,6 +45,15 @@ public class AlphaMiner {
 			m_Y.get(m_Y.size()-1).getRight().add(right);
 		}
 		
+		protected boolean containsPair(ArrayList<Integer> left, ArrayList<Integer> right) {
+			for (Pair<ArrayList<Integer>, ArrayList<Integer>> pair : m_Y) {
+				if ((left.containsAll(pair.getLeft())) && (right.containsAll(pair.getRight()))) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
 		protected YClass mergeLeft() {
 			YClass new_Y = new YClass();
 			for(int i = 0; i < m_Y.size(); i++) {
@@ -54,12 +63,12 @@ public class AlphaMiner {
 				for(int j = 0; j < m_Y.size(); j++) {
 					if (curr_left.containsAll(m_Y.get(j).getLeft())) {
 						new_right.addAll(m_Y.get(j).getRight());
-						m_Y.remove(j);
-						j--;
 					}
 				}
 				
-				new_Y.get_Y().add(Pair.of(new ArrayList<Integer>(curr_left), new ArrayList<Integer>(new_right)));
+				if (!new_Y.containsPair(curr_left, new_right)) {
+					new_Y.get_Y().add(Pair.of(new ArrayList<Integer>(curr_left), new ArrayList<Integer>(new_right)));
+				}
 			}
 			return new_Y;
 		}
@@ -73,12 +82,12 @@ public class AlphaMiner {
 				for(int j = 0; j < m_Y.size(); j++) {
 					if (curr_right.containsAll(m_Y.get(j).getRight())) {
 						new_left.addAll(m_Y.get(j).getLeft());
-						m_Y.remove(j);
-						j--;
 					}
 				}
 				
-				new_Y.get_Y().add(Pair.of(new ArrayList<Integer>(new_left), new ArrayList<Integer>(curr_right)));
+				if (!new_Y.containsPair(new_left, curr_right)) {
+					new_Y.get_Y().add(Pair.of(new ArrayList<Integer>(new_left), new ArrayList<Integer>(curr_right)));
+				}
 			}
 			return new_Y;
 		}
@@ -131,11 +140,16 @@ public class AlphaMiner {
 	
 	public void run(List<Trace> logs) {
 		ArrayList<String> T = new ArrayList<String>();
+		ArrayList<String> caseID = new ArrayList<String>();
+		
 		// Tw
 		for (Trace t : logs) {
 			m_net.addTransition(t.getActivity(), t.getActivity());
 			if (!T.contains(t.getActivity())) {
 				T.add(t.getActivity());
+			}
+			if (!caseID.contains(t.getCaseID())) {
+				caseID.add(t.getCaseID());
 			}
 		}
 		// Ti
@@ -143,58 +157,108 @@ public class AlphaMiner {
 		// To
 		
 		// Xw
-		// reoganisation des logs rassemblés par timestamp
-		ArrayList<ArrayList<Trace>> new_log = new ArrayList<ArrayList<Trace>>();
-		String prev_time = "";
-		for (int i = 0; i < logs.size(); i++) {
-			Trace t = logs.get(i);
-			if (!prev_time.equals(t.getTimestamp())) {
-				new_log.add(new ArrayList<Trace>());
+		// reoganisation des logs rassemblés par caseID puis par timestamp
+		ArrayList<ArrayList<ArrayList<Trace>>> new_log = new ArrayList<ArrayList<ArrayList<Trace>>>();
+		for (int c = 0; c < caseID.size(); c++) {
+			String prev_time = "";
+			new_log.add(new ArrayList<ArrayList<Trace>>());
+			
+			for (int i = 0; i < logs.size(); i++) {
+				Trace t = logs.get(i);
+				if (caseID.get(c).equals(t.getCaseID())) {
+					if (!prev_time.equals(t.getTimestamp())) {
+						new_log.get(c).add(new ArrayList<Trace>());
+					}
+					new_log.get(c).get(new_log.get(c).size()-1).add(t);
+					prev_time = t.getTimestamp();
+				}
 			}
-			new_log.get(new_log.size()-1).add(t);
-			prev_time = t.getTimestamp();
 		}
 		
 		// 1 = >;
-		int X[][] = new int[T.size()][T.size()];
-		
-		for (int[] row : X) {
-			for (int x : row) {
-				x = 0;
+		ArrayList<Integer[][]> X = new ArrayList<Integer[][]>();
+		for (int c = 0; c < new_log.size(); c++) {
+			Integer X_temp[][] = new Integer[T.size()][T.size()];
+			
+			for (int i = 0; i < T.size(); i++) {
+				for (int j = 0; j < T.size(); j++) {
+					X_temp[i][j] = 0;
+				}
 			}
+			
+			for (int i = 0; i < T.size(); i++) {
+				for (int j = 0; j < new_log.get(c).size(); j++) {
+					for (int k = 0; k < T.size(); k++) {
+						if (isIn(new_log.get(c).get(j), T.get(i))) {
+							if ((j+1 < new_log.get(c).size()) && (isIn(new_log.get(c).get(j+1), T.get(k)))) {
+								X_temp[i][k] = 1;
+							}
+						}
+					}
+				}
+			}
+		
+			// -1 = <-; 0 = #; 1 = ->; 2 = ||
+			for (int i = 0; i < T.size(); i++) {
+				for (int j = 0; j < T.size(); j++) {
+					if ((X_temp[i][j] == 1) && (X_temp[j][i] == 1)) {
+						X_temp[i][j] = 2;
+						X_temp[j][i] = 2;
+					}
+					if ((X_temp[i][j] == 1) && (X_temp[j][i] == 0)) {
+						X_temp[i][j] = 1;
+						X_temp[j][i] = -1;
+					}
+					if ((X_temp[i][j] == 0) && (X_temp[j][i] == 1)) {
+						X_temp[i][j] = -1;
+						X_temp[j][i] = 1;
+					}
+					if (i == j) {
+						X_temp[i][j] = 0;
+					}
+					System.out.print(X_temp[i][j]+" ");
+				}
+				System.out.println();
+			}System.out.println();System.out.println();
+			X.add(X_temp);
 		}
 		
+		Integer Xw[][] = new Integer[T.size()][T.size()];
 		for (int i = 0; i < T.size(); i++) {
-			for (int j = 0; j < new_log.size(); j++) {
-				for (int k = 0; k < T.size(); k++) {
-					if (isIn(new_log.get(j), T.get(i))) {
-						if ((j+1 < new_log.size()) && (isIn(new_log.get(j+1), T.get(k)))) {
-							X[i][k] = 1;
-						}
+			for (int j = 0; j < T.size(); j++) {
+				Xw[i][j] = 0;
+				for (int c = 0; c < new_log.size(); c++) {
+					// TODO pas sur du calcul
+					if (X.get(c)[i][j] == 1) {
+						Xw[i][j] = 1;
 					}
 				}
 			}
 		}
 		
-		// -1 = <-; 0 = #; 1 = ->; 2 = ||
 		for (int i = 0; i < T.size(); i++) {
 			for (int j = 0; j < T.size(); j++) {
-				if ((X[i][j] == 1) && (X[j][i] == 1)) {
-					X[i][j] = 2;
-					X[j][i] = 2;
+				if ((Xw[i][j] == 1) && (Xw[j][i] == 1)) {
+					Xw[i][j] = 2;
+					Xw[j][i] = 2;
 				}
-				if ((X[i][j] == 1) && (X[j][i] == 0)) {
-					X[i][j] = 1;
-					X[j][i] = -1;
+				if ((Xw[i][j] == 1) && (Xw[j][i] == 0)) {
+					Xw[i][j] = 1;
+					Xw[j][i] = -1;
 				}
-				if ((X[i][j] == 0) && (X[j][i] == 1)) {
-					X[i][j] = -1;
-					X[j][i] = 1;
+				if ((Xw[i][j] == 0) && (Xw[j][i] == 1)) {
+					Xw[i][j] = -1;
+					Xw[j][i] = 1;
+				}
+				if ((Xw[i][j] == 2) && (Xw[j][i] != 2)) {
+					Xw[j][i] = 2;
 				}
 				if (i == j) {
-					X[i][j] = 0;
+					Xw[i][j] = 0;
 				}
+				System.out.print(Xw[i][j]+" ");
 			}
+			System.out.println();
 		}
 		
 		// Yw
@@ -202,10 +266,10 @@ public class AlphaMiner {
 		
 		for (int i = 0; i < T.size(); i++) {
 			for (int j = i; j < T.size(); j++) {
-				if (X[i][j] == 1) {
+				if (Xw[i][j] == 1) {
 					Y.add(i, j);
 				}
-				if (X[i][j] == -1) {
+				if (Xw[i][j] == -1) {
 					Y.add(j, i);
 				}
 			}
@@ -216,7 +280,7 @@ public class AlphaMiner {
 		
 		for (int i = 0; i < T.size(); i++) {
 			for (int j = i; j < T.size(); j++) {
-				if (X[i][j] != 0) {
+				if (Xw[i][j] != 0) {
 					Y.cleave(i, j);
 				}
 			}
@@ -224,18 +288,20 @@ public class AlphaMiner {
 		
 		//Pw
 		m_net.addPlace("_in_", "_in_", 1);
-		m_net.addPlace("_out_", "_out_", 1);
+		m_net.addPlace("_out_", "_out_", 0);
 		Y.addPlaces();
 		
 		// Fw
 		Y.addArcs(T);
-		ArrayList<Trace> Ti = new_log.get(0);
-		ArrayList<Trace> To = new_log.get(new_log.size()-1);
-		for (int i = 0 ; i < Ti.size(); i++) {
-			m_net.addArc("a_in"+Integer.toString(i), "_in_", Ti.get(i).getActivity());
-		}
-		for (int i = 0 ; i < To.size(); i++) {
-			m_net.addArc("a_in"+Integer.toString(i), To.get(i).getActivity(), "_out_");
+		for (int c = 0; c < new_log.size(); c++) {
+			ArrayList<Trace> Ti = new_log.get(c).get(0);
+			ArrayList<Trace> To = new_log.get(c).get(new_log.get(c).size()-1);
+			for (int i = 0 ; i < Ti.size(); i++) {
+				m_net.addArc("a_in-"+Integer.toString(i)+"_c"+c, "_in_", Ti.get(i).getActivity());
+			}
+			for (int i = 0 ; i < To.size(); i++) {
+				m_net.addArc("a_out-"+Integer.toString(i)+"_c"+c, To.get(i).getActivity(), "_out_");
+			}
 		}
 		
 		// alpha(W)
