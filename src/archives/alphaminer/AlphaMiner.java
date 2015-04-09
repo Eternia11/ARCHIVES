@@ -1,5 +1,8 @@
 package archives.alphaminer;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +13,7 @@ import archives.petrinet.*;
 
 public class AlphaMiner {
 	private PetriNet m_net = null;
+	private String m_netFile = "petri.pnml";
 	
 	public AlphaMiner() {
 		m_net = new PetriNet("net0", "AlphaNetARCHIVES");
@@ -79,6 +83,44 @@ public class AlphaMiner {
 			return new_Y;
 		}
 		
+		protected void cleave(Integer index1, Integer index2) {
+			for(int i = 0; i < m_Y.size(); i++) {
+				ArrayList<Integer> left = m_Y.get(i).getLeft();
+				ArrayList<Integer> right = m_Y.get(i).getRight();
+				if ((left.contains(index1)) && (left.contains(index2))) {
+					m_Y.add(i, Pair.of(new ArrayList<Integer>(left), new ArrayList<Integer>(right)));
+					left.remove(left.indexOf(index1));
+					ArrayList<Integer> new_left = m_Y.get(i).getLeft();
+					new_left.remove(new_left.indexOf(index2));
+				}
+				if ((right.contains(index1)) && (right.contains(index2))) {
+					m_Y.add(i, Pair.of(new ArrayList<Integer>(left), new ArrayList<Integer>(right)));
+					right.remove(right.indexOf(index1));
+					ArrayList<Integer> new_right = m_Y.get(i).getRight();
+					new_right.remove(new_right.indexOf(index2));
+				}
+			}
+		}
+		
+		protected void addPlaces() {
+			for (int i = 0 ; i < m_Y.size(); i++) {
+				m_net.addPlace("p"+Integer.toString(i), "p"+Integer.toString(i), 0);
+			}
+		}
+		
+		protected void addArcs(ArrayList<String> T) {
+			for (int i = 0; i < m_Y.size(); i++) {
+				ArrayList<Integer> left = m_Y.get(i).getLeft();
+				ArrayList<Integer> right = m_Y.get(i).getRight();
+				for (int j = 0; j < left.size(); j++) {
+					m_net.addArc("in_a"+Integer.toString(i)+"-"+Integer.toString(j), T.get(left.get(j)), "p"+Integer.toString(i));
+				}
+				for (int j = 0; j < right.size(); j++) {
+					m_net.addArc("out_a"+Integer.toString(i)+"-"+Integer.toString(j), "p"+Integer.toString(i), T.get(right.get(j)));
+				}
+			}
+		}
+		
 		protected void display() {
 			for (Pair<ArrayList<Integer>, ArrayList<Integer>> p : m_Y) {
 				System.out.println(p.getLeft()+" | "+p.getRight());
@@ -92,7 +134,9 @@ public class AlphaMiner {
 		// Tw
 		for (Trace t : logs) {
 			m_net.addTransition(t.getActivity(), t.getActivity());
-			T.add(t.getActivity());
+			if (!T.contains(t.getActivity())) {
+				T.add(t.getActivity());
+			}
 		}
 		// Ti
 		
@@ -153,13 +197,6 @@ public class AlphaMiner {
 			}
 		}
 		
-		for (int i = 0; i < T.size(); i++) {
-			for (int j = 0; j < T.size(); j++) {
-				System.out.print(X[i][j]+"\t");
-			}
-			System.out.println();
-		}
-		
 		// Yw
 		YClass Y = new YClass();
 		
@@ -173,16 +210,45 @@ public class AlphaMiner {
 				}
 			}
 		}
+		
 		Y = Y.mergeLeft();
 		Y = Y.mergeRight();
-		Y.display();
+		
+		for (int i = 0; i < T.size(); i++) {
+			for (int j = i; j < T.size(); j++) {
+				if (X[i][j] != 0) {
+					Y.cleave(i, j);
+				}
+			}
+		}
 		
 		//Pw
+		m_net.addPlace("_in_", "_in_", 1);
+		m_net.addPlace("_out_", "_out_", 1);
+		Y.addPlaces();
 		
 		// Fw
+		Y.addArcs(T);
+		ArrayList<Trace> Ti = new_log.get(0);
+		ArrayList<Trace> To = new_log.get(new_log.size()-1);
+		for (int i = 0 ; i < Ti.size(); i++) {
+			m_net.addArc("a_in"+Integer.toString(i), "_in_", Ti.get(i).getActivity());
+		}
+		for (int i = 0 ; i < To.size(); i++) {
+			m_net.addArc("a_in"+Integer.toString(i), To.get(i).getActivity(), "_out_");
+		}
 		
 		// alpha(W)
 		
-		System.out.println(m_net.toPNML());
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(m_netFile, "UTF-8");
+			writer.println(m_net.toPNML());
+			writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			System.out.println("The file "+m_netFile+" cannot be created/opened or does not have the UTF-8 encoding.");
+			e.printStackTrace();
+			System.exit(6);
+		}
 	}
 }

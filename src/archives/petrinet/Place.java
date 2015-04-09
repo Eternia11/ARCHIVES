@@ -39,7 +39,7 @@ public class Place {
 					+ m_id
 					+ "\">\n\t\t\t\t<name>\n\t\t\t\t\t<text>"
 					+ m_name
-					+ "</text>\n\t\t\t\t<initialmarking>\n\t\t\t\t\t<text>"
+					+ "</text>\n\t\t\t\t</name>\n\t\t\t\t<initialmarking>\n\t\t\t\t\t<text>"
 					+ Integer.toBinaryString(m_initialMarking)
 					+ "</text>\n\t\t\t\t</initialmarking>\n\t\t\t</place>";		
 		}

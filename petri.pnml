@@ -1,0 +1,250 @@
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+	<net id="net0" type="http://www.pnml.org/version-2009/grammar/ptnet">
+		<name>
+			<text>AlphaNetARCHIVES</text>
+		</name>
+		<page id="unique-page">
+			<place id="_in_">
+				<name>
+					<text>_in_</text>
+				</name>
+				<initialmarking>
+					<text>1</text>
+				</initialmarking>
+			</place>
+			<place id="_out_">
+				<name>
+					<text>_out_</text>
+				</name>
+				<initialmarking>
+					<text>1</text>
+				</initialmarking>
+			</place>
+			<place id="p0">
+				<name>
+					<text>p0</text>
+				</name>
+			</place>
+			<place id="p1">
+				<name>
+					<text>p1</text>
+				</name>
+			</place>
+			<place id="p2">
+				<name>
+					<text>p2</text>
+				</name>
+			</place>
+			<place id="p3">
+				<name>
+					<text>p3</text>
+				</name>
+			</place>
+			<place id="p4">
+				<name>
+					<text>p4</text>
+				</name>
+			</place>
+			<place id="p5">
+				<name>
+					<text>p5</text>
+				</name>
+			</place>
+			<place id="p6">
+				<name>
+					<text>p6</text>
+				</name>
+			</place>
+			<transition id="debordement">
+				<name>
+					<text>debordement</text>
+				</name>
+			</transition>
+			<transition id="construire diguette">
+				<name>
+					<text>construire diguette</text>
+				</name>
+			</transition>
+			<transition id="mobiliser coolies">
+				<name>
+					<text>mobiliser coolies</text>
+				</name>
+			</transition>
+			<transition id="demande de materiel">
+				<name>
+					<text>demande de materiel</text>
+				</name>
+			</transition>
+			<transition id="surveiller">
+				<name>
+					<text>surveiller</text>
+				</name>
+			</transition>
+			<transition id="eau monte">
+				<name>
+					<text>eau monte</text>
+				</name>
+			</transition>
+			<transition id="elever digue">
+				<name>
+					<text>elever digue</text>
+				</name>
+			</transition>
+			<transition id="rencontre">
+				<name>
+					<text>rencontre</text>
+				</name>
+			</transition>
+			<transition id="verifier digue">
+				<name>
+					<text>verifier digue</text>
+				</name>
+			</transition>
+			<transition id="envoyer police">
+				<name>
+					<text>envoyer police</text>
+				</name>
+			</transition>
+			<transition id="ordres non respectes">
+				<name>
+					<text>ordres non respectes</text>
+				</name>
+			</transition>
+			<transition id="renouveler ordres">
+				<name>
+					<text>renouveler ordres</text>
+				</name>
+			</transition>
+			<transition id="reparer digue">
+				<name>
+					<text>reparer digue</text>
+				</name>
+			</transition>
+			<arc id="in_a0-0" source="debordement" target="p0">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="in_a0-1" source="rencontre" target="p0">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a0-0" source="p0" target="construire diguette">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a0-1" source="p0" target="demande de materiel">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="in_a1-0" source="debordement" target="p1">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="in_a1-1" source="rencontre" target="p1">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a1-0" source="p1" target="mobiliser coolies">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a1-1" source="p1" target="demande de materiel">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="in_a2-0" source="mobiliser coolies" target="p2">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a2-0" source="p2" target="eau monte">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a2-1" source="p2" target="elever digue">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a2-2" source="p2" target="renouveler ordres">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="in_a3-0" source="surveiller" target="p3">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a3-0" source="p3" target="envoyer police">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a3-1" source="p3" target="ordres non respectes">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a3-2" source="p3" target="reparer digue">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="in_a4-0" source="surveiller" target="p4">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a4-0" source="p4" target="ordres non respectes">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a4-1" source="p4" target="reparer digue">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="in_a5-0" source="surveiller" target="p5">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a5-0" source="p5" target="renouveler ordres">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="in_a6-0" source="surveiller" target="p6">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_a6-0" source="p6" target="reparer digue">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_in0" source="_in_" target="debordement">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_in0" source="renouveler ordres" target="_out_">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+		</page>
+	</net>
+</pnml>
