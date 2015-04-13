@@ -186,7 +186,7 @@ public class AlphaMiner {
 				}
 			}
 			
-			for (int i = 0; i < T.size(); i++) {
+			/*for (int i = 0; i < T.size(); i++) {
 				for (int j = 0; j < new_log.get(c).size(); j++) {
 					for (int k = 0; k < T.size(); k++) {
 						if (isIn(new_log.get(c).get(j), T.get(i))) {
@@ -196,7 +196,21 @@ public class AlphaMiner {
 						}
 					}
 				}
-			}
+			}*/
+			// TODO même code ?
+			/*for (ArrayList<ArrayList<Trace>> case_first : new_log) {
+				for (int i = 0; i < case_first.size(); i++) {
+					if (i+1 < case_first.size()) {
+						for (int j1 = 0; j1 < case_first.get(i).size(); j1++) {
+							int a1 = T.indexOf(case_first.get(i).get(j1).getActivity());
+							for (int j2 = 0; j2 < case_first.get(i+1).size(); j2++) {
+								int a2 = T.indexOf(case_first.get(i+1).get(j2).getActivity());
+								X_temp[a1][a2] = 1;
+							}
+						}
+					}
+				}
+			}*/
 		
 			// -1 = <-; 0 = #; 1 = ->; 2 = ||
 			for (int i = 0; i < T.size(); i++) {
@@ -224,17 +238,56 @@ public class AlphaMiner {
 		}
 		
 		Integer Xw[][] = new Integer[T.size()][T.size()];
+		// merge des matrices : "paramètre" de l'algorithme alpha
+		// ce calcul-ci est une généralisation totale en fait
+		// TODO autre calcul ?
 		for (int i = 0; i < T.size(); i++) {
 			for (int j = 0; j < T.size(); j++) {
 				Xw[i][j] = 0;
 				for (int c = 0; c < new_log.size(); c++) {
-					// TODO pas sur du calcul
 					if (X.get(c)[i][j] == 1) {
 						Xw[i][j] = 1;
+					}
+					// conserve le parallélisme
+					if (X.get(c)[i][j] == 2) {
+						Xw[i][j] = 1;
+						Xw[j][i] = 1;
 					}
 				}
 			}
 		}
+		// ce calcul-ci est une spécialisation totale
+		/*for (int i = 0; i < T.size(); i++) {
+			for (int j = 0; j < T.size(); j++) {
+				Xw[i][j] = 0;
+				boolean same = true;
+				Integer previous = X.get(0)[i][j];
+				for (int c = 0; same && c < new_log.size(); c++) {
+					if (X.get(c)[i][j] != previous) {
+						same = false;
+					}
+				}
+				if (same) {
+					Xw[i][j] = previous;
+				}
+			}
+		}*/
+		
+		// TODO à enlever ?
+		// post processing : set the activities which have the same timestamp into parallel mode
+		/*for (ArrayList<ArrayList<Trace>> case_first : new_log) {
+			for (ArrayList<Trace> time_first : case_first) {
+				for (int i = 0; i < time_first.size(); i++) {
+					int a1 = T.indexOf(time_first.get(i).getActivity());
+					for (int j = 0; j < time_first.size(); j++) {
+						if (i != j) {
+							int a2 = T.indexOf(time_first.get(j).getActivity());
+							Xw[a1][a2] = 2;
+						}
+					}
+				}
+			}
+		}*/
 		
 		for (int i = 0; i < T.size(); i++) {
 			for (int j = 0; j < T.size(); j++) {
@@ -256,7 +309,7 @@ public class AlphaMiner {
 				if (i == j) {
 					Xw[i][j] = 0;
 				}
-				System.out.print(Xw[i][j]+" ");
+				System.out.print(Math.abs(Xw[i][j])+" ");
 			}
 			System.out.println();
 		}

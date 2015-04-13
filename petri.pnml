@@ -37,31 +37,6 @@
 					<text>p3</text>
 				</name>
 			</place>
-			<place id="p4">
-				<name>
-					<text>p4</text>
-				</name>
-			</place>
-			<place id="p5">
-				<name>
-					<text>p5</text>
-				</name>
-			</place>
-			<place id="p6">
-				<name>
-					<text>p6</text>
-				</name>
-			</place>
-			<place id="p7">
-				<name>
-					<text>p7</text>
-				</name>
-			</place>
-			<place id="p8">
-				<name>
-					<text>p8</text>
-				</name>
-			</place>
 			<transition id="debordement">
 				<name>
 					<text>debordement</text>
@@ -152,7 +127,12 @@
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="in_a1-0" source="construire diguette" target="p1">
+			<arc id="in_a1-0" source="mobiliser coolies" target="p1">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="in_a1-1" source="demande de materiel" target="p1">
 				<inscription>
 					<text>1</text>
 				</inscription>
@@ -162,7 +142,12 @@
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="in_a2-0" source="construire diguette" target="p2">
+			<arc id="in_a2-0" source="mobiliser coolies" target="p2">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="in_a2-1" source="demande de materiel" target="p2">
 				<inscription>
 					<text>1</text>
 				</inscription>
@@ -172,72 +157,12 @@
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="in_a3-0" source="demande de materiel" target="p3">
+			<arc id="in_a3-0" source="rencontre" target="p3">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="out_a3-0" source="p3" target="construire diguette">
-				<inscription>
-					<text>1</text>
-				</inscription>
-			</arc>
-			<arc id="in_a4-0" source="demande de materiel" target="p4">
-				<inscription>
-					<text>1</text>
-				</inscription>
-			</arc>
-			<arc id="out_a4-0" source="p4" target="surveiller">
-				<inscription>
-					<text>1</text>
-				</inscription>
-			</arc>
-			<arc id="in_a5-0" source="mobiliser coolies" target="p5">
-				<inscription>
-					<text>1</text>
-				</inscription>
-			</arc>
-			<arc id="in_a5-1" source="demande de materiel" target="p5">
-				<inscription>
-					<text>1</text>
-				</inscription>
-			</arc>
-			<arc id="out_a5-0" source="p5" target="construire diguette">
-				<inscription>
-					<text>1</text>
-				</inscription>
-			</arc>
-			<arc id="in_a6-0" source="mobiliser coolies" target="p6">
-				<inscription>
-					<text>1</text>
-				</inscription>
-			</arc>
-			<arc id="in_a6-1" source="demande de materiel" target="p6">
-				<inscription>
-					<text>1</text>
-				</inscription>
-			</arc>
-			<arc id="out_a6-0" source="p6" target="surveiller">
-				<inscription>
-					<text>1</text>
-				</inscription>
-			</arc>
-			<arc id="in_a7-0" source="construire diguette" target="p7">
-				<inscription>
-					<text>1</text>
-				</inscription>
-			</arc>
-			<arc id="out_a7-0" source="p7" target="surveiller">
-				<inscription>
-					<text>1</text>
-				</inscription>
-			</arc>
-			<arc id="in_a8-0" source="rencontre" target="p8">
-				<inscription>
-					<text>1</text>
-				</inscription>
-			</arc>
-			<arc id="out_a8-0" source="p8" target="mobiliser coolies">
+			<arc id="out_a3-0" source="p3" target="mobiliser coolies">
 				<inscription>
 					<text>1</text>
 				</inscription>
