@@ -37,6 +37,21 @@
 					<text>p3</text>
 				</name>
 			</place>
+			<place id="loop0_1">
+				<name>
+					<text>loop0_1</text>
+				</name>
+			</place>
+			<place id="loop0_4">
+				<name>
+					<text>loop0_4</text>
+				</name>
+			</place>
+			<place id="loop0_11">
+				<name>
+					<text>loop0_11</text>
+				</name>
+			</place>
 			<transition id="debordement">
 				<name>
 					<text>debordement</text>
@@ -248,6 +263,36 @@
 				</inscription>
 			</arc>
 			<arc id="a_out-0_c10" source="reparer digue" target="_out_">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="in_loop0_1" source="construire diguette" target="loop0_1">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_loop0_1" source="loop0_1" target="construire diguette">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="in_loop0_4" source="surveiller" target="loop0_4">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_loop0_4" source="loop0_4" target="surveiller">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="in_loop0_11" source="renouveler ordres" target="loop0_11">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="out_loop0_11" source="loop0_11" target="renouveler ordres">
 				<inscription>
 					<text>1</text>
 				</inscription>

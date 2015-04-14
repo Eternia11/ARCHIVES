@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -197,8 +198,8 @@ public class AlphaMiner {
 					}
 				}
 			}*/
-			// TODO même code ?
-			/*for (ArrayList<ArrayList<Trace>> case_first : new_log) {
+			// TODO même code et sensiblement meilleure perf
+			for (ArrayList<ArrayList<Trace>> case_first : new_log) {
 				for (int i = 0; i < case_first.size(); i++) {
 					if (i+1 < case_first.size()) {
 						for (int j1 = 0; j1 < case_first.get(i).size(); j1++) {
@@ -210,25 +211,24 @@ public class AlphaMiner {
 						}
 					}
 				}
-			}*/
+			}
 		
 			// -1 = <-; 0 = #; 1 = ->; 2 = ||
 			for (int i = 0; i < T.size(); i++) {
 				for (int j = 0; j < T.size(); j++) {
-					if ((X_temp[i][j] == 1) && (X_temp[j][i] == 1)) {
-						X_temp[i][j] = 2;
-						X_temp[j][i] = 2;
-					}
-					if ((X_temp[i][j] == 1) && (X_temp[j][i] == 0)) {
-						X_temp[i][j] = 1;
-						X_temp[j][i] = -1;
-					}
-					if ((X_temp[i][j] == 0) && (X_temp[j][i] == 1)) {
-						X_temp[i][j] = -1;
-						X_temp[j][i] = 1;
-					}
-					if (i == j) {
-						X_temp[i][j] = 0;
+					if (i != j) { // in order to preserve loop of size 0, the diagonal must remain unchanged (0 or 1)
+						if ((X_temp[i][j] == 1) && (X_temp[j][i] == 1)) {
+							X_temp[i][j] = 2;
+							X_temp[j][i] = 2;
+						}
+						if ((X_temp[i][j] == 1) && (X_temp[j][i] == 0)) {
+							X_temp[i][j] = 1;
+							X_temp[j][i] = -1;
+						}
+						if ((X_temp[i][j] == 0) && (X_temp[j][i] == 1)) {
+							X_temp[i][j] = -1;
+							X_temp[j][i] = 1;
+						}
 					}
 					System.out.print(X_temp[i][j]+" ");
 				}
@@ -238,10 +238,13 @@ public class AlphaMiner {
 		}
 		
 		Integer Xw[][] = new Integer[T.size()][T.size()];
+		Integer loop0[] = new Integer[T.size()];
+		
 		// merge des matrices : "paramètre" de l'algorithme alpha
 		// ce calcul-ci est une généralisation totale en fait
 		// TODO autre calcul ?
 		for (int i = 0; i < T.size(); i++) {
+			loop0[i] = 0;
 			for (int j = 0; j < T.size(); j++) {
 				Xw[i][j] = 0;
 				for (int c = 0; c < new_log.size(); c++) {
@@ -258,6 +261,7 @@ public class AlphaMiner {
 		}
 		// ce calcul-ci est une spécialisation totale
 		/*for (int i = 0; i < T.size(); i++) {
+		 	loop0[i] = 0;
 			for (int j = 0; j < T.size(); j++) {
 				Xw[i][j] = 0;
 				boolean same = true;
@@ -291,22 +295,26 @@ public class AlphaMiner {
 		
 		for (int i = 0; i < T.size(); i++) {
 			for (int j = 0; j < T.size(); j++) {
-				if ((Xw[i][j] == 1) && (Xw[j][i] == 1)) {
-					Xw[i][j] = 2;
-					Xw[j][i] = 2;
-				}
-				if ((Xw[i][j] == 1) && (Xw[j][i] == 0)) {
-					Xw[i][j] = 1;
-					Xw[j][i] = -1;
-				}
-				if ((Xw[i][j] == 0) && (Xw[j][i] == 1)) {
-					Xw[i][j] = -1;
-					Xw[j][i] = 1;
-				}
-				if ((Xw[i][j] == 2) && (Xw[j][i] != 2)) {
-					Xw[j][i] = 2;
-				}
-				if (i == j) {
+				if (i != j) {
+					if ((Xw[i][j] == 1) && (Xw[j][i] == 1)) {
+						Xw[i][j] = 2;
+						Xw[j][i] = 2;
+					}
+					if ((Xw[i][j] == 1) && (Xw[j][i] == 0)) {
+						Xw[i][j] = 1;
+						Xw[j][i] = -1;
+					}
+					if ((Xw[i][j] == 0) && (Xw[j][i] == 1)) {
+						Xw[i][j] = -1;
+						Xw[j][i] = 1;
+					}
+					if ((Xw[i][j] == 2) && (Xw[j][i] != 2)) {
+						Xw[j][i] = 2;
+					}
+				} else {
+					if (Xw[i][j] == 1) {
+						loop0[i] = 1;
+					}
 					Xw[i][j] = 0;
 				}
 				System.out.print(Math.abs(Xw[i][j])+" ");
@@ -319,11 +327,13 @@ public class AlphaMiner {
 		
 		for (int i = 0; i < T.size(); i++) {
 			for (int j = i; j < T.size(); j++) {
-				if (Xw[i][j] == 1) {
-					Y.add(i, j);
-				}
-				if (Xw[i][j] == -1) {
-					Y.add(j, i);
+				if (i != j) {
+					if (Xw[i][j] == 1) {
+						Y.add(i, j);
+					}
+					if (Xw[i][j] == -1) {
+						Y.add(j, i);
+					}
 				}
 			}
 		}
@@ -354,6 +364,15 @@ public class AlphaMiner {
 			}
 			for (int i = 0 ; i < To.size(); i++) {
 				m_net.addArc("a_out-"+Integer.toString(i)+"_c"+c, To.get(i).getActivity(), "_out_");
+			}
+		}
+		
+		// loops
+		for (int i = 0; i < T.size(); i++) {
+			if (loop0[i] == 1) {
+				m_net.addPlace("loop0_"+i, "loop0_"+i, 0);
+				m_net.addArc("in_loop0_"+i, T.get(i), "loop0_"+i);
+				m_net.addArc("out_loop0_"+i, "loop0_"+i, T.get(i));
 			}
 		}
 		
