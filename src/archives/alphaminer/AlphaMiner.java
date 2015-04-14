@@ -220,6 +220,7 @@ public class AlphaMiner {
 						if ((X_temp[i][j] == 1) && (X_temp[j][i] == 1)) {
 							X_temp[i][j] = 2;
 							X_temp[j][i] = 2;
+							System.out.println("loop between "+T.get(i)+" and "+T.get(j));
 						}
 						if ((X_temp[i][j] == 1) && (X_temp[j][i] == 0)) {
 							X_temp[i][j] = 1;
@@ -368,11 +369,35 @@ public class AlphaMiner {
 		}
 		
 		// loops
+		// loops of size 0
 		for (int i = 0; i < T.size(); i++) {
 			if (loop0[i] == 1) {
 				m_net.addPlace("loop0_"+i, "loop0_"+i, 0);
 				m_net.addArc("in_loop0_"+i, T.get(i), "loop0_"+i);
 				m_net.addArc("out_loop0_"+i, "loop0_"+i, T.get(i));
+			}
+		}
+		
+		// loops of size 1
+		for (ArrayList<ArrayList<Trace>> case_first : new_log) {
+			for (int i = 0; i < case_first.size(); i++) {
+				if (i+2 < case_first.size()) {
+					for (int j1 = 0; j1 < case_first.get(i).size(); j1++) {
+						int a1 = T.indexOf(case_first.get(i).get(j1).getActivity());
+						if (isIn(case_first.get(i+2), T.get(a1))) {
+							for (int j2 = 0; j2 < case_first.get(i+1).size(); j2++) {
+								int a2 = T.indexOf(case_first.get(i+1).get(j2).getActivity());
+								// loop between T.get(a1) and T.get(a2)
+								m_net.addPlace("loop1_p1_"+a1+"-"+a2, "loop1_p1_"+a1+"-"+a2, 0);
+								m_net.addPlace("loop1_p2_"+a1+"-"+a2, "loop1_p2_"+a1+"-"+a2, 0);
+								m_net.addArc("loop1_a1_"+a1+"-"+a2, T.get(a1), "loop1_p1_"+a1+"-"+a2);
+								m_net.addArc("loop1_a2_"+a1+"-"+a2, "loop1_p1_"+a1+"-"+a2, T.get(a2));
+								m_net.addArc("loop1_a3_"+a1+"-"+a2, T.get(a2), "loop1_p2_"+a1+"-"+a2);
+								m_net.addArc("loop1_a4_"+a1+"-"+a2, "loop1_p2_"+a1+"-"+a2, T.get(a1));
+							}
+						}
+					}
+				}
 			}
 		}
 		

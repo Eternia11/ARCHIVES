@@ -41,6 +41,6 @@ class Main {
 		long startTime = System.nanoTime();
 		algo.runAlphaMiner();
 		long endTime = System.nanoTime();
-		System.out.println("Took "+(endTime - startTime) + " ns");
+		System.out.println("Took "+(endTime - startTime)/1000000 + " ms");
 	}
 }
