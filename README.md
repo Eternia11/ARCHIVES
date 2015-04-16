@@ -8,3 +8,4 @@ v0 :
 	- Allow to build the list of actions associated with their chain of delegation
 	- Allow to create, manipulate and export to PNML Place/Transition Petri Nets (proM importation is the best way to read these files and visualize the net)
 	- Allow to create the Petri Net representing the logs following the Alpha Algorithm
+	- Allow to create and manipulate Workflows and to export them to XPDL format files in order to visualize them with the "Together Workflow Editor" software

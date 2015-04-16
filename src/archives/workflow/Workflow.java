@@ -79,7 +79,7 @@ public class Workflow {
 		for (Pool pool : m_pools) {
 			ret += "\n" + pool.toXPDL();
 		}
-		ret += "</xpdl:Pools>\n\t<xpdl:WorkflowProcesses>";
+		ret += "\n\t</xpdl:Pools>\n\t<xpdl:WorkflowProcesses>";
 		for (Process process : m_processes) {
 			ret += "\n" + process.toXPDL();
 		}

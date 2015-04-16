@@ -4,12 +4,16 @@ package archives.algorithm;
 
 import archives.alphaminer.AlphaMiner;
 import archives.log.Trace;
+import archives.petrinet.PetriNet;
+import archives.workflow.Workflow;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -337,5 +341,28 @@ public class Algorithm {
 	public void runAlphaMiner(int merge_type, boolean loops) {
 		AlphaMiner alpha = new AlphaMiner();
 		alpha.run(m_traces, merge_type, loops);
+	}
+	
+	// under construction and testing
+	public void findWorkflow() {
+		Workflow wf = new Workflow("wf_test", "wf_test");
+		String WF_file = "gen\\workflow.xpdl";
+		
+		
+		
+		
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(WF_file, "UTF-8");
+			writer.println(wf.toXPDL());
+			writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			System.out
+					.println("The file "
+							+ WF_file
+							+ " cannot be created/opened or does not have the UTF-8 encoding.");
+			e.printStackTrace();
+			System.exit(6);
+		}
 	}
 }

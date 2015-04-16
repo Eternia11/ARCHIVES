@@ -10,9 +10,9 @@ import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
 class Main {
-	private static String m_csvFile = "toy_case.csv";
-	private static String m_delegateGraphFileName = "delegate.graphml";
-	private static String m_informGraphFileName = "inform.graphml";
+	private static String m_csvFile = "resources\\toy_case.csv";
+	private static String m_delegateGraphFileName = "gen\\delegate.graphml";
+	private static String m_informGraphFileName = "gen\\inform.graphml";
 	private static SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> m_delegateGraph = null;
 	private static SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> m_informGraph = null;
 	private static List<List<String>> m_clusters = null;
@@ -41,5 +41,6 @@ class Main {
 		algo.runAlphaMiner(2, false);
 		long endTime = System.nanoTime();
 		System.out.println("Took "+(endTime - startTime)/1000000 + " ms");
+		algo.findWorkflow();
 	}
 }

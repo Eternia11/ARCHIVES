@@ -13,7 +13,7 @@ import archives.petrinet.*;
 
 public class AlphaMiner {
 	private PetriNet m_net = null;
-	private String m_netFile = "petri.pnml";
+	private String m_netFile = "gen\\petri.pnml";
 
 	public AlphaMiner() {
 		m_net = new PetriNet("net0", "AlphaNetARCHIVES");
