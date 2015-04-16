@@ -148,7 +148,9 @@ public class AlphaMiner {
 
 	// run the Alpha Algorithm following the method given in the wiki page :
 	// http://en.wikipedia.org/wiki/Alpha_algorithm
-	public void run(List<Trace> logs) {
+	// loops : enable or disable the add of loops of size 0 and 1
+	// merge_type : 0 : generalization, 1 : specialization, 2 : average
+	public void run(List<Trace> logs, int merge_type, boolean loops) {
 		ArrayList<String> T = new ArrayList<String>(); // list of the
 														// transitions of the
 														// petri net
@@ -229,63 +231,72 @@ public class AlphaMiner {
 				}
 			}
 
-			// -1 represents <-; 0 represents #; 1 represents ->; 2 represents
-			// ||
-			// transform the > relations into ->, # and || relations
-			for (int i = 0; i < T.size(); i++) {
-				for (int j = 0; j < T.size(); j++) {
-					if (i != j) { // in order to preserve loops of size 0, the
-									// diagonal must remain unchanged (0 or 1)
-						if ((X_temp[i][j] == 1) && (X_temp[j][i] == 1)) {
-							X_temp[i][j] = 2;
-							X_temp[j][i] = 2;
-						}
-						if ((X_temp[i][j] == 1) && (X_temp[j][i] == 0)) {
-							X_temp[i][j] = 1;
-							X_temp[j][i] = -1;
-						}
-						if ((X_temp[i][j] == 0) && (X_temp[j][i] == 1)) {
-							X_temp[i][j] = -1;
-							X_temp[j][i] = 1;
-						}
-					}
-				}
-			}
-
 			X.add(X_temp);
 		}
 
 		Integer Xw[][] = new Integer[T.size()][T.size()];
 		Integer loop0[] = new Integer[T.size()];
-
-		// TODO please choose the way matrices will be merged into > relations,
-		// "parameter" of this alpha algorithm
-		// this way is a total generalization
 		for (int i = 0; i < T.size(); i++) {
 			loop0[i] = 0;
-			for (int j = 0; j < T.size(); j++) {
-				Xw[i][j] = 0;
-				for (int c = 0; c < new_log.size(); c++) {
-					if (X.get(c)[i][j] == 1) {
-						Xw[i][j] = 1;
+		}
+
+		// "parameter" of this alpha algorithm : the way matrices will be merged into > relations
+		switch (merge_type) {
+		case 0 :
+			// this way is a total generalization
+			for (int i = 0; i < T.size(); i++) {
+				for (int j = 0; j < T.size(); j++) {
+					Xw[i][j] = 0;
+					for (int c = 0; c < new_log.size(); c++) {
+						if (X.get(c)[i][j] == 1) {
+							Xw[i][j] = 1;
+						}
+						// preserve parallelism
+						if (X.get(c)[i][j] == 2) {
+							Xw[i][j] = 1;
+							Xw[j][i] = 1;
+						}
 					}
-					// preserve parallelism
-					if (X.get(c)[i][j] == 2) {
+				}
+			}
+		case 1 :
+			// this way is a total specialization
+			for (int i = 0; i < T.size(); i++) {
+				for (int j = 0; j < T.size(); j++) {
+					Xw[i][j] = 0;
+					boolean same = true;
+					Integer previous = X.get(0)[i][j];
+					for (int c = 0; same && c < new_log.size(); c++) {
+						if (X.get(c)[i][j] != previous) {
+							same = false;
+						}
+					}
+					if (same) {
+						Xw[i][j] = previous;
+					}
+				}
+			}
+		default :
+			// this way is an average of presence of succession of actions in the different cases
+			for (int i = 0; i < T.size(); i++) {
+				for (int j = 0; j < T.size(); j++) {
+					int avg[] = {0, 0, 0};
+					
+					for (int c = 0; c < new_log.size(); c++) {
+						avg[X.get(c)[i][j]]++;
+					}
+					
+					if ((avg[1] > avg[0]) && (avg[1] > avg[2])) {
 						Xw[i][j] = 1;
-						Xw[j][i] = 1;
+					} else if ((avg[2] > avg[1]) && (avg[2] > avg[1])) {
+						Xw[i][j] = 2;
+					} else {
+						Xw[i][j] = 0;
 					}
 				}
 			}
 		}
-		// this way is a total specialization
-		/*
-		 * for (int i = 0; i < T.size(); i++) { loop0[i] = 0; for (int j = 0; j
-		 * < T.size(); j++) { Xw[i][j] = 0; boolean same = true; Integer
-		 * previous = X.get(0)[i][j]; for (int c = 0; same && c <
-		 * new_log.size(); c++) { if (X.get(c)[i][j] != previous) { same =
-		 * false; } } if (same) { Xw[i][j] = previous; } } }
-		 */
-
+		
 		// transform the > relations into ->, # and || relations
 		for (int i = 0; i < T.size(); i++) {
 			for (int j = 0; j < T.size(); j++) {
@@ -366,45 +377,47 @@ public class AlphaMiner {
 		}
 
 		// construction of loops
-		// loops of size 0
-		for (int i = 0; i < T.size(); i++) {
-			if (loop0[i] == 1) {
-				m_net.addPlace("loop0_" + i, "loop0_" + i, 0);
-				m_net.addArc("in_loop0_" + i, T.get(i), "loop0_" + i);
-				m_net.addArc("out_loop0_" + i, "loop0_" + i, T.get(i));
+		if (loops) {
+			// loops of size 0
+			for (int i = 0; i < T.size(); i++) {
+				if (loop0[i] == 1) {
+					m_net.addPlace("loop0_" + i, "loop0_" + i, 0);
+					m_net.addArc("in_loop0_" + i, T.get(i), "loop0_" + i);
+					m_net.addArc("out_loop0_" + i, "loop0_" + i, T.get(i));
+				}
 			}
-		}
-
-		// loops of size 1
-		for (ArrayList<ArrayList<Trace>> case_first : new_log) {
-			for (int i = 0; i < case_first.size(); i++) {
-				if (i + 2 < case_first.size()) {
-					for (int j1 = 0; j1 < case_first.get(i).size(); j1++) {
-						int a1 = T.indexOf(case_first.get(i).get(j1)
-								.getActivity());
-						if (isIn(case_first.get(i + 2), T.get(a1))) {
-							for (int j2 = 0; j2 < case_first.get(i + 1).size(); j2++) {
-								int a2 = T.indexOf(case_first.get(i + 1)
-										.get(j2).getActivity());
-								// loop between T.get(a1) and T.get(a2)
-								m_net.addPlace("loop1_p1_" + a1 + "-" + a2,
-										"loop1_p1_" + a1 + "-" + a2, 0);
-								m_net.addPlace("loop1_p2_" + a1 + "-" + a2,
-										"loop1_p2_" + a1 + "-" + a2, 0);
-								m_net.addArc("loop1_a1_" + a1 + "-" + a2,
-										T.get(a1), "loop1_p1_" + a1 + "-" + a2);
-								m_net.addArc("loop1_a2_" + a1 + "-" + a2,
-										"loop1_p1_" + a1 + "-" + a2, T.get(a2));
-								m_net.addArc("loop1_a3_" + a1 + "-" + a2,
-										T.get(a2), "loop1_p2_" + a1 + "-" + a2);
-								m_net.addArc("loop1_a4_" + a1 + "-" + a2,
-										"loop1_p2_" + a1 + "-" + a2, T.get(a1));
+	
+			// loops of size 1
+			for (ArrayList<ArrayList<Trace>> case_first : new_log) {
+				for (int i = 0; i < case_first.size(); i++) {
+					if (i + 2 < case_first.size()) {
+						for (int j1 = 0; j1 < case_first.get(i).size(); j1++) {
+							int a1 = T.indexOf(case_first.get(i).get(j1)
+									.getActivity());
+							if (isIn(case_first.get(i + 2), T.get(a1))) {
+								for (int j2 = 0; j2 < case_first.get(i + 1).size(); j2++) {
+									int a2 = T.indexOf(case_first.get(i + 1)
+											.get(j2).getActivity());
+									// loop between T.get(a1) and T.get(a2)
+									m_net.addPlace("loop1_p1_" + a1 + "-" + a2,
+											"loop1_p1_" + a1 + "-" + a2, 0);
+									m_net.addPlace("loop1_p2_" + a1 + "-" + a2,
+											"loop1_p2_" + a1 + "-" + a2, 0);
+									m_net.addArc("loop1_a1_" + a1 + "-" + a2,
+											T.get(a1), "loop1_p1_" + a1 + "-" + a2);
+									m_net.addArc("loop1_a2_" + a1 + "-" + a2,
+											"loop1_p1_" + a1 + "-" + a2, T.get(a2));
+									m_net.addArc("loop1_a3_" + a1 + "-" + a2,
+											T.get(a2), "loop1_p2_" + a1 + "-" + a2);
+									m_net.addArc("loop1_a4_" + a1 + "-" + a2,
+											"loop1_p2_" + a1 + "-" + a2, T.get(a1));
+								}
 							}
 						}
 					}
 				}
 			}
-		}
+		} // end loops
 
 		// construction of alpha(W)
 

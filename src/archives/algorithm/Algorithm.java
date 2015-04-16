@@ -332,8 +332,10 @@ public class Algorithm {
 		return IE_rules;
 	}
 	
-	public void runAlphaMiner() {
+	// loops : enable or disable the add of loops of size 0 and 1
+	// merge_type : 0 : generalization, 1 : specialization, 2 : average
+	public void runAlphaMiner(int merge_type, boolean loops) {
 		AlphaMiner alpha = new AlphaMiner();
-		alpha.run(m_traces);
+		alpha.run(m_traces, merge_type, loops);
 	}
 }

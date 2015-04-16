@@ -38,7 +38,7 @@ class Main {
 //		for (int i = 0; i < m_IE_rules.size(); i++)
 //			System.out.println(m_IE_rules.get(i));
 		long startTime = System.nanoTime();
-		algo.runAlphaMiner();
+		algo.runAlphaMiner(2, false);
 		long endTime = System.nanoTime();
 		System.out.println("Took "+(endTime - startTime)/1000000 + " ms");
 	}
