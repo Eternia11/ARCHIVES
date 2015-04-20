@@ -75,15 +75,25 @@ public class Workflow {
 				+ m_id
 				+ "\" Name=\""
 				+ m_name
-				+ "\" xsi:schemaLocation=\"http://www.wfmc.org/2008/XPDL2.1 http://www.wfmc.org/standards/docs/bpmnxpdl_31.xsd\">\n\t<xpdl:Pools>";
-		for (Pool pool : m_pools) {
-			ret += "\n" + pool.toXPDL();
+				+ "\" xsi:schemaLocation=\"http://www.wfmc.org/2008/XPDL2.1 http://www.wfmc.org/standards/docs/bpmnxpdl_31.xsd\">";
+		if (!m_pools.isEmpty()) {
+			ret += "\n\t<xpdl:Pools>";
+			for (Pool pool : m_pools) {
+				ret += "\n" + pool.toXPDL();
+			}
+			ret += "\n\t</xpdl:Pools";
 		}
-		ret += "\n\t</xpdl:Pools>\n\t<xpdl:WorkflowProcesses>";
-		for (Process process : m_processes) {
-			ret += "\n" + process.toXPDL();
+
+		if (!m_processes.isEmpty()) {
+			ret += "\n\t<xpdl:WorkflowProcesses>";
+			for (Process process : m_processes) {
+				ret += "\n" + process.toXPDL();
+			}
+			ret += "\n\t</xpdl:WorkflowProcesses>";
 		}
-		ret += "\n\t</xpdl:WorkflowProcesses>\n</xpdl:Package>";
+
+		ret += "\n</xpdl:Package>";
+
 		return ret;
 	}
 }

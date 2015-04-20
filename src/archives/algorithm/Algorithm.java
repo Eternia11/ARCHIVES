@@ -6,6 +6,9 @@ import archives.alphaminer.AlphaMiner;
 import archives.log.Trace;
 import archives.petrinet.PetriNet;
 import archives.workflow.Activity;
+import archives.workflow.ActivityEndLane;
+import archives.workflow.ActivityLane;
+import archives.workflow.ActivityStartLane;
 import archives.workflow.Flow;
 import archives.workflow.Lane;
 import archives.workflow.Pool;
@@ -375,16 +378,16 @@ public class Algorithm {
 			}
 			
 			if (!resource_activities.isEmpty()) {
-				wf.get_process(0).addActivity(new Activity(1, tested_resource+"_start_", tested_resource));
-				wf.get_process(0).addActivity(new Activity(tested_resource+"-"+resource_activities.get(0), resource_activities.get(0), tested_resource));
+				wf.get_process(0).addActivity(new ActivityStartLane(tested_resource+"_start_", tested_resource));
+				wf.get_process(0).addActivity(new ActivityLane(tested_resource+"-"+resource_activities.get(0), resource_activities.get(0), tested_resource));
 				wf.get_process(0).addFlow(new Flow (tested_resource+"_start_", tested_resource+"-"+resource_activities.get(0)));
 				for (int i = 0; i < resource_activities.size() - 1; i++) {
-					wf.get_process(0).addActivity(new Activity(tested_resource+"-"+resource_activities.get(i+1), resource_activities.get(i + 1), tested_resource));
+					wf.get_process(0).addActivity(new ActivityLane(tested_resource+"-"+resource_activities.get(i+1), resource_activities.get(i + 1), tested_resource));
 					String a1 = resource_activities.get(i);
 					String a2 = resource_activities.get(i+1);
 					wf.get_process(0).addFlow(new Flow(tested_resource+"-"+a1, tested_resource+"-"+a2));
 				}
-				wf.get_process(0).addActivity(new Activity(2, tested_resource+"_end_", tested_resource));
+				wf.get_process(0).addActivity(new ActivityEndLane(tested_resource+"_end_", tested_resource));
 				wf.get_process(0).addFlow(new Flow (tested_resource+"-"+resource_activities.get(resource_activities.size() - 1), tested_resource+"_end_"));
 			}
 		}
@@ -397,8 +400,8 @@ public class Algorithm {
 				wf.get_pool(0).addLane(new Lane(t.getSender()));
 				wf.get_pool(0).addLane(new Lane(t.getReceiver()));
 				
-				wf.get_process(0).addActivity(new Activity(t.getSender()+"_"+t.getActivity(), t.getActivity(), t.getSender()));
-				wf.get_process(0).addActivity(new Activity(t.getReceiver()+"_"+t.getActivity(), t.getActivity(), t.getReceiver()));
+				wf.get_process(0).addActivity(new ActivityLane(t.getSender()+"_"+t.getActivity(), t.getActivity(), t.getSender()));
+				wf.get_process(0).addActivity(new ActivityLane(t.getReceiver()+"_"+t.getActivity(), t.getActivity(), t.getReceiver()));
 				
 				wf.get_process(0).addFlow(new Flow(t.getSender()+"_"+t.getActivity(), t.getReceiver()+"_"+t.getActivity()));
 			}
@@ -413,7 +416,7 @@ public class Algorithm {
 			if ((t.getSender().equals(actor)) || (t.getReceiver().equals(actor))) {
 				if (t.getReceiver().equals(m_system)) {
 					wf.get_pool(0).addLane(new Lane(t.getSender()));
-					wf.get_process(0).addActivity(new Activity(t.getSender()+"_"+t.getActivity(), t.getActivity(), t.getSender()));
+					wf.get_process(0).addActivity(new ActivityLane(t.getSender()+"_"+t.getActivity(), t.getActivity(), t.getSender()));
 					
 					if (!prev_act.equals("")) {
 						wf.get_process(0).addFlow(new Flow(prev_act, t.getSender()+"_"+t.getActivity()));
@@ -422,7 +425,7 @@ public class Algorithm {
 					
 				} else if (t.getSender().equals(m_system)) {
 					wf.get_pool(0).addLane(new Lane(t.getReceiver()));
-					wf.get_process(0).addActivity(new Activity(t.getReceiver()+"_"+t.getActivity(), t.getActivity(), t.getReceiver()));
+					wf.get_process(0).addActivity(new ActivityLane(t.getReceiver()+"_"+t.getActivity(), t.getActivity(), t.getReceiver()));
 					
 					if (!prev_act.equals("")) {
 						wf.get_process(0).addFlow(new Flow(prev_act, t.getReceiver()+"_"+t.getActivity()));
@@ -432,8 +435,8 @@ public class Algorithm {
 					wf.get_pool(0).addLane(new Lane(t.getSender()));
 					wf.get_pool(0).addLane(new Lane(t.getReceiver()));
 					
-					wf.get_process(0).addActivity(new Activity(t.getSender()+"_"+t.getActivity(), t.getActivity(), t.getSender()));
-					wf.get_process(0).addActivity(new Activity(t.getReceiver()+"_"+t.getActivity(), t.getActivity(), t.getReceiver()));
+					wf.get_process(0).addActivity(new ActivityLane(t.getSender()+"_"+t.getActivity(), t.getActivity(), t.getSender()));
+					wf.get_process(0).addActivity(new ActivityLane(t.getReceiver()+"_"+t.getActivity(), t.getActivity(), t.getReceiver()));
 					
 					wf.get_process(0).addFlow(new Flow(t.getSender()+"_"+t.getActivity(), t.getReceiver()+"_"+t.getActivity()));
 					
@@ -456,13 +459,13 @@ public class Algorithm {
 			}
 			
 			if (!resource_activities.isEmpty()) {
-				wf.get_process(r).addActivity(new Activity(tested_resource+"-"+resource_activities.get(0), resource_activities.get(0), tested_resource));
+				wf.get_process(r).addActivity(new ActivityLane(tested_resource+"-"+resource_activities.get(0), resource_activities.get(0), tested_resource));
 				wf.get_process(r).connectToStart(tested_resource+"-"+resource_activities.get(0));
 				for (int i = 0; i < resource_activities.size() - 1; i++) {
-					wf.get_process(r).addActivity(new Activity(tested_resource+"-"+resource_activities.get(i+1), resource_activities.get(i + 1), tested_resource));
+					wf.get_process(r).addActivity(new ActivityLane(tested_resource+"-"+resource_activities.get(i+1), resource_activities.get(i + 1), tested_resource));
 					String a1 = resource_activities.get(i);
 					String a2 = resource_activities.get(i+1);
-					wf.get_processes(r).addFlow(new Flow(tested_resource+"-"+a1 + "-" + tested_resource+"-"+a2, tested_resource+"-"+a1, tested_resource+"-"+a2));
+					wf.get_process(r).addFlow(new Flow(tested_resource+"-"+a1 + "-" + tested_resource+"-"+a2, tested_resource+"-"+a1, tested_resource+"-"+a2));
 				}
 				wf.get_process(r).connectToEnd(tested_resource+"-"+resource_activities.get(resource_activities.size() - 1));
 			}

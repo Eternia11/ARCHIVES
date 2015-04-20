@@ -1,7 +1,592 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xpdl:Package xmlns:xpdl="http://www.wfmc.org/2008/XPDL2.1" xmlns="http://www.wfmc.org/2008/XPDL2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="wf_test" Name="wf_test" xsi:schemaLocation="http://www.wfmc.org/2008/XPDL2.1 http://www.wfmc.org/standards/docs/bpmnxpdl_31.xsd">
 	<xpdl:Pools>
-	</xpdl:Pools>
+		<xpdl:Pool Id="po_archives" Name="po_archives" Process="pr_archives">
+			<xpdl:Lanes>
+				<xpdl:Lane Id="THGL" Name="THGL"/>
+				<xpdl:Lane Id="RFBN" Name="RFBN"/>
+				<xpdl:Lane Id="TDBN" Name="TDBN"/>
+				<xpdl:Lane Id="TTaGL" Name="TTaGL"/>
+				<xpdl:Lane Id="LyCL" Name="LyCL"/>
+				<xpdl:Lane Id="System" Name="System"/>
+				<xpdl:Lane Id="TLGT" Name="TLGT"/>
+				<xpdl:Lane Id="TLDT" Name="TLDT"/>
+				<xpdl:Lane Id="ATTP" Name="ATTP"/>
+				<xpdl:Lane Id="coolies" Name="coolies"/>
+				<xpdl:Lane Id="TLCL" Name="TLCL"/>
+				<xpdl:Lane Id="TLDD" Name="TLDD"/>
+				<xpdl:Lane Id="LyLD" Name="LyLD"/>
+				<xpdl:Lane Id="NoAM" Name="NoAM"/>
+				<xpdl:Lane Id="ACGL" Name="ACGL"/>
+				<xpdl:Lane Id="LyGT" Name="LyGT"/>
+				<xpdl:Lane Id="LyDT" Name="LyDT"/>
+				<xpdl:Lane Id="LyDD" Name="LyDD"/>
+				<xpdl:Lane Id="AC" Name="AC"/>
+				<xpdl:Lane Id="machin" Name="machin"/>
+			</xpdl:Lanes>
+		</xpdl:Pool>
+	</xpdl:Pools
 	<xpdl:WorkflowProcesses>
+		<xpdl:WorkflowProcess Id="pr_archives" Name="pr_archives">
+			<xpdl:Activities>
+			<xpdl:Activities>
+				<xpdl:Activity Id="THGL_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="THGL-debordement" Name="debordement">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="THGL-construire diguette" Name="construire diguette">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="THGL-surveiller" Name="surveiller">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="THGL-rencontre" Name="rencontre">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="THGL-verifier digue" Name="verifier digue">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="THGL-reparer digue" Name="reparer digue">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="THGL_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="RFBN_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="RFBN-construire diguette" Name="construire diguette">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="RFBN-rencontre" Name="rencontre">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="RFBN-surveiller" Name="surveiller">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="RFBN-renouveler ordres" Name="renouveler ordres">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="RFBN_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL-construire diguette" Name="construire diguette">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL-mobiliser coolies" Name="mobiliser coolies">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL-demande de materiel" Name="demande de materiel">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL-verifier digue" Name="verifier digue">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL-surveiller" Name="surveiller">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL-envoyer police" Name="envoyer police">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL-renouveler ordres" Name="renouveler ordres">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="LyCL_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="LyCL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="LyCL-construire diguette" Name="construire diguette">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="LyCL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="LyCL-surveiller" Name="surveiller">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="LyCL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="LyCL_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="LyCL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="System_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="System"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="System-eau monte" Name="eau monte">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="System"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="System-ordres non respectes" Name="ordres non respectes">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="System"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="System_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="System"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLGT_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLGT"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLGT-construire diguette" Name="construire diguette">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLGT"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLGT_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLGT"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLDT_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLDT"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLDT-mobiliser coolies" Name="mobiliser coolies">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLDT"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLDT-construire diguette" Name="construire diguette">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLDT"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLDT_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLDT"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="ATTP_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="ATTP"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="ATTP-mobiliser coolies" Name="mobiliser coolies">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="ATTP"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="ATTP_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="ATTP"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="coolies_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="coolies"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="coolies-elever digue" Name="elever digue">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="coolies"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="coolies_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="coolies"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLCL_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLCL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLCL-construire diguette" Name="construire diguette">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLCL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLCL_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLCL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLDD_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLDD"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLDD-construire diguette" Name="construire diguette">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLDD"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLDD_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLDD"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="LyLD_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="LyLD"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="LyLD-construire diguette" Name="construire diguette">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="LyLD"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="LyLD_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="LyLD"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="NoAM_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="NoAM"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="NoAM-mobiliser coolies" Name="mobiliser coolies">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="NoAM"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="NoAM_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="NoAM"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="ACGL_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="ACGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="ACGL-envoyer police" Name="envoyer police">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="ACGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="ACGL_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="ACGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="AC_start_">
+					<xpdl:Event>
+						<xpdl:StartEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="AC"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="AC-mobiliser coolies" Name="mobiliser coolies">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="AC"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="AC_end_">
+					<xpdl:Event>
+						<xpdl:EndEvent/>
+					</xpdl:Event>
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="AC"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL_construire diguette" Name="construire diguette">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="LyCL_construire diguette" Name="construire diguette">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="LyCL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLGT_construire diguette" Name="construire diguette">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLGT"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL_mobiliser coolies" Name="mobiliser coolies">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TLDT_mobiliser coolies" Name="mobiliser coolies">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TLDT"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL_demande de materiel" Name="demande de materiel">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="THGL_demande de materiel" Name="demande de materiel">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="THGL_verifier digue" Name="verifier digue">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL_verifier digue" Name="verifier digue">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="LyLD_construire diguette" Name="construire diguette">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="LyLD"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL_surveiller" Name="surveiller">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="NoAM_mobiliser coolies" Name="mobiliser coolies">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="NoAM"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL_envoyer police" Name="envoyer police">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="ACGL_envoyer police" Name="envoyer police">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="ACGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="RFBN_renouveler ordres" Name="renouveler ordres">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="TTaGL_renouveler ordres" Name="renouveler ordres">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+				<xpdl:Activity Id="machin_renouveler ordres" Name="renouveler ordres">
+					<xpdl:NodeGraphicsInfos>
+						<xpdl:NodeGraphicsInfo LaneId="machin"/>
+					</xpdl:NodeGraphicsInfos>
+				</xpdl:Activity>
+			</xpdl:Activities>
+			<xpdl:Transitions>
+				<xpdl:Transition From="THGL_start_" Id="THGL_start_---THGL-debordement" To="THGL-debordement"/>
+				<xpdl:Transition From="THGL-debordement" Id="THGL-debordement---THGL-debordement" To="THGL-debordement"/>
+				<xpdl:Transition From="THGL-debordement" Id="THGL-debordement---THGL-construire diguette" To="THGL-construire diguette"/>
+				<xpdl:Transition From="THGL-construire diguette" Id="THGL-construire diguette---THGL-construire diguette" To="THGL-construire diguette"/>
+				<xpdl:Transition From="THGL-construire diguette" Id="THGL-construire diguette---THGL-surveiller" To="THGL-surveiller"/>
+				<xpdl:Transition From="THGL-surveiller" Id="THGL-surveiller---THGL-surveiller" To="THGL-surveiller"/>
+				<xpdl:Transition From="THGL-surveiller" Id="THGL-surveiller---THGL-rencontre" To="THGL-rencontre"/>
+				<xpdl:Transition From="THGL-rencontre" Id="THGL-rencontre---THGL-verifier digue" To="THGL-verifier digue"/>
+				<xpdl:Transition From="THGL-verifier digue" Id="THGL-verifier digue---THGL-reparer digue" To="THGL-reparer digue"/>
+				<xpdl:Transition From="THGL-reparer digue" Id="THGL-reparer digue---THGL_end_" To="THGL_end_"/>
+				<xpdl:Transition From="RFBN_start_" Id="RFBN_start_---RFBN-construire diguette" To="RFBN-construire diguette"/>
+				<xpdl:Transition From="RFBN-construire diguette" Id="RFBN-construire diguette---RFBN-rencontre" To="RFBN-rencontre"/>
+				<xpdl:Transition From="RFBN-rencontre" Id="RFBN-rencontre---RFBN-surveiller" To="RFBN-surveiller"/>
+				<xpdl:Transition From="RFBN-surveiller" Id="RFBN-surveiller---RFBN-surveiller" To="RFBN-surveiller"/>
+				<xpdl:Transition From="RFBN-surveiller" Id="RFBN-surveiller---RFBN-renouveler ordres" To="RFBN-renouveler ordres"/>
+				<xpdl:Transition From="RFBN-renouveler ordres" Id="RFBN-renouveler ordres---RFBN_end_" To="RFBN_end_"/>
+				<xpdl:Transition From="TTaGL_start_" Id="TTaGL_start_---TTaGL-construire diguette" To="TTaGL-construire diguette"/>
+				<xpdl:Transition From="TTaGL-construire diguette" Id="TTaGL-construire diguette---TTaGL-construire diguette" To="TTaGL-construire diguette"/>
+				<xpdl:Transition From="TTaGL-construire diguette" Id="TTaGL-construire diguette---TTaGL-mobiliser coolies" To="TTaGL-mobiliser coolies"/>
+				<xpdl:Transition From="TTaGL-mobiliser coolies" Id="TTaGL-mobiliser coolies---TTaGL-demande de materiel" To="TTaGL-demande de materiel"/>
+				<xpdl:Transition From="TTaGL-demande de materiel" Id="TTaGL-demande de materiel---TTaGL-verifier digue" To="TTaGL-verifier digue"/>
+				<xpdl:Transition From="TTaGL-verifier digue" Id="TTaGL-verifier digue---TTaGL-construire diguette" To="TTaGL-construire diguette"/>
+				<xpdl:Transition From="TTaGL-construire diguette" Id="TTaGL-construire diguette---TTaGL-surveiller" To="TTaGL-surveiller"/>
+				<xpdl:Transition From="TTaGL-surveiller" Id="TTaGL-surveiller---TTaGL-mobiliser coolies" To="TTaGL-mobiliser coolies"/>
+				<xpdl:Transition From="TTaGL-mobiliser coolies" Id="TTaGL-mobiliser coolies---TTaGL-envoyer police" To="TTaGL-envoyer police"/>
+				<xpdl:Transition From="TTaGL-envoyer police" Id="TTaGL-envoyer police---TTaGL-renouveler ordres" To="TTaGL-renouveler ordres"/>
+				<xpdl:Transition From="TTaGL-renouveler ordres" Id="TTaGL-renouveler ordres---TTaGL_end_" To="TTaGL_end_"/>
+				<xpdl:Transition From="LyCL_start_" Id="LyCL_start_---LyCL-construire diguette" To="LyCL-construire diguette"/>
+				<xpdl:Transition From="LyCL-construire diguette" Id="LyCL-construire diguette---LyCL-surveiller" To="LyCL-surveiller"/>
+				<xpdl:Transition From="LyCL-surveiller" Id="LyCL-surveiller---LyCL_end_" To="LyCL_end_"/>
+				<xpdl:Transition From="System_start_" Id="System_start_---System-eau monte" To="System-eau monte"/>
+				<xpdl:Transition From="System-eau monte" Id="System-eau monte---System-ordres non respectes" To="System-ordres non respectes"/>
+				<xpdl:Transition From="System-ordres non respectes" Id="System-ordres non respectes---System_end_" To="System_end_"/>
+				<xpdl:Transition From="TLGT_start_" Id="TLGT_start_---TLGT-construire diguette" To="TLGT-construire diguette"/>
+				<xpdl:Transition From="TLGT-construire diguette" Id="TLGT-construire diguette---TLGT-construire diguette" To="TLGT-construire diguette"/>
+				<xpdl:Transition From="TLGT-construire diguette" Id="TLGT-construire diguette---TLGT_end_" To="TLGT_end_"/>
+				<xpdl:Transition From="TLDT_start_" Id="TLDT_start_---TLDT-mobiliser coolies" To="TLDT-mobiliser coolies"/>
+				<xpdl:Transition From="TLDT-mobiliser coolies" Id="TLDT-mobiliser coolies---TLDT-construire diguette" To="TLDT-construire diguette"/>
+				<xpdl:Transition From="TLDT-construire diguette" Id="TLDT-construire diguette---TLDT_end_" To="TLDT_end_"/>
+				<xpdl:Transition From="ATTP_start_" Id="ATTP_start_---ATTP-mobiliser coolies" To="ATTP-mobiliser coolies"/>
+				<xpdl:Transition From="ATTP-mobiliser coolies" Id="ATTP-mobiliser coolies---ATTP_end_" To="ATTP_end_"/>
+				<xpdl:Transition From="coolies_start_" Id="coolies_start_---coolies-elever digue" To="coolies-elever digue"/>
+				<xpdl:Transition From="coolies-elever digue" Id="coolies-elever digue---coolies_end_" To="coolies_end_"/>
+				<xpdl:Transition From="TLCL_start_" Id="TLCL_start_---TLCL-construire diguette" To="TLCL-construire diguette"/>
+				<xpdl:Transition From="TLCL-construire diguette" Id="TLCL-construire diguette---TLCL_end_" To="TLCL_end_"/>
+				<xpdl:Transition From="TLDD_start_" Id="TLDD_start_---TLDD-construire diguette" To="TLDD-construire diguette"/>
+				<xpdl:Transition From="TLDD-construire diguette" Id="TLDD-construire diguette---TLDD_end_" To="TLDD_end_"/>
+				<xpdl:Transition From="LyLD_start_" Id="LyLD_start_---LyLD-construire diguette" To="LyLD-construire diguette"/>
+				<xpdl:Transition From="LyLD-construire diguette" Id="LyLD-construire diguette---LyLD_end_" To="LyLD_end_"/>
+				<xpdl:Transition From="NoAM_start_" Id="NoAM_start_---NoAM-mobiliser coolies" To="NoAM-mobiliser coolies"/>
+				<xpdl:Transition From="NoAM-mobiliser coolies" Id="NoAM-mobiliser coolies---NoAM_end_" To="NoAM_end_"/>
+				<xpdl:Transition From="ACGL_start_" Id="ACGL_start_---ACGL-envoyer police" To="ACGL-envoyer police"/>
+				<xpdl:Transition From="ACGL-envoyer police" Id="ACGL-envoyer police---ACGL_end_" To="ACGL_end_"/>
+				<xpdl:Transition From="AC_start_" Id="AC_start_---AC-mobiliser coolies" To="AC-mobiliser coolies"/>
+				<xpdl:Transition From="AC-mobiliser coolies" Id="AC-mobiliser coolies---AC-mobiliser coolies" To="AC-mobiliser coolies"/>
+				<xpdl:Transition From="AC-mobiliser coolies" Id="AC-mobiliser coolies---AC_end_" To="AC_end_"/>
+				<xpdl:Transition From="TTaGL_construire diguette" Id="TTaGL_construire diguette---LyCL_construire diguette" To="LyCL_construire diguette"/>
+				<xpdl:Transition From="TTaGL_construire diguette" Id="TTaGL_construire diguette---TLGT_construire diguette" To="TLGT_construire diguette"/>
+				<xpdl:Transition From="TTaGL_mobiliser coolies" Id="TTaGL_mobiliser coolies---TLDT_mobiliser coolies" To="TLDT_mobiliser coolies"/>
+				<xpdl:Transition From="TTaGL_demande de materiel" Id="TTaGL_demande de materiel---THGL_demande de materiel" To="THGL_demande de materiel"/>
+				<xpdl:Transition From="THGL_verifier digue" Id="THGL_verifier digue---TTaGL_verifier digue" To="TTaGL_verifier digue"/>
+				<xpdl:Transition From="TTaGL_verifier digue" Id="TTaGL_verifier digue---TTaGL_verifier digue" To="TTaGL_verifier digue"/>
+				<xpdl:Transition From="TTaGL_construire diguette" Id="TTaGL_construire diguette---LyLD_construire diguette" To="LyLD_construire diguette"/>
+				<xpdl:Transition From="TTaGL_construire diguette" Id="TTaGL_construire diguette---TTaGL_surveiller" To="TTaGL_surveiller"/>
+				<xpdl:Transition From="TTaGL_mobiliser coolies" Id="TTaGL_mobiliser coolies---NoAM_mobiliser coolies" To="NoAM_mobiliser coolies"/>
+				<xpdl:Transition From="NoAM_mobiliser coolies" Id="NoAM_mobiliser coolies---TTaGL_mobiliser coolies" To="TTaGL_mobiliser coolies"/>
+				<xpdl:Transition From="TTaGL_envoyer police" Id="TTaGL_envoyer police---ACGL_envoyer police" To="ACGL_envoyer police"/>
+				<xpdl:Transition From="RFBN_renouveler ordres" Id="RFBN_renouveler ordres---TTaGL_renouveler ordres" To="TTaGL_renouveler ordres"/>
+				<xpdl:Transition From="TTaGL_renouveler ordres" Id="TTaGL_renouveler ordres---machin_renouveler ordres" To="machin_renouveler ordres"/>
+			</xpdl:Transitions>
+		</xpdl:WorkflowProcess>
 	</xpdl:WorkflowProcesses>
 </xpdl:Package>
