@@ -7,6 +7,8 @@ public class Process {
 	private String m_name = "";
 	private ArrayList<Activity> m_activities = null;
 	private ArrayList<Flow> m_flows = null;
+	private String m_start = "_start_";
+	private String m_end = "_end_";
 
 	public Process() {
 		m_activities = new ArrayList<Activity>();
@@ -72,18 +74,26 @@ public class Process {
 		if (!containsFlow(flow))
 			m_flows.add(flow);
 	}
+	
+	public void connectToStart(String activity_id) {
+		addFlow(new Flow(m_start + m_id + "-" + activity_id, m_start + m_id, activity_id));
+	}
+	
+	public void connectToEnd(String activity_id) {
+		addFlow(new Flow(m_end + m_id + "-" + activity_id, activity_id, m_end + m_id));
+	}
 
 	public String toXPDL() {
 		String ret = "\t\t<xpdl:WorkflowProcess Id=\"" + m_id + "\" Name=\""
 				+ m_name + "\">\n\t\t\t<xpdl:Activities>";
-		// start event
-		ret += "\t\t\t\t<xpdl:Activity Id=\"_start_"
-				+ m_id
-				+ "\">\n\t\t\t\t\t<xpdl:Event>\n\t\t\t\t\t\t<xpdl:StartEvent/>\n\t\t\t\t\t</xpdl:Event>";
+		/*// start event
+		ret += "\n\t\t\t\t<xpdl:Activity Id=\""
+				+ m_start + m_id
+				+ "\">\n\t\t\t\t\t<xpdl:Event>\n\t\t\t\t\t\t<xpdl:StartEvent/>\n\t\t\t\t\t</xpdl:Event>\n\t\t\t\t</xpdl:Activity>";
 		// end event
-		ret += "\t\t\t\t<xpdl:Activity Id=\"_end_"
-				+ m_id
-				+ "\">\n\t\t\t\t\t<xpdl:Event>\n\t\t\t\t\t\t<xpdl:EndEvent/>\n\t\t\t\t\t</xpdl:Event>";
+		ret += "\n\t\t\t\t<xpdl:Activity Id=\""
+				+ m_end + m_id
+				+ "\">\n\t\t\t\t\t<xpdl:Event>\n\t\t\t\t\t\t<xpdl:EndEvent/>\n\t\t\t\t\t</xpdl:Event>\n\t\t\t\t</xpdl:Activity>";*/
 		for (Activity activity : m_activities) {
 			ret += "\n" + activity.toXPDL();
 		}

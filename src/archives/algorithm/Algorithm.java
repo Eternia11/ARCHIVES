@@ -5,6 +5,11 @@ package archives.algorithm;
 import archives.alphaminer.AlphaMiner;
 import archives.log.Trace;
 import archives.petrinet.PetriNet;
+import archives.workflow.Activity;
+import archives.workflow.Flow;
+import archives.workflow.Lane;
+import archives.workflow.Pool;
+import archives.workflow.Process;
 import archives.workflow.Workflow;
 
 import java.io.FileNotFoundException;
@@ -348,8 +353,120 @@ public class Algorithm {
 		Workflow wf = new Workflow("wf_test", "wf_test");
 		String WF_file = "gen\\workflow.xpdl";
 		
+		ArrayList<String> resources = new ArrayList<String>();
+		for (Trace t : m_traces) {
+			if (!resources.contains(t.getSender()))
+				resources.add(t.getSender());
+			if (!resources.contains(t.getReceiver()))
+				resources.add(t.getReceiver());
+		}
 		
+		// each resource is a lane and we fill them with the resource's activities
+		wf.addProcess(new Process("pr_archives", "pr_archives"));
+		wf.addPool(new Pool("po_archives", "po_archives", "pr_archives"));
+		for (int r = 0; r < resources.size(); r++) {
+			String tested_resource = resources.get(r);
+			wf.get_pool(0).addLane(new Lane(tested_resource, tested_resource));
+			ArrayList<String> resource_activities = new ArrayList<String>();
+			
+			for (Trace t : m_traces) {
+				if (tested_resource.equals(t.getSender()))
+					resource_activities.add(t.getActivity());
+			}
+			
+			if (!resource_activities.isEmpty()) {
+				wf.get_process(0).addActivity(new Activity(1, tested_resource+"_start_", tested_resource));
+				wf.get_process(0).addActivity(new Activity(tested_resource+"-"+resource_activities.get(0), resource_activities.get(0), tested_resource));
+				wf.get_process(0).addFlow(new Flow (tested_resource+"_start_", tested_resource+"-"+resource_activities.get(0)));
+				for (int i = 0; i < resource_activities.size() - 1; i++) {
+					wf.get_process(0).addActivity(new Activity(tested_resource+"-"+resource_activities.get(i+1), resource_activities.get(i + 1), tested_resource));
+					String a1 = resource_activities.get(i);
+					String a2 = resource_activities.get(i+1);
+					wf.get_process(0).addFlow(new Flow(tested_resource+"-"+a1, tested_resource+"-"+a2));
+				}
+				wf.get_process(0).addActivity(new Activity(2, tested_resource+"_end_", tested_resource));
+				wf.get_process(0).addFlow(new Flow (tested_resource+"-"+resource_activities.get(resource_activities.size() - 1), tested_resource+"_end_"));
+			}
+		}
 		
+		// interactions with everyone
+		/*wf.addProcess(new Process("pr_archives", "pr_archives"));
+		wf.addPool(new Pool("po_archives", "po_archives", "pr_archives"));
+		for (Trace t : m_traces) {
+			if (t.getPerformative().equals("delegate")) {
+				wf.get_pool(0).addLane(new Lane(t.getSender()));
+				wf.get_pool(0).addLane(new Lane(t.getReceiver()));
+				
+				wf.get_process(0).addActivity(new Activity(t.getSender()+"_"+t.getActivity(), t.getActivity(), t.getSender()));
+				wf.get_process(0).addActivity(new Activity(t.getReceiver()+"_"+t.getActivity(), t.getActivity(), t.getReceiver()));
+				
+				wf.get_process(0).addFlow(new Flow(t.getSender()+"_"+t.getActivity(), t.getReceiver()+"_"+t.getActivity()));
+			}
+		}*/
+		
+		// interaction for only one resource
+		String actor = "TTaGL";
+		wf.addProcess(new Process("pr_archives", "pr_archives"));
+		wf.addPool(new Pool("po_archives", "po_archives", "pr_archives"));
+		String prev_act = "";
+		for (Trace t : m_traces) {
+			if ((t.getSender().equals(actor)) || (t.getReceiver().equals(actor))) {
+				if (t.getReceiver().equals(m_system)) {
+					wf.get_pool(0).addLane(new Lane(t.getSender()));
+					wf.get_process(0).addActivity(new Activity(t.getSender()+"_"+t.getActivity(), t.getActivity(), t.getSender()));
+					
+					if (!prev_act.equals("")) {
+						wf.get_process(0).addFlow(new Flow(prev_act, t.getSender()+"_"+t.getActivity()));
+					}
+					prev_act = t.getSender()+"_"+t.getActivity();
+					
+				} else if (t.getSender().equals(m_system)) {
+					wf.get_pool(0).addLane(new Lane(t.getReceiver()));
+					wf.get_process(0).addActivity(new Activity(t.getReceiver()+"_"+t.getActivity(), t.getActivity(), t.getReceiver()));
+					
+					if (!prev_act.equals("")) {
+						wf.get_process(0).addFlow(new Flow(prev_act, t.getReceiver()+"_"+t.getActivity()));
+					}
+					prev_act = t.getReceiver()+"_"+t.getActivity();
+				} else {
+					wf.get_pool(0).addLane(new Lane(t.getSender()));
+					wf.get_pool(0).addLane(new Lane(t.getReceiver()));
+					
+					wf.get_process(0).addActivity(new Activity(t.getSender()+"_"+t.getActivity(), t.getActivity(), t.getSender()));
+					wf.get_process(0).addActivity(new Activity(t.getReceiver()+"_"+t.getActivity(), t.getActivity(), t.getReceiver()));
+					
+					wf.get_process(0).addFlow(new Flow(t.getSender()+"_"+t.getActivity(), t.getReceiver()+"_"+t.getActivity()));
+					
+					prev_act = actor+"_"+t.getActivity();
+				}
+			}
+		}
+		
+		// first resource (very test)
+		/*for (int r = 0; r < resources.size(); r++) {
+			String tested_resource = resources.get(r);
+			wf.addProcess(new Process("pr_"+tested_resource, "pr_"+tested_resource));
+			wf.addPool(new Pool("po_"+tested_resource, "po_"+tested_resource,"pr_"+tested_resource));
+			wf.get_pool(r).addLane(new Lane(tested_resource, tested_resource));
+			ArrayList<String> resource_activities = new ArrayList<String>();
+			
+			for (Trace t : m_traces) {
+				if (tested_resource.equals(t.getSender()))
+					resource_activities.add(t.getActivity());
+			}
+			
+			if (!resource_activities.isEmpty()) {
+				wf.get_process(r).addActivity(new Activity(tested_resource+"-"+resource_activities.get(0), resource_activities.get(0), tested_resource));
+				wf.get_process(r).connectToStart(tested_resource+"-"+resource_activities.get(0));
+				for (int i = 0; i < resource_activities.size() - 1; i++) {
+					wf.get_process(r).addActivity(new Activity(tested_resource+"-"+resource_activities.get(i+1), resource_activities.get(i + 1), tested_resource));
+					String a1 = resource_activities.get(i);
+					String a2 = resource_activities.get(i+1);
+					wf.get_processes(r).addFlow(new Flow(tested_resource+"-"+a1 + "-" + tested_resource+"-"+a2, tested_resource+"-"+a1, tested_resource+"-"+a2));
+				}
+				wf.get_process(r).connectToEnd(tested_resource+"-"+resource_activities.get(resource_activities.size() - 1));
+			}
+		}*/
 		
 		PrintWriter writer;
 		try {

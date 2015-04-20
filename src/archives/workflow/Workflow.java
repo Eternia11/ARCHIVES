@@ -40,7 +40,7 @@ public class Workflow {
 		return m_processes.size();
 	}
 
-	public Process get_processes(int index) {
+	public Process get_process(int index) {
 		return m_processes.get(index);
 	}
 

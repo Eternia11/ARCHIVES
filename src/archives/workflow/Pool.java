@@ -16,6 +16,7 @@ public class Pool {
 		m_id = id;
 		m_name = name;
 		m_process = process;
+		m_lanes = new ArrayList<Lane>();
 	}
 
 	public String get_id() {

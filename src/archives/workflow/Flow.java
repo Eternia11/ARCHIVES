@@ -7,6 +7,12 @@ public class Flow {
 
 	public Flow() {
 	}
+	
+	public Flow(String source, String target) {
+		m_id = source + "---" + target;
+		m_source = source;
+		m_target = target;
+	}
 
 	public Flow(String id, String source, String target) {
 		m_id = id;

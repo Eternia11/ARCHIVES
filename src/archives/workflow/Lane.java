@@ -6,6 +6,11 @@ public class Lane {
 
 	public Lane() {
 	}
+	
+	public Lane(String id) {
+		m_id = id;
+		m_name = id;
+	}
 
 	public Lane(String id, String name) {
 		m_id = id;
@@ -21,7 +26,6 @@ public class Lane {
 	}
 
 	public String toXPDL() {
-		return "\t\t\t\t<xpdl:Lane Id=\"" + m_id + "\" Name=\"" + m_name
-				+ "\">\n\t\t\t\t</xpdl:Lane>";
+		return "\t\t\t\t<xpdl:Lane Id=\"" + m_id + "\" Name=\"" + m_name + "\"/>";
 	}
 }
