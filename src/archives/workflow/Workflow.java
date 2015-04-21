@@ -81,7 +81,7 @@ public class Workflow {
 			for (Pool pool : m_pools) {
 				ret += "\n" + pool.toXPDL();
 			}
-			ret += "\n\t</xpdl:Pools";
+			ret += "\n\t</xpdl:Pools>";
 		}
 
 		if (!m_processes.isEmpty()) {

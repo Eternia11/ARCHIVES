@@ -2,14 +2,50 @@
 <key id="vertex_label" for="node" attr.name="Vertex Label" attr.type="string"/>
 <key id="edge_label" for="edge" attr.name="Edge Label" attr.type="string"/>
 <graph edgedefault="directed">
-<node id="THGL">
-<data key="vertex_label">THGL</data>
-</node>
 <node id="RFBN">
 <data key="vertex_label">RFBN</data>
 </node>
+<node id="TLDD">
+<data key="vertex_label">TLDD</data>
+</node>
+<node id="TLGT">
+<data key="vertex_label">TLGT</data>
+</node>
+<node id="TLDT">
+<data key="vertex_label">TLDT</data>
+</node>
+<node id="TLCL">
+<data key="vertex_label">TLCL</data>
+</node>
+<node id="LyXQ">
+<data key="vertex_label">LyXQ</data>
+</node>
+<node id="LyDD">
+<data key="vertex_label">LyDD</data>
+</node>
+<node id="LyGC">
+<data key="vertex_label">LyGC</data>
+</node>
+<node id="LyTT">
+<data key="vertex_label">LyTT</data>
+</node>
+<node id="LyTD">
+<data key="vertex_label">LyTD</data>
+</node>
+<node id="LyCL">
+<data key="vertex_label">LyCL</data>
+</node>
+<node id="LyPV">
+<data key="vertex_label">LyPV</data>
+</node>
+<node id="LyLD">
+<data key="vertex_label">LyLD</data>
+</node>
 <node id="TDBN">
 <data key="vertex_label">TDBN</data>
+</node>
+<node id="THGL">
+<data key="vertex_label">THGL</data>
 </node>
 <node id="System">
 <data key="vertex_label">System</data>
@@ -17,6 +53,45 @@
 <node id="coolies">
 <data key="vertex_label">coolies</data>
 </node>
+<edge id="(RFBN : TLDD)" source="RFBN" target="TLDD">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : TLGT)" source="RFBN" target="TLGT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : TLDT)" source="RFBN" target="TLDT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : TLCL)" source="RFBN" target="TLCL">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : LyXQ)" source="RFBN" target="LyXQ">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : LyDD)" source="RFBN" target="LyDD">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : LyGC)" source="RFBN" target="LyGC">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : LyTT)" source="RFBN" target="LyTT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : LyTD)" source="RFBN" target="LyTD">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : LyCL)" source="RFBN" target="LyCL">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : LyPV)" source="RFBN" target="LyPV">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : LyLD)" source="RFBN" target="LyLD">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TDBN : RFBN)" source="TDBN" target="RFBN">
+<data key="edge_label">1</data>
+</edge>
 <edge id="(THGL : RFBN)" source="THGL" target="RFBN">
 <data key="edge_label">2</data>
 </edge>

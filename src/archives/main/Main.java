@@ -26,21 +26,21 @@ class Main {
 	public static void main(String[] args) {
 		Algorithm algo = new Algorithm();
 		algo.readLogFile(m_csvFile);
-		/*m_informGraph = algo.buildPerformativeGraph("inform");
+		m_informGraph = algo.buildPerformativeGraph("inform");
 		m_delegateGraph = algo.buildPerformativeGraph("delegate");
 		algo.exportGraphsToGraphml(m_informGraph, m_informGraphFileName);
 		algo.exportGraphsToGraphml(m_delegateGraph, m_delegateGraphFileName);
-//		m_clusters = algo.buildClusterList(m_delegateGraph);
-//		for (int i = 0; i < m_clusters.size(); i++)
-//			System.out.println(m_clusters.get(i));
-//		m_delegateChain = algo.buildPerformativeChainList("delegate");
-//		m_IE_rules = algo.buildInform_ExecuteRules();
-//		for (int i = 0; i < m_IE_rules.size(); i++)
-//			System.out.println(m_IE_rules.get(i));
+		m_clusters = algo.buildClusterList(m_delegateGraph);
+		for (int i = 0; i < m_clusters.size(); i++)
+			System.out.println(m_clusters.get(i));
+		m_delegateChain = algo.buildPerformativeChainList("delegate");
+		m_IE_rules = algo.buildInform_ExecuteRules();
+		for (int i = 0; i < m_IE_rules.size(); i++)
+			System.out.println(m_IE_rules.get(i));
 		long startTime = System.nanoTime();
 		algo.runAlphaMiner(2, false);
 		long endTime = System.nanoTime();
-		System.out.println("Took "+(endTime - startTime)/1000000 + " ms");*/
+		System.out.println("Alpha Algorithm took "+(endTime - startTime)/1000000 + " ms");
 		algo.findWorkflow();
 	}
 }

@@ -5,14 +5,47 @@
 <node id="TTaGL">
 <data key="vertex_label">TTaGL</data>
 </node>
-<node id="LyCL">
-<data key="vertex_label">LyCL</data>
+<node id="LyTT">
+<data key="vertex_label">LyTT</data>
+</node>
+<node id="ACGC">
+<data key="vertex_label">ACGC</data>
+</node>
+<node id="TDBN">
+<data key="vertex_label">TDBN</data>
+</node>
+<node id="TLDD">
+<data key="vertex_label">TLDD</data>
 </node>
 <node id="TLGT">
 <data key="vertex_label">TLGT</data>
 </node>
 <node id="TLDT">
 <data key="vertex_label">TLDT</data>
+</node>
+<node id="TLCL">
+<data key="vertex_label">TLCL</data>
+</node>
+<node id="LyXQ">
+<data key="vertex_label">LyXQ</data>
+</node>
+<node id="LyDD">
+<data key="vertex_label">LyDD</data>
+</node>
+<node id="LyGC">
+<data key="vertex_label">LyGC</data>
+</node>
+<node id="LyTD">
+<data key="vertex_label">LyTD</data>
+</node>
+<node id="LyCL">
+<data key="vertex_label">LyCL</data>
+</node>
+<node id="LyPV">
+<data key="vertex_label">LyPV</data>
+</node>
+<node id="LyLD">
+<data key="vertex_label">LyLD</data>
 </node>
 <node id="ATTP">
 <data key="vertex_label">ATTP</data>
@@ -22,15 +55,6 @@
 </node>
 <node id="THGL">
 <data key="vertex_label">THGL</data>
-</node>
-<node id="TLCL">
-<data key="vertex_label">TLCL</data>
-</node>
-<node id="TLDD">
-<data key="vertex_label">TLDD</data>
-</node>
-<node id="LyLD">
-<data key="vertex_label">LyLD</data>
 </node>
 <node id="NoAM">
 <data key="vertex_label">NoAM</data>
@@ -44,12 +68,48 @@
 <node id="LyDT">
 <data key="vertex_label">LyDT</data>
 </node>
-<node id="LyDD">
-<data key="vertex_label">LyDD</data>
-</node>
-<node id="machin">
-<data key="vertex_label">machin</data>
-</node>
+<edge id="(TTaGL : LyTT)" source="TTaGL" target="LyTT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TTaGL : ACGC)" source="TTaGL" target="ACGC">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TDBN : TLDD)" source="TDBN" target="TLDD">
+<data key="edge_label">2</data>
+</edge>
+<edge id="(TDBN : TLGT)" source="TDBN" target="TLGT">
+<data key="edge_label">2</data>
+</edge>
+<edge id="(TDBN : TLDT)" source="TDBN" target="TLDT">
+<data key="edge_label">2</data>
+</edge>
+<edge id="(TDBN : TLCL)" source="TDBN" target="TLCL">
+<data key="edge_label">2</data>
+</edge>
+<edge id="(TDBN : LyXQ)" source="TDBN" target="LyXQ">
+<data key="edge_label">2</data>
+</edge>
+<edge id="(TDBN : LyDD)" source="TDBN" target="LyDD">
+<data key="edge_label">2</data>
+</edge>
+<edge id="(TDBN : LyGC)" source="TDBN" target="LyGC">
+<data key="edge_label">2</data>
+</edge>
+<edge id="(TDBN : LyTT)" source="TDBN" target="LyTT">
+<data key="edge_label">2</data>
+</edge>
+<edge id="(TDBN : LyTD)" source="TDBN" target="LyTD">
+<data key="edge_label">2</data>
+</edge>
+<edge id="(TDBN : LyCL)" source="TDBN" target="LyCL">
+<data key="edge_label">2</data>
+</edge>
+<edge id="(TDBN : LyPV)" source="TDBN" target="LyPV">
+<data key="edge_label">2</data>
+</edge>
+<edge id="(TDBN : LyLD)" source="TDBN" target="LyLD">
+<data key="edge_label">2</data>
+</edge>
 <edge id="(TTaGL : LyCL)" source="TTaGL" target="LyCL">
 <data key="edge_label">1</data>
 </edge>
@@ -114,9 +174,6 @@
 <data key="edge_label">1</data>
 </edge>
 <edge id="(RFBN : TTaGL)" source="RFBN" target="TTaGL">
-<data key="edge_label">1</data>
-</edge>
-<edge id="(TTaGL : machin)" source="TTaGL" target="machin">
 <data key="edge_label">1</data>
 </edge>
 </graph>
