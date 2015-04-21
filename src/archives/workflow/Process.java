@@ -5,14 +5,12 @@ import java.util.ArrayList;
 public class Process {
 	private String m_id = "";
 	private String m_name = "";
-	private ArrayList<Participant> m_participants = null;
 	private ArrayList<Activity> m_activities = null;
 	private ArrayList<Flow> m_flows = null;
 	private String m_start = "_start_";
 	private String m_end = "_end_";
 
 	public Process() {
-		m_participants = new ArrayList<Participant>();
 		m_activities = new ArrayList<Activity>();
 		m_flows = new ArrayList<Flow>();
 	}
@@ -20,7 +18,6 @@ public class Process {
 	public Process(String id, String name) {
 		m_id = id;
 		m_name = name;
-		m_participants = new ArrayList<Participant>();
 		m_activities = new ArrayList<Activity>();
 		m_flows = new ArrayList<Flow>();
 	}
@@ -31,14 +28,6 @@ public class Process {
 
 	public String get_name() {
 		return m_name;
-	}
-
-	public int sizeParticipants() {
-		return m_participants.size();
-	}
-
-	public Participant get_participant(int index) {
-		return m_participants.get(index);
 	}
 
 	public int sizeActivities() {
@@ -56,20 +45,7 @@ public class Process {
 	public Flow get_flow(int index) {
 		return m_flows.get(index);
 	}
-
-	public boolean containsParticipant(Participant participant) {
-		for (Participant p : m_participants) {
-			if (participant.get_id().equals(p.get_id()))
-				return true;
-		}
-		return false;
-	}
-
-	public void addParticipant(Participant participant) {
-		if (!containsParticipant(participant))
-			m_participants.add(participant);
-	}
-
+	
 	public boolean containsActivity(Activity activity) {
 		for (Activity a : m_activities) {
 			if (activity.get_id().equals(a.get_id()))
@@ -112,16 +88,6 @@ public class Process {
 	public String toXPDL() {
 		String ret = "\t\t<xpdl:WorkflowProcess Id=\"" + m_id + "\" Name=\""
 				+ m_name + "\">\n\t\t\t<xpdl:Activities>";
-
-		if (!m_participants.isEmpty()) {
-			ret += "\n\t\t\t<xpdl:Participant>";
-			for (Participant participant : m_participants) {
-				ret += "\n" + participant.toXPDL();
-			}
-			ret += "\n\t\t\t</xpdl:Participant>";
-		}
-
-		ret += "\n\t\t\t<xpdl:Activities>";
 		// start event
 		// ret += "\n\t\t\t\t<xpdl:Activity Id=\"" + m_start + m_id +
 		// "\">\n\t\t\t\t\t<xpdl:Event>\n\t\t\t\t\t\t<xpdl:StartEvent/>\n\t\t\t\t\t</xpdl:Event>\n\t\t\t\t</xpdl:Activity>";

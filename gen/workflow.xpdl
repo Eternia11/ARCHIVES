@@ -29,7 +29,6 @@
 	<xpdl:WorkflowProcesses>
 		<xpdl:WorkflowProcess Id="pr_archives" Name="pr_archives">
 			<xpdl:Activities>
-			<xpdl:Activities>
 				<xpdl:Activity Id="THGL_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
