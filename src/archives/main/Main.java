@@ -41,6 +41,6 @@ class Main {
 		algo.runAlphaMiner(2, false);
 		long endTime = System.nanoTime();
 		System.out.println("Alpha Algorithm took "+(endTime - startTime)/1000000 + " ms");
-		algo.findWorkflow();
+		algo.alphaWorkflow();
 	}
 }

@@ -2,8 +2,32 @@
 <key id="vertex_label" for="node" attr.name="Vertex Label" attr.type="string"/>
 <key id="edge_label" for="edge" attr.name="Edge Label" attr.type="string"/>
 <graph edgedefault="directed">
+<node id="System">
+<data key="vertex_label">System</data>
+</node>
+<node id="TDBN">
+<data key="vertex_label">TDBN</data>
+</node>
 <node id="RFBN">
 <data key="vertex_label">RFBN</data>
+</node>
+<node id="RST">
+<data key="vertex_label">RST</data>
+</node>
+<node id="PLyAM">
+<data key="vertex_label">PLyAM</data>
+</node>
+<node id="NoAM">
+<data key="vertex_label">NoAM</data>
+</node>
+<node id="THGL">
+<data key="vertex_label">THGL</data>
+</node>
+<node id="ACGC">
+<data key="vertex_label">ACGC</data>
+</node>
+<node id="TTaGL">
+<data key="vertex_label">TTaGL</data>
 </node>
 <node id="TLDD">
 <data key="vertex_label">TLDD</data>
@@ -41,18 +65,36 @@
 <node id="LyLD">
 <data key="vertex_label">LyLD</data>
 </node>
-<node id="TDBN">
-<data key="vertex_label">TDBN</data>
-</node>
-<node id="THGL">
-<data key="vertex_label">THGL</data>
-</node>
-<node id="System">
-<data key="vertex_label">System</data>
-</node>
 <node id="coolies">
 <data key="vertex_label">coolies</data>
 </node>
+<edge id="(System : TDBN)" source="System" target="TDBN">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : RST)" source="RFBN" target="RST">
+<data key="edge_label">3</data>
+</edge>
+<edge id="(System : PLyAM)" source="System" target="PLyAM">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(System : NoAM)" source="System" target="NoAM">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : TDBN)" source="RFBN" target="TDBN">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : THGL)" source="RFBN" target="THGL">
+<data key="edge_label">2</data>
+</edge>
+<edge id="(ACGC : TTaGL)" source="ACGC" target="TTaGL">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RST : RFBN)" source="RST" target="RFBN">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(System : TTaGL)" source="System" target="TTaGL">
+<data key="edge_label">1</data>
+</edge>
 <edge id="(RFBN : TLDD)" source="RFBN" target="TLDD">
 <data key="edge_label">1</data>
 </edge>
@@ -99,9 +141,6 @@
 <data key="edge_label">1</data>
 </edge>
 <edge id="(System : coolies)" source="System" target="coolies">
-<data key="edge_label">1</data>
-</edge>
-<edge id="(RFBN : THGL)" source="RFBN" target="THGL">
 <data key="edge_label">1</data>
 </edge>
 <edge id="(System : RFBN)" source="System" target="RFBN">

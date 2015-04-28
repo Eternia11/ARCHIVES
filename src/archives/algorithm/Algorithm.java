@@ -352,8 +352,11 @@ public class Algorithm {
 	}
 	
 	// under construction and testing
-	public void findWorkflow() {
-		Workflow wf = new Workflow("wf_test", "wf_test");
+	public void alphaWorkflow() {
+		AlphaMiner alpha = new AlphaMiner();
+		alpha.alphaWorkflow(m_traces, 2, true);
+		
+		/*Workflow wf = new Workflow("wf_test", "wf_test");
 		String WF_file = "gen\\workflow.xpdl";
 		
 		ArrayList<String> resources = new ArrayList<String>();
@@ -362,10 +365,10 @@ public class Algorithm {
 				resources.add(t.getSender());
 			if (!resources.contains(t.getReceiver()))
 				resources.add(t.getReceiver());
-		}
+		}*/
 		
 		// each resource is a lane and we fill them with the resource's activities
-		wf.addProcess(new Process("pr_archives", "pr_archives"));
+		/*wf.addProcess(new Process("pr_archives", "pr_archives"));
 		wf.addPool(new Pool("po_archives", "po_archives", "pr_archives"));
 		for (int r = 0; r < resources.size(); r++) {
 			String tested_resource = resources.get(r);
@@ -390,7 +393,7 @@ public class Algorithm {
 				wf.get_process(0).addActivity(new ActivityEndLane(tested_resource+"_end_", tested_resource));
 				wf.get_process(0).addFlow(new Flow (tested_resource+"-"+resource_activities.get(resource_activities.size() - 1), tested_resource+"_end_"));
 			}
-		}
+		}*/
 		
 		// interactions with everyone
 		/*wf.addProcess(new Process("pr_archives", "pr_archives"));
@@ -408,7 +411,7 @@ public class Algorithm {
 		}*/
 		
 		// interaction for only one resource
-		String actor = "TTaGL";
+		/*String actor = "TTaGL";
 		wf.addProcess(new Process("pr_archives", "pr_archives"));
 		wf.addPool(new Pool("po_archives", "po_archives", "pr_archives"));
 		String prev_act = "";
@@ -443,7 +446,7 @@ public class Algorithm {
 					prev_act = actor+"_"+t.getActivity();
 				}
 			}
-		}
+		}*/
 		
 		// first resource (very test)
 		/*for (int r = 0; r < resources.size(); r++) {
@@ -471,7 +474,7 @@ public class Algorithm {
 			}
 		}*/
 		
-		PrintWriter writer;
+		/*PrintWriter writer;
 		try {
 			writer = new PrintWriter(WF_file, "UTF-8");
 			writer.println(wf.toXPDL());
@@ -483,6 +486,6 @@ public class Algorithm {
 							+ " cannot be created/opened or does not have the UTF-8 encoding.");
 			e.printStackTrace();
 			System.exit(6);
-		}
+		}*/
 	}
 }

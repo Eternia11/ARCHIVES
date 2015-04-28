@@ -10,13 +10,16 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import archives.log.Trace;
 import archives.petrinet.*;
+import archives.workflow.*;
 
 public class AlphaMiner {
 	private PetriNet m_net = null;
+	private Workflow m_workflow = null;
 	private String m_netFile = "gen\\petri.pnml";
 
 	public AlphaMiner() {
 		m_net = new PetriNet("net0", "AlphaNetARCHIVES");
+		m_workflow = new Workflow("wf_test", "wf_test");
 	}
 
 	private boolean isIn(ArrayList<Trace> log_part, String activity) {
@@ -144,6 +147,29 @@ public class AlphaMiner {
 				}
 			}
 		}
+
+		protected void addFlows(ArrayList<String> T, String resource) {
+			for (int i = 0; i < m_Y.size(); i++) {
+				ArrayList<Integer> left = m_Y.get(i).getLeft();
+				ArrayList<Integer> right = m_Y.get(i).getRight();
+
+				m_workflow.get_process(0).addActivity(
+						new Gateway(resource+"_"+"G" + i, resource+"_"+"G" + i, resource));
+
+				for (int j = 0; j < left.size(); j++) {
+					m_workflow.get_process(0).addFlow(
+							new Flow("in_a" + i + "-" + j, resource+"_"+T.get(left.get(j)),
+									resource+"_"+"G" + i));
+				}
+				for (int j = 0; j < right.size(); j++) {
+					m_workflow.get_process(0)
+							.addFlow(
+									new Flow("out_a" + i + "-" + j, resource+"_"+"G"
+											+ i, resource+"_"+T.get(right
+											.get(j))));
+				}
+			}
+		}
 	}
 
 	// run the Alpha Algorithm following the method given in the wiki page :
@@ -240,9 +266,10 @@ public class AlphaMiner {
 			loop0[i] = 0;
 		}
 
-		// "parameter" of this alpha algorithm : the way matrices will be merged into > relations
+		// "parameter" of this alpha algorithm : the way matrices will be merged
+		// into > relations
 		switch (merge_type) {
-		case 0 :
+		case 0:
 			// this way is a total generalization
 			for (int i = 0; i < T.size(); i++) {
 				for (int j = 0; j < T.size(); j++) {
@@ -259,7 +286,7 @@ public class AlphaMiner {
 					}
 				}
 			}
-		case 1 :
+		case 1:
 			// this way is a total specialization
 			for (int i = 0; i < T.size(); i++) {
 				for (int j = 0; j < T.size(); j++) {
@@ -276,16 +303,17 @@ public class AlphaMiner {
 					}
 				}
 			}
-		default :
-			// this way is an average of presence of succession of actions in the different cases
+		default:
+			// this way is an average of presence of succession of actions in
+			// the different cases
 			for (int i = 0; i < T.size(); i++) {
 				for (int j = 0; j < T.size(); j++) {
-					int avg[] = {0, 0, 0};
-					
+					int avg[] = { 0, 0, 0 };
+
 					for (int c = 0; c < new_log.size(); c++) {
 						avg[X.get(c)[i][j]]++;
 					}
-					
+
 					if ((avg[1] > avg[0]) && (avg[1] > avg[2])) {
 						Xw[i][j] = 1;
 					} else if ((avg[2] > avg[1]) && (avg[2] > avg[1])) {
@@ -296,7 +324,7 @@ public class AlphaMiner {
 				}
 			}
 		}
-		
+
 		// transform the > relations into ->, # and || relations
 		for (int i = 0; i < T.size(); i++) {
 			for (int j = 0; j < T.size(); j++) {
@@ -386,7 +414,7 @@ public class AlphaMiner {
 					m_net.addArc("out_loop0_" + i, "loop0_" + i, T.get(i));
 				}
 			}
-	
+
 			// loops of size 1
 			for (ArrayList<ArrayList<Trace>> case_first : new_log) {
 				for (int i = 0; i < case_first.size(); i++) {
@@ -395,7 +423,8 @@ public class AlphaMiner {
 							int a1 = T.indexOf(case_first.get(i).get(j1)
 									.getActivity());
 							if (isIn(case_first.get(i + 2), T.get(a1))) {
-								for (int j2 = 0; j2 < case_first.get(i + 1).size(); j2++) {
+								for (int j2 = 0; j2 < case_first.get(i + 1)
+										.size(); j2++) {
 									int a2 = T.indexOf(case_first.get(i + 1)
 											.get(j2).getActivity());
 									// loop between T.get(a1) and T.get(a2)
@@ -404,13 +433,17 @@ public class AlphaMiner {
 									m_net.addPlace("loop1_p2_" + a1 + "-" + a2,
 											"loop1_p2_" + a1 + "-" + a2, 0);
 									m_net.addArc("loop1_a1_" + a1 + "-" + a2,
-											T.get(a1), "loop1_p1_" + a1 + "-" + a2);
+											T.get(a1), "loop1_p1_" + a1 + "-"
+													+ a2);
 									m_net.addArc("loop1_a2_" + a1 + "-" + a2,
-											"loop1_p1_" + a1 + "-" + a2, T.get(a2));
+											"loop1_p1_" + a1 + "-" + a2,
+											T.get(a2));
 									m_net.addArc("loop1_a3_" + a1 + "-" + a2,
-											T.get(a2), "loop1_p2_" + a1 + "-" + a2);
+											T.get(a2), "loop1_p2_" + a1 + "-"
+													+ a2);
 									m_net.addArc("loop1_a4_" + a1 + "-" + a2,
-											"loop1_p2_" + a1 + "-" + a2, T.get(a1));
+											"loop1_p2_" + a1 + "-" + a2,
+											T.get(a1));
 								}
 							}
 						}
@@ -430,6 +463,271 @@ public class AlphaMiner {
 			System.out
 					.println("The file "
 							+ m_netFile
+							+ " cannot be created/opened or does not have the UTF-8 encoding.");
+			e.printStackTrace();
+			System.exit(6);
+		}
+	}
+
+	public void alphaWorkflow(List<Trace> logs, int merge_type, boolean loops) {
+		String WF_file = "gen\\workflow.xpdl";
+		m_workflow.addProcess(new archives.workflow.Process("pr_archives",
+				"pr_archives"));
+		m_workflow
+				.addPool(new Pool("po_archives", "po_archives", "pr_archives"));
+
+		ArrayList<String> caseID = new ArrayList<String>(); // list of the
+		// caseID of the log file
+
+		ArrayList<String> resources = new ArrayList<String>();
+		for (Trace t : logs) {
+			if (!resources.contains(t.getSender()))
+				resources.add(t.getSender());
+			if (!resources.contains(t.getReceiver()))
+				resources.add(t.getReceiver());
+			// add the different caseID
+			if (!caseID.contains(t.getCaseID())) {
+				caseID.add(t.getCaseID());
+			}
+		}
+
+		for (String r : resources) {
+			// sort the log by case for the current resource, and store it into
+			// new_log
+			ArrayList<ArrayList<Trace>> new_log = new ArrayList<ArrayList<Trace>>();
+			for (int c = 0; c < caseID.size(); c++)
+				new_log.add(new ArrayList<Trace>());
+			for (int i = 0; i < logs.size(); i++) {
+				Trace t = logs.get(i);
+				if (r.equals(t.getSender()))
+					new_log.get(caseID.indexOf(t.getCaseID())).add(t);
+			}
+
+			ArrayList<String> T = new ArrayList<String>(); // list of the
+															// transitions of
+															// the petri net
+
+			m_workflow.get_pool(0).addLane(new Lane(r));
+			// construction of Tw
+			for (Trace t : logs) {
+				if (r.equals(t.getSender())) {
+					m_workflow.get_process(0).addActivity(
+							new ActivityLane(r + "_" + t.getActivity(), t
+									.getActivity(), r));
+					if (!T.contains(t.getActivity())) {
+						T.add(t.getActivity());
+					}
+				}
+			}
+
+			// construction of Xw
+			ArrayList<Integer[][]> X = new ArrayList<Integer[][]>();
+			for (int c = 0; c < new_log.size(); c++) {
+				Integer X_temp[][] = new Integer[T.size()][T.size()];
+
+				for (int i = 0; i < T.size(); i++) {
+					for (int j = 0; j < T.size(); j++) {
+						X_temp[i][j] = 0;
+					}
+				}
+
+				// 1 represents > between 2 transitions in the matrix X_temp
+				for (int i = 0; i < new_log.get(c).size(); i++) {
+					if (i + 1 < new_log.get(c).size()) {
+						int a1 = T.indexOf(new_log.get(c).get(i).getActivity());
+						int a2 = T.indexOf(new_log.get(c).get(i + 1)
+								.getActivity());
+						X_temp[a1][a2] = 1;
+					}
+				}
+
+				X.add(X_temp);
+			}
+
+			Integer Xw[][] = new Integer[T.size()][T.size()];
+			Integer loop0[] = new Integer[T.size()];
+			for (int i = 0; i < T.size(); i++) {
+				loop0[i] = 0;
+			}
+
+			// "parameter" of this alpha algorithm : the way matrices will be
+			// merged
+			// into > relations
+			switch (merge_type) {
+			case 0:
+				// this way is a total generalization
+				for (int i = 0; i < T.size(); i++) {
+					for (int j = 0; j < T.size(); j++) {
+						Xw[i][j] = 0;
+						for (int c = 0; c < new_log.size(); c++) {
+							if (X.get(c)[i][j] == 1) {
+								Xw[i][j] = 1;
+							}
+							// preserve parallelism
+							if (X.get(c)[i][j] == 2) {
+								Xw[i][j] = 1;
+								Xw[j][i] = 1;
+							}
+						}
+					}
+				}
+			case 1:
+				// this way is a total specialization
+				for (int i = 0; i < T.size(); i++) {
+					for (int j = 0; j < T.size(); j++) {
+						Xw[i][j] = 0;
+						boolean same = true;
+						Integer previous = X.get(0)[i][j];
+						for (int c = 0; same && c < new_log.size(); c++) {
+							if (X.get(c)[i][j] != previous) {
+								same = false;
+							}
+						}
+						if (same) {
+							Xw[i][j] = previous;
+						}
+					}
+				}
+			default:
+				// this way is an average of presence of succession of actions
+				// in
+				// the different cases
+				for (int i = 0; i < T.size(); i++) {
+					for (int j = 0; j < T.size(); j++) {
+						int avg[] = { 0, 0, 0 };
+
+						for (int c = 0; c < new_log.size(); c++) {
+							avg[X.get(c)[i][j]]++;
+						}
+
+						if ((avg[1] > avg[0]) && (avg[1] > avg[2])) {
+							Xw[i][j] = 1;
+						} else if ((avg[2] > avg[1]) && (avg[2] > avg[1])) {
+							Xw[i][j] = 2;
+						} else {
+							Xw[i][j] = 0;
+						}
+					}
+				}
+			}
+
+			// transform the > relations into ->, # and || relations
+			for (int i = 0; i < T.size(); i++) {
+				for (int j = 0; j < T.size(); j++) {
+					if (i != j) {
+						if ((Xw[i][j] == 1) && (Xw[j][i] == 1)) {
+							Xw[i][j] = 2;
+							Xw[j][i] = 2;
+						}
+						if ((Xw[i][j] == 1) && (Xw[j][i] == 0)) {
+							Xw[i][j] = 1;
+							Xw[j][i] = -1;
+						}
+						if ((Xw[i][j] == 0) && (Xw[j][i] == 1)) {
+							Xw[i][j] = -1;
+							Xw[j][i] = 1;
+						}
+						if ((Xw[i][j] == 2) && (Xw[j][i] != 2)) {
+							Xw[j][i] = 2;
+						}
+					} else {
+						if (Xw[i][j] == 1) {
+							loop0[i] = 1;
+						}
+						Xw[i][j] = 0;
+					}
+				}
+			}
+
+			// construction of Yw
+			YClass Y = new YClass();
+
+			for (int i = 0; i < T.size(); i++) {
+				for (int j = i; j < T.size(); j++) {
+					if (i != j) {
+						if (Xw[i][j] == 1) {
+							Y.add(i, j);
+						}
+						if (Xw[i][j] == -1) {
+							Y.add(j, i);
+						}
+					}
+				}
+			}
+
+			Y = Y.mergeLeft();
+			Y = Y.mergeRight();
+
+			for (int i = 0; i < T.size(); i++) {
+				for (int j = i; j < T.size(); j++) {
+					if (Xw[i][j] != 0) {
+						Y.cleave(i, j);
+					}
+				}
+			}
+
+			// construction of Ti
+			m_workflow.get_process(0).addActivity(new ActivityStartLane(r+"_start_", r));
+			for (int c=0; c<new_log.size(); c++) {
+				if (!new_log.get(c).isEmpty())
+					m_workflow.get_process(0).addFlow(new Flow("f"+c+r+"_start_", r+"_start_", r+"_"+new_log.get(c).get(0).getActivity()));
+			}
+
+			// construction of To
+			m_workflow.get_process(0).addActivity(new ActivityEndLane(r+"_end_", r));
+			for (int c=0; c<new_log.size(); c++) {
+				if (!new_log.get(c).isEmpty())
+					m_workflow.get_process(0).addFlow(new Flow("f"+c+r+"_end_", r+"_"+new_log.get(c).get(new_log.get(c).size()-1).getActivity(), r+"_end_"));
+			}
+
+			// construction of Pw
+
+			// construction of Fw
+			Y.addFlows(T, r);
+
+			// construction of loops
+			if (loops) {
+				// loops of size 0
+				for (int i = 0; i < T.size(); i++) {
+					if (loop0[i] == 1) {
+						m_workflow.get_process(0).addFlow(
+								new Flow("out_loop0_" + i, T.get(i), T.get(i)));
+					}
+				}
+
+				// loops of size 1
+				for (ArrayList<Trace> case_first : new_log) {
+					for (int i = 0; i < case_first.size(); i++) {
+						if (i + 2 < case_first.size()) {
+							int a1 = T.indexOf(case_first.get(i).getActivity());
+							if (case_first.get(i + 2).equals(T.get(a1))) {
+								int a2 = T.indexOf(case_first.get(i + 1)
+										.getActivity());
+								// loop between T.get(a1) and T.get(a2)
+								m_workflow.get_process(0).addFlow(
+										new Flow("loop1_a1_" + a1 + "-" + a2, T
+												.get(a1), T.get(a2)));
+								m_workflow.get_process(0).addFlow(
+										new Flow("loop1_a2_" + a1 + "-" + a2, T
+												.get(a2), T.get(a1)));
+							}
+						}
+					}
+				}
+			}
+		} // end loops
+
+		// construction of alpha(W)
+
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(WF_file, "UTF-8");
+			writer.println(m_workflow.toXPDL());
+			writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			System.out
+					.println("The file "
+							+ WF_file
 							+ " cannot be created/opened or does not have the UTF-8 encoding.");
 			e.printStackTrace();
 			System.exit(6);

@@ -5,14 +5,53 @@
 <node id="TTaGL">
 <data key="vertex_label">TTaGL</data>
 </node>
-<node id="LyTT">
-<data key="vertex_label">LyTT</data>
-</node>
 <node id="ACGC">
 <data key="vertex_label">ACGC</data>
 </node>
 <node id="TDBN">
 <data key="vertex_label">TDBN</data>
+</node>
+<node id="LyPV">
+<data key="vertex_label">LyPV</data>
+</node>
+<node id="LyDD">
+<data key="vertex_label">LyDD</data>
+</node>
+<node id="LyCL">
+<data key="vertex_label">LyCL</data>
+</node>
+<node id="RFBN">
+<data key="vertex_label">RFBN</data>
+</node>
+<node id="LTGQ">
+<data key="vertex_label">LTGQ</data>
+</node>
+<node id="THGL">
+<data key="vertex_label">THGL</data>
+</node>
+<node id="LyGT">
+<data key="vertex_label">LyGT</data>
+</node>
+<node id="PLyAM">
+<data key="vertex_label">PLyAM</data>
+</node>
+<node id="LyLD">
+<data key="vertex_label">LyLD</data>
+</node>
+<node id="LyTT">
+<data key="vertex_label">LyTT</data>
+</node>
+<node id="TLDT">
+<data key="vertex_label">TLDT</data>
+</node>
+<node id="ACGQ">
+<data key="vertex_label">ACGQ</data>
+</node>
+<node id="ACGT">
+<data key="vertex_label">ACGT</data>
+</node>
+<node id="LD">
+<data key="vertex_label">LD</data>
 </node>
 <node id="TLDD">
 <data key="vertex_label">TLDD</data>
@@ -20,17 +59,11 @@
 <node id="TLGT">
 <data key="vertex_label">TLGT</data>
 </node>
-<node id="TLDT">
-<data key="vertex_label">TLDT</data>
-</node>
 <node id="TLCL">
 <data key="vertex_label">TLCL</data>
 </node>
 <node id="LyXQ">
 <data key="vertex_label">LyXQ</data>
-</node>
-<node id="LyDD">
-<data key="vertex_label">LyDD</data>
 </node>
 <node id="LyGC">
 <data key="vertex_label">LyGC</data>
@@ -38,23 +71,8 @@
 <node id="LyTD">
 <data key="vertex_label">LyTD</data>
 </node>
-<node id="LyCL">
-<data key="vertex_label">LyCL</data>
-</node>
-<node id="LyPV">
-<data key="vertex_label">LyPV</data>
-</node>
-<node id="LyLD">
-<data key="vertex_label">LyLD</data>
-</node>
 <node id="ATTP">
 <data key="vertex_label">ATTP</data>
-</node>
-<node id="RFBN">
-<data key="vertex_label">RFBN</data>
-</node>
-<node id="THGL">
-<data key="vertex_label">THGL</data>
 </node>
 <node id="NoAM">
 <data key="vertex_label">NoAM</data>
@@ -62,16 +80,67 @@
 <node id="ACGL">
 <data key="vertex_label">ACGL</data>
 </node>
-<node id="LyGT">
-<data key="vertex_label">LyGT</data>
-</node>
 <node id="LyDT">
 <data key="vertex_label">LyDT</data>
 </node>
-<edge id="(TTaGL : LyTT)" source="TTaGL" target="LyTT">
+<edge id="(TTaGL : ACGC)" source="TTaGL" target="ACGC">
+<data key="edge_label">2</data>
+</edge>
+<edge id="(TDBN : LyPV)" source="TDBN" target="LyPV">
+<data key="edge_label">3</data>
+</edge>
+<edge id="(TDBN : LyDD)" source="TDBN" target="LyDD">
+<data key="edge_label">4</data>
+</edge>
+<edge id="(TDBN : LyCL)" source="TDBN" target="LyCL">
+<data key="edge_label">3</data>
+</edge>
+<edge id="(RFBN : TDBN)" source="RFBN" target="TDBN">
 <data key="edge_label">1</data>
 </edge>
-<edge id="(TTaGL : ACGC)" source="TTaGL" target="ACGC">
+<edge id="(TTaGL : LyPV)" source="TTaGL" target="LyPV">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TTaGL : LTGQ)" source="TTaGL" target="LTGQ">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(RFBN : TTaGL)" source="RFBN" target="TTaGL">
+<data key="edge_label">4</data>
+</edge>
+<edge id="(THGL : TTaGL)" source="THGL" target="TTaGL">
+<data key="edge_label">3</data>
+</edge>
+<edge id="(TDBN : LTGQ)" source="TDBN" target="LTGQ">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TDBN : LyGT)" source="TDBN" target="LyGT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TDBN : PLyAM)" source="TDBN" target="PLyAM">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TDBN : LyLD)" source="TDBN" target="LyLD">
+<data key="edge_label">3</data>
+</edge>
+<edge id="(TDBN : LyTT)" source="TDBN" target="LyTT">
+<data key="edge_label">3</data>
+</edge>
+<edge id="(TDBN : TLDT)" source="TDBN" target="TLDT">
+<data key="edge_label">3</data>
+</edge>
+<edge id="(TTaGL : ACGQ)" source="TTaGL" target="ACGQ">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TTaGL : ACGT)" source="TTaGL" target="ACGT">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TTaGL : PLyAM)" source="TTaGL" target="PLyAM">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TTaGL : LD)" source="TTaGL" target="LD">
+<data key="edge_label">1</data>
+</edge>
+<edge id="(TTaGL : LyTT)" source="TTaGL" target="LyTT">
 <data key="edge_label">1</data>
 </edge>
 <edge id="(TDBN : TLDD)" source="TDBN" target="TLDD">
@@ -80,34 +149,16 @@
 <edge id="(TDBN : TLGT)" source="TDBN" target="TLGT">
 <data key="edge_label">2</data>
 </edge>
-<edge id="(TDBN : TLDT)" source="TDBN" target="TLDT">
-<data key="edge_label">2</data>
-</edge>
 <edge id="(TDBN : TLCL)" source="TDBN" target="TLCL">
 <data key="edge_label">2</data>
 </edge>
 <edge id="(TDBN : LyXQ)" source="TDBN" target="LyXQ">
 <data key="edge_label">2</data>
 </edge>
-<edge id="(TDBN : LyDD)" source="TDBN" target="LyDD">
-<data key="edge_label">2</data>
-</edge>
 <edge id="(TDBN : LyGC)" source="TDBN" target="LyGC">
 <data key="edge_label">2</data>
 </edge>
-<edge id="(TDBN : LyTT)" source="TDBN" target="LyTT">
-<data key="edge_label">2</data>
-</edge>
 <edge id="(TDBN : LyTD)" source="TDBN" target="LyTD">
-<data key="edge_label">2</data>
-</edge>
-<edge id="(TDBN : LyCL)" source="TDBN" target="LyCL">
-<data key="edge_label">2</data>
-</edge>
-<edge id="(TDBN : LyPV)" source="TDBN" target="LyPV">
-<data key="edge_label">2</data>
-</edge>
-<edge id="(TDBN : LyLD)" source="TDBN" target="LyLD">
 <data key="edge_label">2</data>
 </edge>
 <edge id="(TTaGL : LyCL)" source="TTaGL" target="LyCL">
@@ -135,9 +186,6 @@
 <data key="edge_label">1</data>
 </edge>
 <edge id="(THGL : TLDD)" source="THGL" target="TLDD">
-<data key="edge_label">1</data>
-</edge>
-<edge id="(THGL : TTaGL)" source="THGL" target="TTaGL">
 <data key="edge_label">1</data>
 </edge>
 <edge id="(TTaGL : LyLD)" source="TTaGL" target="LyLD">
@@ -171,9 +219,6 @@
 <data key="edge_label">1</data>
 </edge>
 <edge id="(RFBN : LyDD)" source="RFBN" target="LyDD">
-<data key="edge_label">1</data>
-</edge>
-<edge id="(RFBN : TTaGL)" source="RFBN" target="TTaGL">
 <data key="edge_label">1</data>
 </edge>
 </graph>

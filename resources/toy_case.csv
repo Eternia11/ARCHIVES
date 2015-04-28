@@ -1,4 +1,55 @@
 Event ID,dd/MM/yyyy HH:mm,Performative,Sender,Receiver,Objet,Lieu
+C7,27/07/1926 08:00,delegate,TTaGL,ACGC,construire diguette,Giang Cao
+C7,27/07/1926 08:00,execute,TTaGL,System,surveiller,Giang Cao
+AC16,27/07/1926 08:00,delegate,TDBN,LyPV,elever digue,Phú Viên
+6,27/07/1926 08:00,inform,System,TDBN,eau monte,?
+7,27/07/1926 08:00,inform,RFBN,RST,eau monte,?
+8,27/07/1926 08:00,inform,RFBN,RST,infiltration,Gia Thượng
+8,27/07/1926 08:00,inform,RFBN,RST,infiltration,Cổ Bi 
+AC25,27/07/1926 08:00,delegate,TDBN,LyDD,elever digue,Đông Dư
+AC22,27/07/1926 08:00,delegate,TDBN,LyCL,elever digue,Cự Linh
+AC1,27/07/1926 12:00,inform,System,PLyAM,eau monte,Ái Mộ
+AC7,27/07/1926 12:00,inform,System,NoAM,eau monte,Ái Mộ
+R3,27/07/1926 14:00,inform,RFBN,TDBN,danger,CR
+R3,27/07/1926 14:00,delegate,RFBN,TDBN,elever digue,CR
+AC17,27/07/1926 17:00,delegate,TTaGL,LyPV,construire diguette,Phú Viên
+AC17,27/07/1926 17:00,execute,TTaGL,System,surveiller,Phú Viên
+AC17,27/07/1926 17:00,execute,TTaGL,System,se deplacer,Đông Dư
+AC18,27/07/1926 17:00,delegate,TTaGL,LTGQ,construire diguette,Gia Quất
+AC18,27/07/1926 17:00,execute,TTaGL,System,surveiller,Gia Quất
+TT1,27/07/1926 17:00,delegate,RFBN,TTaGL,rencontre,Giang Cao
+TT1,27/07/1926 17:00,delegate,RFBN,TTaGL,donner ordres,Giang Cao
+TT1,27/07/1926 17:00,delegate,RFBN,TTaGL,surveiller,Giang Cao
+TT2,27/07/1926 17:00,delegate,THGL,TTaGL,se deplacer,Gia Thượng
+AC13,27/07/1926 18:00,execute,TTaGL,LyGT,construire diguette,Gia Thụy
+TT3,27/07/1926 21:00,execute,TTaGL,System,verifier digue,Gia Thụy
+TT3,27/07/1926 21:00,execute,TLGT,System,verifier digue,Gia Thụy
+TT3,27/07/1926 21:00,execute,ACGT,System,verifier digue,Gia Thụy
+AC19,27/07/1926 21:00,delegate,TDBN,LTGQ,elever digue,Gia Quất
+AC14,27/07/1926 21:00,delegate,TDBN,LyGT,elever digue,Gia Thượng
+TH3,27/07/1926 21:00,inform,RFBN,THGL,eau monte,?
+TH3,27/07/1926 21:00,execute,THGL,System,se deplacer,?
+TH3,27/07/1926 21:00,delegate,THGL,TTaGL,surveiller,FR
+AC2,27/07/1926 21:00,delegate,TDBN,PLyAM,elever digue,Ái Mộ
+AC9,27/07/1926 21:00,delegate,TDBN,LyLD,elever digue,Lâm Du
+AC31,27/07/1926 21:00,delegate,TDBN,LyTT,elever digue,Thuận Tốn
+C8,27/07/1926 21:00,delegate,TDBN,TLDT,elever digue,Đa Tốn
+AC35,27/07/1926 21:00,delegate,TDBN,LyDD,elever digue,Đông Dư
+C9,28/07/1926 00:00,inform,ACGC,TTaGL,infiltration,Giang Cao
+TH4,28/07/1926 00:00,execute,THGL,System,surveiller,CR
+TT4,28/07/1926 01:00,delegate,TTaGL,ACGQ,construire diguette,Gia Quất
+TT4,28/07/1926 01:00,execute,TTaGL,System,se deplacer,Gia Quất
+TT4,28/07/1926 01:00,delegate,TTaGL,ACGT,construire diguette,Gia Thượng
+90,28/07/1926 01:00,inform,RST,RFBN,débordement,CR
+TT5,28/07/1926 05:00,execute,TTaGL,System,diriger,Gia Thượng
+TT5,28/07/1926 05:00,inform,System,TTaGL,infiltration,Gia Thượng
+AC3,28/07/1926 05:00,delegate,TTaGL,PLyAM,construire diguette,Giang Cao
+AC3,28/07/1926 05:00,execute,TTaGL,System,se deplacer,?
+AC27,28/07/1926 05:00,delegate,TTaGL,LD,construire diguette,?
+R5,28/07/1926 06:00,execute,RFBN,System,surveiller,?
+C10,28/07/1926 08:00,execute,TLDT,System,mobiliser coolies,Giang Cao
+C10,28/07/1926 08:00,execute,TTaGL,System,mobiliser coolies,Giang Cao
+C10,28/07/1926 08:00,execute,coolies,System,colmater digue,Giang Cao
 AC32,28/07/1926 08:00,delegate,TTaGL,LyTT,elever digue,Thuận Tốn
 AC33,28/07/1926 08:00,delegate,TTaGL,ACGC,construire diguette,?
 10,28/07/1926 08:00,inform,RFBN,TLDD,situation grave,Đông Dư

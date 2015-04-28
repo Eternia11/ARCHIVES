@@ -17,24 +17,79 @@
 					<text>_out_</text>
 				</name>
 			</place>
-			<transition id="elever digue">
-				<name>
-					<text>elever digue</text>
-				</name>
-			</transition>
 			<transition id="construire diguette">
 				<name>
 					<text>construire diguette</text>
 				</name>
 			</transition>
-			<transition id="situation grave">
-				<name>
-					<text>situation grave</text>
-				</name>
-			</transition>
 			<transition id="surveiller">
 				<name>
 					<text>surveiller</text>
+				</name>
+			</transition>
+			<transition id="elever digue">
+				<name>
+					<text>elever digue</text>
+				</name>
+			</transition>
+			<transition id="eau monte">
+				<name>
+					<text>eau monte</text>
+				</name>
+			</transition>
+			<transition id="infiltration">
+				<name>
+					<text>infiltration</text>
+				</name>
+			</transition>
+			<transition id="danger">
+				<name>
+					<text>danger</text>
+				</name>
+			</transition>
+			<transition id="se deplacer">
+				<name>
+					<text>se deplacer</text>
+				</name>
+			</transition>
+			<transition id="rencontre">
+				<name>
+					<text>rencontre</text>
+				</name>
+			</transition>
+			<transition id="donner ordres">
+				<name>
+					<text>donner ordres</text>
+				</name>
+			</transition>
+			<transition id="verifier digue">
+				<name>
+					<text>verifier digue</text>
+				</name>
+			</transition>
+			<transition id="dÃ©bordement">
+				<name>
+					<text>dÃ©bordement</text>
+				</name>
+			</transition>
+			<transition id="diriger">
+				<name>
+					<text>diriger</text>
+				</name>
+			</transition>
+			<transition id="mobiliser coolies">
+				<name>
+					<text>mobiliser coolies</text>
+				</name>
+			</transition>
+			<transition id="colmater digue">
+				<name>
+					<text>colmater digue</text>
+				</name>
+			</transition>
+			<transition id="situation grave">
+				<name>
+					<text>situation grave</text>
 				</name>
 			</transition>
 			<transition id="presence renard">
@@ -47,29 +102,9 @@
 					<text>debordement</text>
 				</name>
 			</transition>
-			<transition id="mobiliser coolies">
-				<name>
-					<text>mobiliser coolies</text>
-				</name>
-			</transition>
 			<transition id="demande de materiel">
 				<name>
 					<text>demande de materiel</text>
-				</name>
-			</transition>
-			<transition id="eau monte">
-				<name>
-					<text>eau monte</text>
-				</name>
-			</transition>
-			<transition id="rencontre">
-				<name>
-					<text>rencontre</text>
-				</name>
-			</transition>
-			<transition id="verifier digue">
-				<name>
-					<text>verifier digue</text>
 				</name>
 			</transition>
 			<transition id="envoyer police">
@@ -92,92 +127,107 @@
 					<text>reparer digue</text>
 				</name>
 			</transition>
-			<arc id="a_in-0_c0" source="_in_" target="elever digue">
+			<arc id="a_in-0_c0" source="_in_" target="construire diguette">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_in-1_c0" source="_in_" target="situation grave">
+			<arc id="a_in-1_c0" source="_in_" target="surveiller">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_in-2_c0" source="_in_" target="construire diguette">
+			<arc id="a_out-0_c0" source="construire diguette" target="_out_">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_in-4_c0" source="_in_" target="surveiller">
+			<arc id="a_in-0_c1" source="_in_" target="elever digue">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_out-0_c0" source="elever digue" target="_out_">
+			<arc id="a_out-0_c1" source="situation grave" target="_out_">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_out-1_c0" source="situation grave" target="_out_">
+			<arc id="a_out-3_c1" source="surveiller" target="_out_">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_out-2_c0" source="construire diguette" target="_out_">
+			<arc id="a_in-0_c2" source="_in_" target="eau monte">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_out-4_c0" source="surveiller" target="_out_">
+			<arc id="a_out-0_c2" source="renouveler ordres" target="_out_">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_out-0_c1" source="renouveler ordres" target="_out_">
+			<arc id="a_in-0_c3" source="_in_" target="infiltration">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_out-0_c6" source="mobiliser coolies" target="_out_">
+			<arc id="a_out-0_c3" source="diriger" target="_out_">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_in-0_c10" source="_in_" target="presence renard">
+			<arc id="a_out-1_c3" source="infiltration" target="_out_">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_out-0_c10" source="reparer digue" target="_out_">
+			<arc id="a_out-0_c4" source="reparer digue" target="_out_">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_in-0_c11" source="_in_" target="debordement">
+			<arc id="a_out-0_c7" source="mobiliser coolies" target="_out_">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_out-2_c11" source="envoyer police" target="_out_">
+			<arc id="a_out-2_c7" source="envoyer police" target="_out_">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_out-4_c11" source="ordres non respectes" target="_out_">
+			<arc id="a_out-4_c7" source="ordres non respectes" target="_out_">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_in-0_c12" source="_in_" target="verifier digue">
+			<arc id="a_in-0_c8" source="_in_" target="danger">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_out-0_c12" source="verifier digue" target="_out_">
+			<arc id="a_out-0_c8" source="dÃ©bordement" target="_out_">
 				<inscription>
 					<text>1</text>
 				</inscription>
 			</arc>
-			<arc id="a_in-0_c13" source="_in_" target="mobiliser coolies">
+			<arc id="a_out-0_c9" source="verifier digue" target="_out_">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_out-0_c13" source="elever digue" target="_out_">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_in-0_c15" source="_in_" target="situation grave">
+				<inscription>
+					<text>1</text>
+				</inscription>
+			</arc>
+			<arc id="a_in-0_c16" source="_in_" target="mobiliser coolies">
 				<inscription>
 					<text>1</text>
 				</inscription>
