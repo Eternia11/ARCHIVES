@@ -3,19 +3,16 @@
 package archives.main;
 
 import archives.algorithm.Algorithm;
+import archives.graph.Graph;
 
 import java.util.List;
-
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
-import org.jgrapht.graph.DefaultWeightedEdge;
 
 class Main {
 	private static String m_csvFile = "resources\\toy_case.csv";
 	private static String m_delegateGraphFileName = "gen\\delegate.graphml";
 	private static String m_informGraphFileName = "gen\\inform.graphml";
-	private static SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> m_delegateGraph = null;
-	private static SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> m_informGraph = null;
-	private static List<List<String>> m_clusters = null;
+	private static Graph m_delegateGraph = null;
+	private static Graph m_informGraph = null;
 	private static List<List<String>> m_delegateChain = null;
 	private static List<String> m_IE_rules = null;
 
@@ -28,11 +25,9 @@ class Main {
 		algo.readLogFile(m_csvFile);
 		m_informGraph = algo.buildPerformativeGraph("inform");
 		m_delegateGraph = algo.buildPerformativeGraph("delegate");
-		algo.exportGraphsToGraphml(m_informGraph, m_informGraphFileName);
-		algo.exportGraphsToGraphml(m_delegateGraph, m_delegateGraphFileName);
-		m_clusters = algo.buildClusterList(m_delegateGraph);
-		for (int i = 0; i < m_clusters.size(); i++)
-			System.out.println(m_clusters.get(i));
+		algo.buildClusterList(m_delegateGraph);
+		algo.exportToGraphml(m_informGraph, m_informGraphFileName);
+		algo.exportToGraphml(m_delegateGraph, m_delegateGraphFileName);
 		m_delegateChain = algo.buildPerformativeChainList("delegate");
 		m_IE_rules = algo.buildInform_ExecuteRules();
 		for (int i = 0; i < m_IE_rules.size(); i++)

@@ -40,51 +40,6 @@
 	<xpdl:WorkflowProcesses>
 		<xpdl:WorkflowProcess Id="pr_archives" Name="pr_archives">
 			<xpdl:Activities>
-				<xpdl:Activity Id="TTaGL_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TTaGL_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TTaGL_se deplacer" Name="se deplacer">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TTaGL_verifier digue" Name="verifier digue">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TTaGL_diriger" Name="diriger">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TTaGL_mobiliser coolies" Name="mobiliser coolies">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TTaGL_elever digue" Name="elever digue">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TTaGL_demande de materiel" Name="demande de materiel">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TTaGL_envoyer police" Name="envoyer police">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="TTaGL_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
@@ -99,11 +54,6 @@
 					</xpdl:Event>
 					<xpdl:NodeGraphicsInfos>
 						<xpdl:NodeGraphicsInfo LaneId="TTaGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="ACGC_infiltration" Name="infiltration">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="ACGC"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
 				<xpdl:Activity Id="ACGC_start_">
@@ -122,21 +72,6 @@
 						<xpdl:NodeGraphicsInfo LaneId="ACGC"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
-				<xpdl:Activity Id="System_eau monte" Name="eau monte">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="System"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="System_infiltration" Name="infiltration">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="System"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="System_ordres non respectes" Name="ordres non respectes">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="System"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="System_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
@@ -153,22 +88,12 @@
 						<xpdl:NodeGraphicsInfo LaneId="System"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
-				<xpdl:Activity Id="TDBN_elever digue" Name="elever digue">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TDBN"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="TDBN_construire diguette" Name="construire diguette">
 					<xpdl:NodeGraphicsInfos>
 						<xpdl:NodeGraphicsInfo LaneId="TDBN"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
 				<xpdl:Activity Id="TDBN_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TDBN"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TDBN_presence renard" Name="presence renard">
 					<xpdl:NodeGraphicsInfos>
 						<xpdl:NodeGraphicsInfo LaneId="TDBN"/>
 					</xpdl:NodeGraphicsInfos>
@@ -195,16 +120,6 @@
 						<xpdl:NodeGraphicsInfo LaneId="TDBN"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
-				<xpdl:Activity Id="LyPV_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyPV"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="LyPV_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyPV"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="LyPV_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
@@ -219,56 +134,6 @@
 					</xpdl:Event>
 					<xpdl:NodeGraphicsInfos>
 						<xpdl:NodeGraphicsInfo LaneId="LyPV"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="RFBN_eau monte" Name="eau monte">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="RFBN_infiltration" Name="infiltration">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="RFBN_danger" Name="danger">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="RFBN_elever digue" Name="elever digue">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="RFBN_rencontre" Name="rencontre">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="RFBN_donner ordres" Name="donner ordres">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="RFBN_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="RFBN_situation grave" Name="situation grave">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="RFBN_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="RFBN_renouveler ordres" Name="renouveler ordres">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
 				<xpdl:Activity Id="RFBN_start_">
@@ -287,11 +152,6 @@
 						<xpdl:NodeGraphicsInfo LaneId="RFBN"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
-				<xpdl:Activity Id="RST_dÃ©bordement" Name="dÃ©bordement">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="RST"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="RST_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
@@ -308,16 +168,6 @@
 						<xpdl:NodeGraphicsInfo LaneId="RST"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
-				<xpdl:Activity Id="LyDD_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyDD"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="LyDD_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyDD"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="LyDD_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
@@ -332,16 +182,6 @@
 					</xpdl:Event>
 					<xpdl:NodeGraphicsInfos>
 						<xpdl:NodeGraphicsInfo LaneId="LyDD"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="LyCL_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyCL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="LyCL_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyCL"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
 				<xpdl:Activity Id="LyCL_start_">
@@ -376,11 +216,6 @@
 						<xpdl:NodeGraphicsInfo LaneId="PLyAM"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
-				<xpdl:Activity Id="NoAM_mobiliser coolies" Name="mobiliser coolies">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="NoAM"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="NoAM_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
@@ -411,41 +246,6 @@
 					</xpdl:Event>
 					<xpdl:NodeGraphicsInfos>
 						<xpdl:NodeGraphicsInfo LaneId="LTGQ"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="THGL_se deplacer" Name="se deplacer">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="THGL_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="THGL_debordement" Name="debordement">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="THGL_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="THGL_rencontre" Name="rencontre">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="THGL_verifier digue" Name="verifier digue">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="THGL_reparer digue" Name="reparer digue">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="THGL"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
 				<xpdl:Activity Id="THGL_start_">
@@ -480,21 +280,6 @@
 						<xpdl:NodeGraphicsInfo LaneId="LyGT"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
-				<xpdl:Activity Id="TLGT_verifier digue" Name="verifier digue">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TLGT"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TLGT_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TLGT"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TLGT_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TLGT"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="TLGT_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
@@ -509,11 +294,6 @@
 					</xpdl:Event>
 					<xpdl:NodeGraphicsInfos>
 						<xpdl:NodeGraphicsInfo LaneId="TLGT"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="ACGT_verifier digue" Name="verifier digue">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="ACGT"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
 				<xpdl:Activity Id="ACGT_start_">
@@ -532,16 +312,6 @@
 						<xpdl:NodeGraphicsInfo LaneId="ACGT"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
-				<xpdl:Activity Id="LyLD_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyLD"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="LyLD_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyLD"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="LyLD_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
@@ -558,16 +328,6 @@
 						<xpdl:NodeGraphicsInfo LaneId="LyLD"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
-				<xpdl:Activity Id="LyTT_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyTT"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="LyTT_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyTT"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="LyTT_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
@@ -582,21 +342,6 @@
 					</xpdl:Event>
 					<xpdl:NodeGraphicsInfos>
 						<xpdl:NodeGraphicsInfo LaneId="LyTT"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TLDT_mobiliser coolies" Name="mobiliser coolies">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TLDT"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TLDT_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TLDT"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TLDT_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TLDT"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
 				<xpdl:Activity Id="TLDT_start_">
@@ -647,16 +392,6 @@
 						<xpdl:NodeGraphicsInfo LaneId="LD"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
-				<xpdl:Activity Id="coolies_colmater digue" Name="colmater digue">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="coolies"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="coolies_elever digue" Name="elever digue">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="coolies"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="coolies_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
@@ -671,16 +406,6 @@
 					</xpdl:Event>
 					<xpdl:NodeGraphicsInfos>
 						<xpdl:NodeGraphicsInfo LaneId="coolies"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TLDD_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TLDD"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TLDD_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TLDD"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
 				<xpdl:Activity Id="TLDD_start_">
@@ -699,16 +424,6 @@
 						<xpdl:NodeGraphicsInfo LaneId="TLDD"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
-				<xpdl:Activity Id="TLCL_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TLCL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="TLCL_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="TLCL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="TLCL_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
@@ -723,16 +438,6 @@
 					</xpdl:Event>
 					<xpdl:NodeGraphicsInfos>
 						<xpdl:NodeGraphicsInfo LaneId="TLCL"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="LyXQ_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyXQ"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="LyXQ_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyXQ"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
 				<xpdl:Activity Id="LyXQ_start_">
@@ -751,16 +456,6 @@
 						<xpdl:NodeGraphicsInfo LaneId="LyXQ"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
-				<xpdl:Activity Id="LyGC_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyGC"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="LyGC_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyGC"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="LyGC_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
@@ -775,16 +470,6 @@
 					</xpdl:Event>
 					<xpdl:NodeGraphicsInfos>
 						<xpdl:NodeGraphicsInfo LaneId="LyGC"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="LyTD_construire diguette" Name="construire diguette">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyTD"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="LyTD_surveiller" Name="surveiller">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="LyTD"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
 				<xpdl:Activity Id="LyTD_start_">
@@ -803,11 +488,6 @@
 						<xpdl:NodeGraphicsInfo LaneId="LyTD"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
-				<xpdl:Activity Id="ATTP_mobiliser coolies" Name="mobiliser coolies">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="ATTP"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
 				<xpdl:Activity Id="ATTP_start_">
 					<xpdl:Event>
 						<xpdl:StartEvent/>
@@ -822,11 +502,6 @@
 					</xpdl:Event>
 					<xpdl:NodeGraphicsInfos>
 						<xpdl:NodeGraphicsInfo LaneId="ATTP"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="ACGL_envoyer police" Name="envoyer police">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="ACGL"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
 				<xpdl:Activity Id="ACGL_start_">
@@ -859,11 +534,6 @@
 					</xpdl:Event>
 					<xpdl:NodeGraphicsInfos>
 						<xpdl:NodeGraphicsInfo LaneId="LyDT"/>
-					</xpdl:NodeGraphicsInfos>
-				</xpdl:Activity>
-				<xpdl:Activity Id="AC_mobiliser coolies" Name="mobiliser coolies">
-					<xpdl:NodeGraphicsInfos>
-						<xpdl:NodeGraphicsInfo LaneId="AC"/>
 					</xpdl:NodeGraphicsInfos>
 				</xpdl:Activity>
 				<xpdl:Activity Id="AC_start_">

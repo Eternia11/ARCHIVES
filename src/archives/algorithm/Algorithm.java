@@ -3,6 +3,9 @@
 package archives.algorithm;
 
 import archives.alphaminer.AlphaMiner;
+import archives.graph.Edge;
+import archives.graph.Graph;
+import archives.graph.Node;
 import archives.log.Trace;
 import archives.petrinet.PetriNet;
 import archives.workflow.Activity;
@@ -28,14 +31,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.awt.Color;
 
 import javax.xml.transform.TransformerConfigurationException;
 
-import org.jgrapht.ext.EdgeNameProvider;
-import org.jgrapht.ext.GraphMLExporter;
-import org.jgrapht.ext.VertexNameProvider;
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
-import org.jgrapht.graph.DefaultWeightedEdge;
 import org.xml.sax.SAXException;
 import org.apache.commons.csv.*;
 
@@ -51,45 +50,19 @@ public class Algorithm {
 	private List<Trace> m_traces = null;
 
 	// export the graph g into the graphml format file f
-	public void exportGraphsToGraphml(
-			SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> g, String f) {
-		Writer f_writer = null;
+	public void exportToGraphml(Graph g, String file) {
+		PrintWriter writer;
 		try {
-			f_writer = new OutputStreamWriter(new FileOutputStream(f));
-		} catch (FileNotFoundException e) {
+			writer = new PrintWriter(file, "UTF-8");
+			writer.println(g.toGRAPHML());
+			writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			System.out
-					.println("One of the graph file cannot be created or opened. Please check the names twice.");
+					.println("The file "
+							+ file
+							+ " cannot be created/opened or does not have the UTF-8 encoding.");
 			e.printStackTrace();
 			System.exit(1);
-		}
-
-		// given by developers of JgraphT
-		GraphMLExporter<String, DefaultWeightedEdge> gml;
-		VertexNameProvider<String> vertex_name = new VertexNameProvider<String>() {
-			public String getVertexName(String vertex) {
-				return vertex;
-			}
-		};
-		EdgeNameProvider<DefaultWeightedEdge> edge_ID = new EdgeNameProvider<DefaultWeightedEdge>() {
-			public String getEdgeName(DefaultWeightedEdge edge) {
-				return edge.toString();
-			}
-		};
-		EdgeNameProvider<DefaultWeightedEdge> edge_weight = new EdgeNameProvider<DefaultWeightedEdge>() {
-			public String getEdgeName(DefaultWeightedEdge edge) {
-				return Integer.toString((int) g.getEdgeWeight(edge));
-			}
-		};
-		gml = new GraphMLExporter<String, DefaultWeightedEdge>(vertex_name,
-				vertex_name, edge_ID, edge_weight);
-		try {
-			gml.export(f_writer, g);
-		} catch (TransformerConfigurationException | SAXException e) {
-			System.out
-					.println("Error during the export the graph into the graphml file"
-							+ f);
-			e.printStackTrace();
-			System.exit(2);
 		}
 	}
 
@@ -126,31 +99,24 @@ public class Algorithm {
 
 	// build the graph of interactions of type performative between resources of
 	// the log file extracted in m_traces
-	public SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> buildPerformativeGraph(
-			String performative) {
-		SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> g = new SimpleDirectedWeightedGraph<String, DefaultWeightedEdge>(
-				DefaultWeightedEdge.class);
+	public Graph buildPerformativeGraph(String performative) {
+		Graph g = new Graph();
+		
 		for (int i = 0; i < m_traces.size(); i++) {
 			Trace t = m_traces.get(i);
 			if (t.getPerformative().equals(performative)) {
 				String sender = t.getSender();
 				String receiver = t.getReceiver();
-				if (!g.containsVertex(sender)) {
-					g.addVertex(sender);
+				
+				g.add_node(sender);
+				g.add_node(receiver);
+				if (!g.contains_edge(sender, receiver))
+					g.add_edge(sender, receiver);
+				else
+					g.increase_weight(sender, receiver);
 				}
-				if (!g.containsVertex(receiver)) {
-					g.addVertex(receiver);
-				}
-				if (g.containsEdge(sender, receiver)) {
-					DefaultWeightedEdge previous_edge = g.getEdge(sender,
-							receiver);
-					g.setEdgeWeight(previous_edge,
-							g.getEdgeWeight(previous_edge) + 1.0);
-				} else {
-					g.addEdge(sender, receiver);
-				}
-			}
 		}
+		
 		return g;
 	}
 	
@@ -248,64 +214,63 @@ public class Algorithm {
 		return chainList;
 	}
 
-	// build the list of clusters of vertex of g
-	public List<List<String>> buildClusterList(SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> g) {
-		List<List<String>> clusterList = new ArrayList<List<String>>();
-		List<String> vertex = new ArrayList<String>(g.vertexSet());
-		List<List<String>> toVertex = new ArrayList<List<String>>();
-		List<List<String>> fromVertex = new ArrayList<List<String>>();
+	// build the list of clusters of vertex of g and color the nodes of this graph
+	public void buildClusterList(Graph g) {
+		// clustering
+		ArrayList<ArrayList<String>> clusterList = new ArrayList<ArrayList<String>>();
+		ArrayList<Node> nodes = g.get_nodes();
+		ArrayList<List<String>> targets = new ArrayList<List<String>>();
+		ArrayList<ArrayList<String>> sources = new ArrayList<ArrayList<String>>();
+		for (int i = 0; i < nodes.size(); i++) {
+			targets.add(new ArrayList<String>());
+			sources.add(new ArrayList<String>());
 
-		// for each vertex, we retrieve their source and target edges
-		for (int i = 0; i < vertex.size(); i++) {
-			toVertex.add(new ArrayList<String>());
-			fromVertex.add(new ArrayList<String>());
-
-			List<DefaultWeightedEdge> outgoingEdges = new ArrayList<DefaultWeightedEdge>(
-					g.outgoingEdgesOf(vertex.get(i)));
-			List<DefaultWeightedEdge> incomingEdges = new ArrayList<DefaultWeightedEdge>(
-					g.incomingEdgesOf(vertex.get(i)));
+			ArrayList<Edge> outgoingEdges = new ArrayList<Edge>(g.outgoingEdgesOf(nodes.get(i)));
+			ArrayList<Edge> incomingEdges = new ArrayList<Edge>(g.incomingEdgesOf(nodes.get(i)));
 
 			for (int j = 0; j < outgoingEdges.size(); j++) {
-				toVertex.get(i).add(
-						g.getEdgeTarget(outgoingEdges.get(j)));
+				targets.get(i).add(outgoingEdges.get(j).get_target());
 			}
 			for (int j = 0; j < incomingEdges.size(); j++) {
-				fromVertex.get(i).add(
-						g.getEdgeSource(incomingEdges.get(j)));
+				sources.get(i).add(incomingEdges.get(j).get_source());
 			}
 		}
-
 		// classification
-		for (int i = 0; i < vertex.size(); i++) {
+		for (int i = 0; i < nodes.size(); i++) {
 			boolean classified = false;
-
 			for (int j = 0; j < clusterList.size() && !classified; j++) {
-				if (clusterList.get(j).contains(vertex.get(i))) {
+				if (clusterList.get(j).contains(nodes.get(i).get_id())) {
 					classified = true;
 				}
 			}
-
 			if (!classified) {
-				List<String> new_cluster = new ArrayList<String>();
-				new_cluster.add(vertex.get(i));
+				ArrayList<String> new_cluster = new ArrayList<String>();
+				new_cluster.add(nodes.get(i).get_id());
 
-				for (int j = 0; j < vertex.size(); j++) {
+				for (int j = 0; j < nodes.size(); j++) {
 					if ((i != j)
-							&& (toVertex.get(i).containsAll(toVertex.get(j)))
-							&& (toVertex.get(j).containsAll(toVertex.get(i)))
-							&& (fromVertex.get(i)
-									.containsAll(fromVertex.get(j)))
-							&& (fromVertex.get(j)
-									.containsAll(fromVertex.get(i)))) {
-						new_cluster.add(vertex.get(j));
+							&& (targets.get(i).containsAll(targets.get(j)))
+							&& (targets.get(j).containsAll(targets.get(i)))
+							&& (sources.get(i).containsAll(sources.get(j)))
+							&& (sources.get(j).containsAll(sources.get(i)))) {
+						new_cluster.add(nodes.get(j).get_id());
 					}
 				}
-
 				clusterList.add(new_cluster);
 			}
 		}
 		
-		return clusterList;
+		// coloring
+		int nb_clusters = clusterList.size();
+		for (int i = 0; i < clusterList.size(); i++) {
+			Color c = new Color(Color.HSBtoRGB((float) i/nb_clusters, 1, 1));
+			for (int j = 0; j < clusterList.get(i).size(); j++) {
+				Node n = g.get_node(clusterList.get(i).get(j));
+				if (n != null) {
+					n.setRGB(c.getRed(), c.getGreen(), c.getBlue());
+				}
+			}
+		}
 	}
 	
 	// build the list of bounds between informs and executed actions, in a very simple way, without taking in account the caseID
@@ -354,7 +319,7 @@ public class Algorithm {
 	// under construction and testing
 	public void alphaWorkflow() {
 		AlphaMiner alpha = new AlphaMiner();
-		alpha.alphaWorkflow(m_traces, 2, true);
+		alpha.alphaWorkflow(m_traces, 0, true);
 		
 		/*Workflow wf = new Workflow("wf_test", "wf_test");
 		String WF_file = "gen\\workflow.xpdl";

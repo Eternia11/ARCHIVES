@@ -511,9 +511,9 @@ public class AlphaMiner {
 			// construction of Tw
 			for (Trace t : logs) {
 				if (r.equals(t.getSender())) {
-					m_workflow.get_process(0).addActivity(
+					/*m_workflow.get_process(0).addActivity(
 							new ActivityLane(r + "_" + t.getActivity(), t
-									.getActivity(), r));
+									.getActivity(), r));*/
 					if (!T.contains(t.getActivity())) {
 						T.add(t.getActivity());
 					}
@@ -662,6 +662,16 @@ public class AlphaMiner {
 				for (int j = i; j < T.size(); j++) {
 					if (Xw[i][j] != 0) {
 						Y.cleave(i, j);
+					}
+				}
+			}
+			
+			// construction of Tw
+			for (int i = 0; i < T.size(); i++) {
+				for (int j = i; j < T.size(); j++) {
+					if (Xw[i][j] != 0) {
+						m_workflow.get_process(0).addActivity(new ActivityLane(r + "_" + T.get(i), T.get(i), r));
+						m_workflow.get_process(0).addActivity(new ActivityLane(r + "_" + T.get(j), T.get(j), r));
 					}
 				}
 			}
