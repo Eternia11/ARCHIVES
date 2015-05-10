@@ -7,25 +7,12 @@ import archives.graph.Edge;
 import archives.graph.Graph;
 import archives.graph.Node;
 import archives.log.Trace;
-import archives.petrinet.PetriNet;
-import archives.workflow.Activity;
-import archives.workflow.ActivityEndLane;
-import archives.workflow.ActivityLane;
-import archives.workflow.ActivityStartLane;
-import archives.workflow.Flow;
-import archives.workflow.Lane;
-import archives.workflow.Pool;
-import archives.workflow.Process;
-import archives.workflow.Workflow;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,9 +20,6 @@ import java.util.Date;
 import java.util.List;
 import java.awt.Color;
 
-import javax.xml.transform.TransformerConfigurationException;
-
-import org.xml.sax.SAXException;
 import org.apache.commons.csv.*;
 
 public class Algorithm {
