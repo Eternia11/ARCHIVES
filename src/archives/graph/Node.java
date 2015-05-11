@@ -1,25 +1,22 @@
 package archives.graph;
 
 /**
- * Represents an edge of a Graph in GraphML format
+ * Represents an edge of a Graph
  * 
- * @param m_id id of the Node
- * @param m_label label or name of the Node
- * @param m_r red value of the RGB color of the Node
- * @param m_g green value of the RGB color of the Node
- * @param m_b blue value of the RGB color of the Node
- * @param m_size size of the Node
+ * @author Alan BENIER
  */
 public class Node {
-	private String m_id = "";
-	private String m_label = "";
-	private int m_r = 0;
-	private int m_g = 0;
-	private int m_b = 0;
-	private float m_size = 25;
+	private String m_id = "";		// id of the Node
+	private String m_label = "";	// label or name of the Node
+	private int m_r = 0;			// red value of the RGB color of the Node
+	private int m_g = 0;			// green value of the RGB color of the Node
+	private int m_b = 0;			// blue value of the RGB color of the Node
+	private float m_size = 25;		// size of the Node
 
 	/**
-	 * Depreciated Constructor
+	 * Deprecated Constructor
+	 * 
+	 * @deprecated
 	 */
 	public Node() {
 	}

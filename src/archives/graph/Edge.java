@@ -1,21 +1,20 @@
 package archives.graph;
 
 /**
- * Represents an edge of a Graph in GraphML format
+ * Represents an edge of a Graph
  * 
- * @param m_label label or name of the Edge
- * @param m_source id of the source node
- * @param m_target id of the target node
- * @param m_weight weight of the Edge
+ * @author Alan BENIER
  */
 public class Edge {
-	private String m_label = "";
-	private String m_source = "";
-	private String m_target = "";
-	private float m_weight = 1;
+	private String m_label = "";	// label or name of the Edge
+	private String m_source = "";	// id of the source node
+	private String m_target = "";	// id of the target node
+	private float m_weight = 1;		// weight of the Edge
 
 	/**
-	 * Depreciated Constructor
+	 * Deprecated Constructor
+	 * 
+	 * @deprecated
 	 */
 	public Edge() {
 	}

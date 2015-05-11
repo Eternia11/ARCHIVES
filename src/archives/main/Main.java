@@ -2,40 +2,43 @@
 
 package archives.main;
 
-import archives.algorithm.Algorithm;
+import java.util.ArrayList;
+
 import archives.graph.Graph;
+import archives.log.Trace;
+import archives.tools.Tools;
 
-import java.util.List;
-
+/**
+ * 
+ * 
+ * @author Alan BENIER
+ */
 class Main {
-	private static String m_csvFile = "resources\\toy_case.csv";
-	private static String m_delegateGraphFileName = "gen\\delegate.graphml";
-	private static String m_informGraphFileName = "gen\\inform.graphml";
-	private static Graph m_delegateGraph = null;
-	private static Graph m_informGraph = null;
-	private static List<List<String>> m_delegateChain = null;
-	private static List<String> m_IE_rules = null;
+	private final static String m_csvFile = "resources\\toy_case.csv";					// import path of the log file
+	private final static String m_delegateGraphFileName = "gen\\delegate.graphml";		// export path of the graph of resources' hierarchy
+	private final static String m_informGraphFileName = "gen\\inform.graphml";			// export path of the graph of resources' interaction
+	private static ArrayList<Trace> m_traces = null;									// list of cases of the log file
+	private static Graph m_delegateGraph = null;										// graph of resources' hierarchy
+	private static Graph m_informGraph = null;											// graph of resources' interaction
+	private static ArrayList<ArrayList<String>> m_delegateChain = null;					// list of series of activities associated with list of resources to who the activities have been delegated
+	private static ArrayList<String> m_IE_rules = null;									// list of relations between "inform" and "execute" cases
 
-	// read a log file m_csvFile in csv format (case, timestamp, performative,
-	// sender, receiver, activity), mine the hierarchy of resources, the
-	// information chain and export
-	// them into graphML format files
 	public static void main(String[] args) {
-		Algorithm algo = new Algorithm();
-		algo.readLogFile(m_csvFile);
-		m_informGraph = algo.buildPerformativeGraph("inform");
-		m_delegateGraph = algo.buildPerformativeGraph("delegate");
-		algo.buildClusterList(m_delegateGraph);
-		algo.exportToGraphml(m_informGraph, m_informGraphFileName);
-		algo.exportToGraphml(m_delegateGraph, m_delegateGraphFileName);
-		m_delegateChain = algo.buildPerformativeChainList("delegate");
-		m_IE_rules = algo.buildInform_ExecuteRules();
+		m_traces = Tools.readLogFile(m_csvFile); // read the log file
+		m_informGraph = Tools.buildPerformativeGraph(m_traces, "inform"); // build a hierarchical graph of the resources of the log file
+		m_delegateGraph = Tools.buildPerformativeGraph(m_traces, "delegate"); // build a graph of interactions between the resources of the log file
+		Tools.buildClusterList(m_delegateGraph); // color the nodes of the hierarchy graph finding simple clusters
+		Tools.exportToGraphml(m_informGraph, m_informGraphFileName); // export the interactions graph
+		Tools.exportToGraphml(m_delegateGraph, m_delegateGraphFileName); // export the hierarchy graph
+		m_delegateChain = Tools.buildPerformativeChainList(m_traces, "delegate"); // build series of activities associated with list of resources to who the activities have been delegated
+		// build then print the relations between "inform" and "execute"cases
+		m_IE_rules = Tools.buildInform_ExecuteRules(m_traces);
 		for (int i = 0; i < m_IE_rules.size(); i++)
 			System.out.println(m_IE_rules.get(i));
-		long startTime = System.nanoTime();
-		algo.runAlphaMiner(2, false);
-		long endTime = System.nanoTime();
-		System.out.println("Alpha Algorithm took "+(endTime - startTime)/1000000 + " ms");
-		algo.alphaWorkflow();
+		long startTime = System.nanoTime(); // timer
+		Tools.runAlphaMiner(m_traces, 2, false); // alpha algorithm
+		long endTime = System.nanoTime(); // timer
+		System.out.println("Alpha Algorithm took "+(endTime - startTime)/1000000 + " ms"); // print the time of execution of the Alpha Algorithm
+		Tools.alphaWorkflow(m_traces); // my test of workflow
 	}
 }

@@ -12,10 +12,16 @@ import archives.log.Trace;
 import archives.petrinet.*;
 import archives.workflow.*;
 
+/**
+ * Represents an instance of the Alpha Algorithm
+ * 
+ * @author Alan BENIER
+ * @see http://
+ */
 public class AlphaMiner {
-	private PetriNet m_net = null;
-	private Workflow m_workflow = null;
-	private String m_netFile = "gen\\petri.pnml";
+	private PetriNet m_net = null;									// petri net resulting of the Alpha Algorithm
+	private Workflow m_workflow = null;								// workflow
+	private final static String m_netFile = "gen\\petri.pnml";		// file in which the petri net will be exported
 
 	public AlphaMiner() {
 		m_net = new PetriNet("net0", "AlphaNetARCHIVES");

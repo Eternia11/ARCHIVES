@@ -3,14 +3,13 @@ package archives.graph;
 import java.util.ArrayList;
 
 /**
- * Represents a Graph in GraphML format
+ * Represents a Graph
  * 
- * @param m_nodes list of nodes of the Graph
- * @param m_edges list of edges of the Graph
+ * @author Alan BENIER
  */
 public class Graph {
-	private ArrayList<Node> m_nodes = null;
-	private ArrayList<Edge> m_edges = null;
+	private ArrayList<Node> m_nodes = null;		// list of nodes of the Graph
+	private ArrayList<Edge> m_edges = null;		// list of edges of the Graph
 
 	/**
 	 * Create a Graph with no node nor edge
@@ -59,10 +58,13 @@ public class Graph {
 	}
 
 	/**
+	 * Check if a node designated by its id
+	 * is contained in the list of nodes
+	 * We assume that two nodes are the same
+	 * iff they have the same id
 	 * 
-	 * 
-	 * @param id
-	 * @return
+	 * @param id id of the node to check
+	 * @return true if the node is in the list
 	 */
 	public boolean contains_node(String id) {
 		for (Node node : m_nodes) {
@@ -73,10 +75,15 @@ public class Graph {
 	}
 
 	/**
+	 * Check if an edge designated by its source and target
+	 * is contained in the list of edges
+	 * We assume that two edges are the same
+	 * iff they have the same source
+	 * and the same target
 	 * 
-	 * @param source
-	 * @param target
-	 * @return
+	 * @param source id of the source node of the edge to check
+	 * @param target id of the target node of the edge to check
+	 * @return true if the edges is in the list
 	 */
 	public boolean contains_edge(String source, String target) {
 		for (Edge edge : m_edges) {
@@ -88,8 +95,9 @@ public class Graph {
 	}
 
 	/**
+	 * Add a node to the list of nodes
 	 * 
-	 * @param node
+	 * @param node node to add
 	 */
 	public void add_node(Node node) {
 		if (!contains_node(node.get_id()))
@@ -97,8 +105,10 @@ public class Graph {
 	}
 	
 	/**
+	 * Create then add a node to the list of nodes
+	 * Its id will be the same as its label
 	 * 
-	 * @param label
+	 * @param label label of the node to add
 	 */
 	public void add_node(String label) {
 		if (!contains_node(label))
@@ -106,8 +116,9 @@ public class Graph {
 	}
 
 	/**
+	 * Add an edge to the list of edges
 	 * 
-	 * @param edge
+	 * @param edge edge to add
 	 */
 	public void add_edge(Edge edge) {
 		if (!contains_edge(edge.get_source(), edge.get_target()))
@@ -115,9 +126,10 @@ public class Graph {
 	}
 	
 	/**
+	 * Create then add an edge to the list of edges
 	 * 
-	 * @param source
-	 * @param target
+	 * @param source id of source of the edge to add
+	 * @param target id of target of the edge to add
 	 */
 	public void add_edge(String source, String target) {
 		if (!contains_edge(source, target))
@@ -125,9 +137,11 @@ public class Graph {
 	}
 	
 	/**
+	 * Retrieve in the list the corresponding edge (source and target)
+	 * then add 1 to its current weight
 	 * 
-	 * @param source
-	 * @param target
+	 * @param source id of the source of the edge to modify
+	 * @param target id of the target of the edge to modify
 	 */
 	public void increase_weight(String source, String target) {
 		for (Edge edge : m_edges) {
@@ -139,9 +153,11 @@ public class Graph {
 	}
 	
 	/**
+	 * Create then return the list of edges which
+	 * have the source node given in parameter
 	 * 
-	 * @param node
-	 * @return
+	 * @param node source node of the edges to retrieve
+	 * @return the list of edges which source is given in parameter
 	 */
 	public ArrayList<Edge> outgoingEdgesOf(Node node) {
 		ArrayList<Edge> out = new ArrayList<Edge>();
@@ -153,9 +169,11 @@ public class Graph {
 	}
 	
 	/**
+	 * Create then return the list of edges which
+	 * have the target node given in parameter
 	 * 
-	 * @param node
-	 * @return
+	 * @param node target node of the edges to retrieve
+	 * @return the list of edges which target is given in parameter
 	 */
 	public ArrayList<Edge> incomingEdgesOf(Node node) {
 		ArrayList<Edge> in = new ArrayList<Edge>();
@@ -167,9 +185,13 @@ public class Graph {
 	}
 	
 	/**
+	 * Retrieve in the list of nodes the node which
+	 * id is given in parameter and then return it
+	 * We assume that two nodes are the same
+	 * iff they have the same id
 	 * 
-	 * @param id
-	 * @return
+	 * @param id id of the node to retrieve
+	 * @return the node if contained in the list, else null
 	 */
 	public Node get_node(String id) {
 		for (Node node : m_nodes) {
@@ -180,8 +202,9 @@ public class Graph {
 	}
 
 	/**
+	 * Convert the Graph into GraphML format String
 	 * 
-	 * @return
+	 * @return the GraphML format String representing this Graph
 	 */
 	public String toGRAPHML() {
 		String ret = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"

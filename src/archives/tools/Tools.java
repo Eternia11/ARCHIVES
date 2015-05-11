@@ -1,6 +1,6 @@
 /* Author : Alan BENIER */
 
-package archives.algorithm;
+package archives.tools;
 
 import archives.alphaminer.AlphaMiner;
 import archives.graph.Edge;
@@ -17,43 +17,39 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.awt.Color;
 
 import org.apache.commons.csv.*;
 
-public class Algorithm {
-	private static String m_caseID = "Lieu";
-	private static String m_timestamp = "dd/MM/yyyy HH:mm";
-	private static String m_performative = "Performative";
-	private static String m_sender = "Sender";
-	private static String m_receiver = "Receiver";
-	private static String m_activity = "Objet";
-	private static String m_system = "System";
-	private static String m_dateFormat = "dd/MM/yyyy HH:mm";
-	private List<Trace> m_traces = null;
+/**
+ * This class contains several tools meant to be used in ARCHIVES
+ * project that aims to generate GAMA code from archives
+ * 
+ * @author Alan BENIER
+ */
+public class Tools {
+	private final static String m_caseID = "Lieu";						// name of the column of the caseID in log file
+	private final static String m_timestamp = "dd/MM/yyyy HH:mm";		// name of the column of the timestamp in log file
+	private final static String m_performative = "Performative";		// name of the column of the performative in log file
+	private final static String m_sender = "Sender";					// name of the column of the sender in log file
+	private final static String m_receiver = "Receiver";				// name of the column of the receiver in log file
+	private final static String m_activity = "Objet";					// name of the column of the activity in log file
+	private final static String m_system = "System";					// name of the neutral or environmental resource
+	private final static String m_dateFormat = "dd/MM/yyyy HH:mm";		// date format used in the timestamp column in the log file
 
-	// export the graph g into the graphml format file f
-	public void exportToGraphml(Graph g, String file) {
-		PrintWriter writer;
-		try {
-			writer = new PrintWriter(file, "UTF-8");
-			writer.println(g.toGRAPHML());
-			writer.close();
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			System.out
-					.println("The file "
-							+ file
-							+ " cannot be created/opened or does not have the UTF-8 encoding.");
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
-
-	// read a log file *logs in csv format and store it in m_traces
-	public void readLogFile(String logs) {
+	/**
+	 * Import a log file read in .csv format
+	 * 
+	 * A log file must contain 6 column (no precise order or name) representing :
+	 * the caseID, the timestamp, the performative, the sender, the receiver
+	 * and the activity for each case
+	 * 
+	 * @param logs path of the log file to import (must be in .csv format)
+	 * @return the list of cases representing the log file
+	 */
+	public static ArrayList<Trace> readLogFile(String logs) {
 		CSVParser parser = null;
-		m_traces = new ArrayList<Trace>();
+		ArrayList<Trace> traces = new ArrayList<Trace>();
 		CSVFormat format = CSVFormat.EXCEL.withHeader().withDelimiter(',');
 		try {
 			parser = new CSVParser(new FileReader(logs), format);
@@ -62,7 +58,7 @@ public class Algorithm {
 						record.get(m_timestamp), record.get(m_performative),
 						record.get(m_sender), record.get(m_receiver),
 						record.get(m_activity));
-				m_traces.add(t);
+				traces.add(t);
 			}
 			parser.close();
 		} catch (IOException e) {
@@ -73,21 +69,33 @@ public class Algorithm {
 			e.printStackTrace();
 			System.exit(2);
 		}
+		
+		return traces;
 	}
 
-	// display the log data on stdout
-	public void displayLogs() {
-		for (int i = 0; i < m_traces.size(); i++)
-			System.out.println(m_traces.get(i));
+	/**
+	 * Print the log data imported from a log file
+	 * 
+	 * @param traces log data to print
+	 */
+	public static void displayLogs(ArrayList<Trace> traces) {
+		for (int i = 0; i < traces.size(); i++)
+			System.out.println(traces.get(i));
 	}
 
 	// build the graph of interactions of type performative between resources of
 	// the log file extracted in m_traces
-	public Graph buildPerformativeGraph(String performative) {
+	/**
+	 * 
+	 * @param traces
+	 * @param performative
+	 * @return
+	 */
+	public static Graph buildPerformativeGraph(ArrayList<Trace> traces, String performative) {
 		Graph g = new Graph();
 		
-		for (int i = 0; i < m_traces.size(); i++) {
-			Trace t = m_traces.get(i);
+		for (int i = 0; i < traces.size(); i++) {
+			Trace t = traces.get(i);
 			if (t.getPerformative().equals(performative)) {
 				String sender = t.getSender();
 				String receiver = t.getReceiver();
@@ -103,21 +111,49 @@ public class Algorithm {
 		
 		return g;
 	}
-	
+
+	// export the graph g into the graphml format file f
+	/**
+	 * 
+	 * @param g
+	 * @param file
+	 */
+	public static void exportToGraphml(Graph g, String file) {
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(file, "UTF-8");
+			writer.println(g.toGRAPHML());
+			writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			System.out
+					.println("The file "
+							+ file
+							+ " cannot be created/opened or does not have the UTF-8 encoding.");
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
+
 	// build the list of chains of delegation of tasks of type performative between resources of
 	// the log file extracted in m_traces
-	public List<List<String>> buildPerformativeChainList(String performative) {
-		List<List<String>> chainList = new ArrayList<List<String>>();
+	/**
+	 * 
+	 * @param traces
+	 * @param performative
+	 * @return
+	 */
+	public static ArrayList<ArrayList<String>> buildPerformativeChainList(ArrayList<Trace> traces, String performative) {
+		ArrayList<ArrayList<String>> chainList = new ArrayList<ArrayList<String>>();
 		
 		// we assume that the log is sort from the earliest date to the later
 		// and that an action cannot be delegated from and to the same agents
 		// two times in a same case
-		List<Integer> nb_occ = new ArrayList<Integer>();
-		for (int i = 0; i < m_traces.size(); i++) {
-			Trace t = m_traces.get(i);
+		ArrayList<Integer> nb_occ = new ArrayList<Integer>();
+		for (int i = 0; i < traces.size(); i++) {
+			Trace t = traces.get(i);
 			if (t.getPerformative().equals("delegate")) {
 				String action = t.getActivity();
-				List<String> new_chain = new ArrayList<String>();
+				ArrayList<String> new_chain = new ArrayList<String>();
 				String sender = t.getSender();
 				String receiver = t.getReceiver();
 				String last_receiver = receiver;
@@ -129,12 +165,12 @@ public class Algorithm {
 				}
 				new_chain.add(receiver);
 
-				for (int j = 0; j < m_traces.size(); j++) {
-					if ((m_traces.get(j).getActivity().equals(action))
-							&& m_traces.get(j).getPerformative().equals(performative)) {
+				for (int j = 0; j < traces.size(); j++) {
+					if ((traces.get(j).getActivity().equals(action))
+							&& traces.get(j).getPerformative().equals(performative)) {
 						// TODO gérer le caseID
-						sender = m_traces.get(j).getSender();
-						receiver = m_traces.get(j).getReceiver();
+						sender = traces.get(j).getSender();
+						receiver = traces.get(j).getReceiver();
 
 						if (last_receiver.equals(sender)) {
 							if (receiver.equals(m_system)) {
@@ -199,11 +235,15 @@ public class Algorithm {
 	}
 
 	// build the list of clusters of vertex of g and color the nodes of this graph
-	public void buildClusterList(Graph g) {
+	/**
+	 * 
+	 * @param g
+	 */
+	public static void buildClusterList(Graph g) {
 		// clustering
 		ArrayList<ArrayList<String>> clusterList = new ArrayList<ArrayList<String>>();
 		ArrayList<Node> nodes = g.get_nodes();
-		ArrayList<List<String>> targets = new ArrayList<List<String>>();
+		ArrayList<ArrayList<String>> targets = new ArrayList<ArrayList<String>>();
 		ArrayList<ArrayList<String>> sources = new ArrayList<ArrayList<String>>();
 		for (int i = 0; i < nodes.size(); i++) {
 			targets.add(new ArrayList<String>());
@@ -258,12 +298,17 @@ public class Algorithm {
 	}
 	
 	// build the list of bounds between informs and executed actions, in a very simple way, without taking in account the caseID
-	public List<String> buildInform_ExecuteRules() {
+	/**
+	 * 
+	 * @param traces
+	 * @return
+	 */
+	public static ArrayList<String> buildInform_ExecuteRules(ArrayList<Trace> traces) {
 		// test : print the date of the first line of the log
 		Date d = null;
 		SimpleDateFormat sdf = new SimpleDateFormat(m_dateFormat);
 		try {
-			d = sdf.parse(m_traces.get(0).getTimestamp());
+			d = sdf.parse(traces.get(0).getTimestamp());
 		} catch (ParseException e) {
 			System.out.println("Error. Could not read the date at line "
 					+ ". Please check out the log file.");
@@ -273,13 +318,13 @@ public class Algorithm {
 		System.out.println(d.toString());
 	
 		// TODO prendre en compte le caseID
-		List<String> IE_rules = new ArrayList<String>();
-		for (int i = 0; i < m_traces.size(); i++) {
-			Trace t1 = m_traces.get(i);
+		ArrayList<String> IE_rules = new ArrayList<String>();
+		for (int i = 0; i < traces.size(); i++) {
+			Trace t1 = traces.get(i);
 			if (t1.getPerformative().equals("execute")) {
 				String sender = t1.getSender();
-				for (int j = 0; j < m_traces.size(); j++) {
-					Trace t2 = m_traces.get(j);
+				for (int j = 0; j < traces.size(); j++) {
+					Trace t2 = traces.get(j);
 					if ((t2.getPerformative().equals("inform"))
 							&& (t2.getReceiver().equals(sender))) {
 						IE_rules.add(sender + " did " + t1.getActivity()
@@ -295,15 +340,25 @@ public class Algorithm {
 	
 	// loops : enable or disable the add of loops of size 0 and 1
 	// merge_type : 0 : generalization, 1 : specialization, 2 : average
-	public void runAlphaMiner(int merge_type, boolean loops) {
+	/**
+	 * 
+	 * @param traces
+	 * @param merge_type
+	 * @param loops
+	 */
+	public static  void runAlphaMiner(ArrayList<Trace> traces, int merge_type, boolean loops) {
 		AlphaMiner alpha = new AlphaMiner();
-		alpha.run(m_traces, merge_type, loops);
+		alpha.run(traces, merge_type, loops);
 	}
 	
 	// under construction and testing
-	public void alphaWorkflow() {
+	/**
+	 * 
+	 * @param traces
+	 */
+	public static void alphaWorkflow(ArrayList<Trace> traces) {
 		AlphaMiner alpha = new AlphaMiner();
-		alpha.alphaWorkflow(m_traces, 0, true);
+		alpha.alphaWorkflow(traces, 0, true);
 		
 		/*Workflow wf = new Workflow("wf_test", "wf_test");
 		String WF_file = "gen\\workflow.xpdl";
