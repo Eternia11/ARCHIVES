@@ -42,18 +42,21 @@ public class Tools {
 	 * 
 	 * A log file must contain 6 column (no precise order or name) representing :
 	 * the caseID, the timestamp, the performative, the sender, the receiver
-	 * and the activity for each case
+	 * and the activity for each line
 	 * 
 	 * @param logs path of the log file to import (must be in .csv format)
-	 * @return the list of cases representing the log file
+	 * @return the list of lines representing the log file
 	 */
 	public static ArrayList<Trace> readLogFile(String logs) {
 		CSVParser parser = null;
 		ArrayList<Trace> traces = new ArrayList<Trace>();
+		// define the char which separate the fields in the log file
 		CSVFormat format = CSVFormat.EXCEL.withHeader().withDelimiter(',');
 		try {
+			// parse the log file
 			parser = new CSVParser(new FileReader(logs), format);
 			for (CSVRecord record : parser) {
+				// read a line of the log file
 				Trace t = new Trace(record.get(m_caseID),
 						record.get(m_timestamp), record.get(m_performative),
 						record.get(m_sender), record.get(m_receiver),
@@ -62,10 +65,9 @@ public class Tools {
 			}
 			parser.close();
 		} catch (IOException e) {
-			System.out
-					.println("Error. Could not read the log file "
-							+ logs
-							+ ".\nMake sure to use the right column names : 'CaseID', 'Timestamp', 'Performative', 'Sender', 'Receiver', 'Activity'.");
+			// if the log file cannot be opened
+			System.out.println("Error. Could not read the log file " + logs + ".\n"
+							+ "Make sure to use the right column names : 'CaseID', 'Timestamp', 'Performative', 'Sender', 'Receiver', 'Activity'.");
 			e.printStackTrace();
 			System.exit(2);
 		}
@@ -83,25 +85,29 @@ public class Tools {
 			System.out.println(traces.get(i));
 	}
 
-	// build the graph of interactions of type performative between resources of
-	// the log file extracted in m_traces
 	/**
+	 * Builds and returns the graph of interactions of which
+	 * have the given performative between resources
+	 * regarding the cases described in the log file
 	 * 
-	 * @param traces
-	 * @param performative
-	 * @return
+	 * @param traces log data
+	 * @param performative FIPA-ACL performative
+	 * @return the graph of interactions between the resources
 	 */
 	public static Graph buildPerformativeGraph(ArrayList<Trace> traces, String performative) {
 		Graph g = new Graph();
 		
 		for (int i = 0; i < traces.size(); i++) {
 			Trace t = traces.get(i);
+			// we handle only the lines which have the right performative
 			if (t.getPerformative().equals(performative)) {
 				String sender = t.getSender();
 				String receiver = t.getReceiver();
 				
+				// we add the nodes (if they are already in the graph, they are not added)
 				g.add_node(sender);
 				g.add_node(receiver);
+				// add the current edge or increase its weight by 1
 				if (!g.contains_edge(sender, receiver))
 					g.add_edge(sender, receiver);
 				else
@@ -112,11 +118,11 @@ public class Tools {
 		return g;
 	}
 
-	// export the graph g into the graphml format file f
 	/**
+	 * Export a graph into a graphML file
 	 * 
-	 * @param g
-	 * @param file
+	 * @param g graph to export
+	 * @param file path of export file
 	 */
 	public static void exportToGraphml(Graph g, String file) {
 		PrintWriter writer;
@@ -125,33 +131,33 @@ public class Tools {
 			writer.println(g.toGRAPHML());
 			writer.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			System.out
-					.println("The file "
-							+ file
-							+ " cannot be created/opened or does not have the UTF-8 encoding.");
+			// if the file cannot be opened or created
+			System.out.println("The file " + file + " cannot be created/opened or does not have the UTF-8 encoding.");
 			e.printStackTrace();
 			System.exit(1);
 		}
 	}
 
-	// build the list of chains of delegation of tasks of type performative between resources of
-	// the log file extracted in m_traces
 	/**
+	 * Build the list of chains of resources who are
+	 * in a line as receiver with the given performative
+	 * A resource is linked to another iff the previous
+	 * resource who was the receiver is now the sender
 	 * 
-	 * @param traces
-	 * @param performative
-	 * @return
+	 * @param traces log data
+	 * @param performative FIPA-ACL performative
+	 * @return a list of chains of resources
 	 */
 	public static ArrayList<ArrayList<String>> buildPerformativeChainList(ArrayList<Trace> traces, String performative) {
 		ArrayList<ArrayList<String>> chainList = new ArrayList<ArrayList<String>>();
 		
-		// we assume that the log is sort from the earliest date to the later
+		// we assume that the log is sorted from the earliest timestamp to the later
 		// and that an action cannot be delegated from and to the same agents
 		// two times in a same case
 		ArrayList<Integer> nb_occ = new ArrayList<Integer>();
 		for (int i = 0; i < traces.size(); i++) {
 			Trace t = traces.get(i);
-			if (t.getPerformative().equals("delegate")) {
+			if (t.getPerformative().equals(performative)) {
 				String action = t.getActivity();
 				ArrayList<String> new_chain = new ArrayList<String>();
 				String sender = t.getSender();
@@ -160,6 +166,7 @@ public class Tools {
 
 				new_chain.add(action);
 				new_chain.add(sender);
+				// if the neutral resource interferes then we break the chain
 				if (receiver.equals(m_system)) {
 					break;
 				}
@@ -213,11 +220,9 @@ public class Tools {
 			}
 		}
 
-		// print the action chains
+		// prints the action chains
 		if (nb_occ.size() != chainList.size()) {
-			// TODO handle error
-			System.out
-					.println("Error occured when mining the action delegation chains.");
+			System.out.println("Error occured when mining the action delegation chains.");
 			System.exit(4);
 		}
 		for (int i = 0; i < chainList.size(); i++) {
@@ -234,17 +239,23 @@ public class Tools {
 		return chainList;
 	}
 
-	// build the list of clusters of vertex of g and color the nodes of this graph
 	/**
+	 * Clusters the nodes of the graph g and assign
+	 * a color to each cluster and then color
+	 * the nodes with it
+	 * For now two nodes are in the same cluster
+	 * iff they have the same outgoing edges
+	 * and the same incoming edges
 	 * 
-	 * @param g
+	 * @param g graph to color according the clusters
 	 */
 	public static void buildClusterList(Graph g) {
-		// clustering
 		ArrayList<ArrayList<String>> clusterList = new ArrayList<ArrayList<String>>();
 		ArrayList<Node> nodes = g.get_nodes();
 		ArrayList<ArrayList<String>> targets = new ArrayList<ArrayList<String>>();
 		ArrayList<ArrayList<String>> sources = new ArrayList<ArrayList<String>>();
+
+		// we build the list of targets and sources of each node
 		for (int i = 0; i < nodes.size(); i++) {
 			targets.add(new ArrayList<String>());
 			sources.add(new ArrayList<String>());
@@ -259,15 +270,19 @@ public class Tools {
 				sources.get(i).add(incomingEdges.get(j).get_source());
 			}
 		}
-		// classification
+		
+		// clustering
 		for (int i = 0; i < nodes.size(); i++) {
-			boolean classified = false;
-			for (int j = 0; j < clusterList.size() && !classified; j++) {
+			// we check if the current node is not already in a cluster
+			boolean in_cluster = false;
+			for (int j = 0; j < clusterList.size() && !in_cluster; j++) {
 				if (clusterList.get(j).contains(nodes.get(i).get_id())) {
-					classified = true;
+					in_cluster = true;
 				}
 			}
-			if (!classified) {
+			// if the current node is not in a cluster yet
+			if (!in_cluster) {
+				// we create a new cluster and find all the nodes which must be in the same cluster
 				ArrayList<String> new_cluster = new ArrayList<String>();
 				new_cluster.add(nodes.get(i).get_id());
 
@@ -300,8 +315,9 @@ public class Tools {
 	// build the list of bounds between informs and executed actions, in a very simple way, without taking in account the caseID
 	/**
 	 * 
-	 * @param traces
-	 * @return
+	 * 
+	 * @param traces log data
+	 * @return 
 	 */
 	public static ArrayList<String> buildInform_ExecuteRules(ArrayList<Trace> traces) {
 		// test : print the date of the first line of the log

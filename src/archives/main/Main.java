@@ -31,7 +31,7 @@ class Main {
 		Tools.exportToGraphml(m_informGraph, m_informGraphFileName); // export the interactions graph
 		Tools.exportToGraphml(m_delegateGraph, m_delegateGraphFileName); // export the hierarchy graph
 		m_delegateChain = Tools.buildPerformativeChainList(m_traces, "delegate"); // build series of activities associated with list of resources to who the activities have been delegated
-		// build then print the relations between "inform" and "execute"cases
+		// build then print the relations between "inform" and "execute" lines
 		m_IE_rules = Tools.buildInform_ExecuteRules(m_traces);
 		for (int i = 0; i < m_IE_rules.size(); i++)
 			System.out.println(m_IE_rules.get(i));

@@ -16,7 +16,8 @@ import archives.workflow.*;
  * Represents an instance of the Alpha Algorithm
  * 
  * @author Alan BENIER
- * @see http://
+ * @see http://en.wikipedia.org/wiki/Alpha_algorithm
+ * @see http://0agr.ru/wiki/index.php/Alpha_Algorithm
  */
 public class AlphaMiner {
 	private PetriNet m_net = null;									// petri net resulting of the Alpha Algorithm
