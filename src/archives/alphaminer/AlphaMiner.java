@@ -1,35 +1,28 @@
 package archives.alphaminer;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang3.tuple.Pair;
 
 import archives.log.Trace;
 import archives.petrinet.*;
 import archives.workflow.*;
 
 /**
- * Represents an instance of the Alpha Algorithm
+ * Tool to run the Alpha Algorithm
  * 
  * @author Alan BENIER
  * @see http://en.wikipedia.org/wiki/Alpha_algorithm
  * @see http://0agr.ru/wiki/index.php/Alpha_Algorithm
  */
 public class AlphaMiner {
-	private PetriNet m_net = null;									// petri net resulting of the Alpha Algorithm
-	private Workflow m_workflow = null;								// workflow
-	private final static String m_netFile = "gen\\petri.pnml";		// file in which the petri net will be exported
-
-	public AlphaMiner() {
-		m_net = new PetriNet("net0", "AlphaNetARCHIVES");
-		m_workflow = new Workflow("wf_test", "wf_test");
-	}
-
-	private boolean isIn(ArrayList<Trace> log_part, String activity) {
+	/**
+	 * Check if an activity is contained in a log data
+	 * 
+	 * @param log_part log data
+	 * @param activity activity to check
+	 * @return true if the activity was found in the log data
+	 */
+	private static boolean isIn(ArrayList<Trace> log_part, String activity) {
 		for (Trace t : log_part) {
 			if (activity.equals(t.getActivity())) {
 				return true;
@@ -38,163 +31,25 @@ public class AlphaMiner {
 		return false;
 	}
 
-	private class YClass {
-		ArrayList<Pair<ArrayList<Integer>, ArrayList<Integer>>> m_Y = null;
-
-		protected YClass() {
-			m_Y = new ArrayList<Pair<ArrayList<Integer>, ArrayList<Integer>>>();
-		}
-
-		protected ArrayList<Pair<ArrayList<Integer>, ArrayList<Integer>>> get_Y() {
-			return m_Y;
-		}
-
-		protected void add(Integer left, Integer right) {
-			m_Y.add(Pair.of(new ArrayList<Integer>(), new ArrayList<Integer>()));
-			m_Y.get(m_Y.size() - 1).getLeft().add(left);
-			m_Y.get(m_Y.size() - 1).getRight().add(right);
-		}
-
-		protected boolean containsPair(ArrayList<Integer> left,
-				ArrayList<Integer> right) {
-			for (Pair<ArrayList<Integer>, ArrayList<Integer>> pair : m_Y) {
-				if ((left.containsAll(pair.getLeft()))
-						&& (right.containsAll(pair.getRight()))) {
-					return true;
-				}
-			}
-			return false;
-		}
-
-		protected YClass mergeLeft() {
-			YClass new_Y = new YClass();
-			for (int i = 0; i < m_Y.size(); i++) {
-				ArrayList<Integer> curr_left = m_Y.get(i).getLeft();
-				ArrayList<Integer> new_right = new ArrayList<Integer>();
-
-				for (int j = 0; j < m_Y.size(); j++) {
-					if (curr_left.containsAll(m_Y.get(j).getLeft())) {
-						new_right.addAll(m_Y.get(j).getRight());
-					}
-				}
-
-				if (!new_Y.containsPair(curr_left, new_right)) {
-					new_Y.get_Y().add(
-							Pair.of(new ArrayList<Integer>(curr_left),
-									new ArrayList<Integer>(new_right)));
-				}
-			}
-			return new_Y;
-		}
-
-		protected YClass mergeRight() {
-			YClass new_Y = new YClass();
-			for (int i = 0; i < m_Y.size(); i++) {
-				ArrayList<Integer> curr_right = m_Y.get(i).getRight();
-				ArrayList<Integer> new_left = new ArrayList<Integer>();
-
-				for (int j = 0; j < m_Y.size(); j++) {
-					if (curr_right.containsAll(m_Y.get(j).getRight())) {
-						new_left.addAll(m_Y.get(j).getLeft());
-					}
-				}
-
-				if (!new_Y.containsPair(new_left, curr_right)) {
-					new_Y.get_Y().add(
-							Pair.of(new ArrayList<Integer>(new_left),
-									new ArrayList<Integer>(curr_right)));
-				}
-			}
-			return new_Y;
-		}
-
-		protected void cleave(Integer index1, Integer index2) {
-			for (int i = 0; i < m_Y.size(); i++) {
-				ArrayList<Integer> left = m_Y.get(i).getLeft();
-				ArrayList<Integer> right = m_Y.get(i).getRight();
-				if ((left.contains(index1)) && (left.contains(index2))) {
-					m_Y.add(i, Pair.of(new ArrayList<Integer>(left),
-							new ArrayList<Integer>(right)));
-					left.remove(left.indexOf(index1));
-					ArrayList<Integer> new_left = m_Y.get(i).getLeft();
-					new_left.remove(new_left.indexOf(index2));
-				}
-				if ((right.contains(index1)) && (right.contains(index2))) {
-					m_Y.add(i, Pair.of(new ArrayList<Integer>(left),
-							new ArrayList<Integer>(right)));
-					right.remove(right.indexOf(index1));
-					ArrayList<Integer> new_right = m_Y.get(i).getRight();
-					new_right.remove(new_right.indexOf(index2));
-				}
-			}
-		}
-
-		protected void addPlaces() {
-			for (int i = 0; i < m_Y.size(); i++) {
-				m_net.addPlace("p" + Integer.toString(i),
-						"p" + Integer.toString(i), 0);
-			}
-		}
-
-		protected void addArcs(ArrayList<String> T) {
-			for (int i = 0; i < m_Y.size(); i++) {
-				ArrayList<Integer> left = m_Y.get(i).getLeft();
-				ArrayList<Integer> right = m_Y.get(i).getRight();
-				for (int j = 0; j < left.size(); j++) {
-					m_net.addArc(
-							"in_a" + Integer.toString(i) + "-"
-									+ Integer.toString(j), T.get(left.get(j)),
-							"p" + Integer.toString(i));
-				}
-				for (int j = 0; j < right.size(); j++) {
-					m_net.addArc(
-							"out_a" + Integer.toString(i) + "-"
-									+ Integer.toString(j),
-							"p" + Integer.toString(i), T.get(right.get(j)));
-				}
-			}
-		}
-
-		protected void addFlows(ArrayList<String> T, String resource) {
-			for (int i = 0; i < m_Y.size(); i++) {
-				ArrayList<Integer> left = m_Y.get(i).getLeft();
-				ArrayList<Integer> right = m_Y.get(i).getRight();
-
-				m_workflow.get_process(0).addActivity(
-						new Gateway(resource+"_"+"G" + i, resource+"_"+"G" + i, resource));
-
-				for (int j = 0; j < left.size(); j++) {
-					m_workflow.get_process(0).addFlow(
-							new Flow("in_a" + i + "-" + j, resource+"_"+T.get(left.get(j)),
-									resource+"_"+"G" + i));
-				}
-				for (int j = 0; j < right.size(); j++) {
-					m_workflow.get_process(0)
-							.addFlow(
-									new Flow("out_a" + i + "-" + j, resource+"_"+"G"
-											+ i, resource+"_"+T.get(right
-											.get(j))));
-				}
-			}
-		}
-	}
-
-	// run the Alpha Algorithm following the method given in the wiki page :
-	// http://en.wikipedia.org/wiki/Alpha_algorithm
-	// loops : enable or disable the add of loops of size 0 and 1
-	// merge_type : 0 : generalization, 1 : specialization, 2 : average
-	public void run(List<Trace> logs, int merge_type, boolean loops) {
-		ArrayList<String> T = new ArrayList<String>(); // list of the
-														// transitions of the
-														// petri net
-		ArrayList<String> caseID = new ArrayList<String>(); // list of the
-															// caseID of the log
-															// file
+	/**
+	 * Run the classic alpha algorithm on the log data
+	 * 
+	 * @param logs log data
+	 * @param merge_type "parameter" of the alpha algorithm 0 : generalization, 1 : specialization, 2 : average
+	 * @param loops enable or disable loops of size 0 and 1
+	 * @return the petri net resulting of the alpha algorithm
+	 */
+	public static PetriNet petriNet(List<Trace> logs, int merge_type, boolean loops) {
+		PetriNet net = new PetriNet("net0", "AlphaNetARCHIVES");
+		// list of the transitions of the petri net
+		ArrayList<String> T = new ArrayList<String>();
+		// list of the caseID of the log file
+		ArrayList<String> caseID = new ArrayList<String>();
 
 		// construction of Tw
 		for (Trace t : logs) {
 			// add the different transitions to the petri net and to the list
-			m_net.addTransition(t.getActivity(), t.getActivity());
+			net.addTransition(t.getActivity(), t.getActivity());
 			if (!T.contains(t.getActivity())) {
 				T.add(t.getActivity());
 			}
@@ -204,21 +59,15 @@ public class AlphaMiner {
 			}
 		}
 
-		// sort the log file by case, then by timestamp and store it into
-		// new_log
-		ArrayList<ArrayList<ArrayList<Trace>>> new_log = new ArrayList<ArrayList<ArrayList<Trace>>>();
+		// gather the log lines which have the same caseID
+		ArrayList<ArrayList<Trace>> new_log = new ArrayList<ArrayList<Trace>>();
 		for (int c = 0; c < caseID.size(); c++) {
-			String prev_time = "";
-			new_log.add(new ArrayList<ArrayList<Trace>>());
+			new_log.add(new ArrayList<Trace>());
 
 			for (int i = 0; i < logs.size(); i++) {
 				Trace t = logs.get(i);
 				if (caseID.get(c).equals(t.getCaseID())) {
-					if (!prev_time.equals(t.getTimestamp())) {
-						new_log.get(c).add(new ArrayList<Trace>());
-					}
-					new_log.get(c).get(new_log.get(c).size() - 1).add(t);
-					prev_time = t.getTimestamp();
+					new_log.get(c).add(t);
 				}
 			}
 		}
@@ -235,46 +84,27 @@ public class AlphaMiner {
 			}
 
 			// 1 represents > between 2 transitions in the matrix X_temp
+			// we set the relation > between each task and the one which follows it
 			for (int i = 0; i < new_log.get(c).size(); i++) {
 				if (i + 1 < new_log.get(c).size()) {
-					for (int j1 = 0; j1 < new_log.get(c).get(i).size(); j1++) {
-						int a1 = T.indexOf(new_log.get(c).get(i).get(j1)
-								.getActivity());
-						for (int j2 = 0; j2 < new_log.get(c).get(i + 1).size(); j2++) {
-							int a2 = T.indexOf(new_log.get(c).get(i + 1)
-									.get(j2).getActivity());
-							X_temp[a1][a2] = 1;
-						}
-					}
-				}
-			}
-
-			// set the activities which have the same timestamp into parallel
-			// mode
-			for (ArrayList<Trace> time_first : new_log.get(c)) {
-				for (int i = 0; i < time_first.size(); i++) {
-					int a1 = T.indexOf(time_first.get(i).getActivity());
-					for (int j = 0; j < time_first.size(); j++) {
-						if (i != j) {
-							int a2 = T.indexOf(time_first.get(j).getActivity());
-							if (a1 != a2)
-								X_temp[a1][a2] = 2;
-						}
-					}
+					int a1 = T.indexOf(new_log.get(c).get(i).getActivity());
+					int a2 = T.indexOf(new_log.get(c).get(i + 1).getActivity());
+					X_temp[a1][a2] = 1;
 				}
 			}
 
 			X.add(X_temp);
 		}
 
+		// see Xw in the wiki link
 		Integer Xw[][] = new Integer[T.size()][T.size()];
+		// carry the loops of size 0
 		Integer loop0[] = new Integer[T.size()];
 		for (int i = 0; i < T.size(); i++) {
 			loop0[i] = 0;
 		}
 
-		// "parameter" of this alpha algorithm : the way matrices will be merged
-		// into > relations
+		// "parameter" of this alpha algorithm : the way matrices will be merged into > relations
 		switch (merge_type) {
 		case 0:
 			// this way is a total generalization
@@ -376,9 +206,13 @@ public class AlphaMiner {
 			}
 		}
 
+		// this way, we have the couples of maximal sets of tasks
+		// we gather all sets which are the same
 		Y = Y.mergeLeft();
 		Y = Y.mergeRight();
 
+		// then we separates the sets which doesn't fit the definition
+		// to make them fit the definition in a minimal number of fractures
 		for (int i = 0; i < T.size(); i++) {
 			for (int j = i; j < T.size(); j++) {
 				if (Xw[i][j] != 0) {
@@ -388,27 +222,21 @@ public class AlphaMiner {
 		}
 
 		// construction of Ti
-		m_net.addPlace("_in_", "_in_", 1);
+		net.addPlace("_in_", "_in_", 1);
 
 		// construction of To
-		m_net.addPlace("_out_", "_out_", 0);
+		net.addPlace("_out_", "_out_", 0);
 
 		// construction of Pw
-		Y.addPlaces();
+		net = Y.addPlaces(net);
 
 		// construction of Fw
-		Y.addArcs(T);
+		net = Y.addArcs(net, T);
 		for (int c = 0; c < new_log.size(); c++) {
-			ArrayList<Trace> Ti = new_log.get(c).get(0);
-			ArrayList<Trace> To = new_log.get(c).get(new_log.get(c).size() - 1);
-			for (int i = 0; i < Ti.size(); i++) {
-				m_net.addArc("a_in-" + Integer.toString(i) + "_c" + c, "_in_",
-						Ti.get(i).getActivity());
-			}
-			for (int i = 0; i < To.size(); i++) {
-				m_net.addArc("a_out-" + Integer.toString(i) + "_c" + c,
-						To.get(i).getActivity(), "_out_");
-			}
+			Trace Ti = new_log.get(c).get(0);
+			Trace To = new_log.get(c).get(new_log.get(c).size() - 1);
+			net.addArc("a_in_c" + c, "_in_", Ti.getActivity());
+			net.addArc("a_out_c" + c, To.getActivity(), "_out_");
 		}
 
 		// construction of loops
@@ -416,43 +244,36 @@ public class AlphaMiner {
 			// loops of size 0
 			for (int i = 0; i < T.size(); i++) {
 				if (loop0[i] == 1) {
-					m_net.addPlace("loop0_" + i, "loop0_" + i, 0);
-					m_net.addArc("in_loop0_" + i, T.get(i), "loop0_" + i);
-					m_net.addArc("out_loop0_" + i, "loop0_" + i, T.get(i));
+					net.addPlace("loop0_" + i, "loop0_" + i, 0);
+					net.addArc("in_loop0_" + i, T.get(i), "loop0_" + i);
+					net.addArc("out_loop0_" + i, "loop0_" + i, T.get(i));
 				}
 			}
 
 			// loops of size 1
-			for (ArrayList<ArrayList<Trace>> case_first : new_log) {
+			for (ArrayList<Trace> case_first : new_log) {
 				for (int i = 0; i < case_first.size(); i++) {
 					if (i + 2 < case_first.size()) {
-						for (int j1 = 0; j1 < case_first.get(i).size(); j1++) {
-							int a1 = T.indexOf(case_first.get(i).get(j1)
-									.getActivity());
-							if (isIn(case_first.get(i + 2), T.get(a1))) {
-								for (int j2 = 0; j2 < case_first.get(i + 1)
-										.size(); j2++) {
-									int a2 = T.indexOf(case_first.get(i + 1)
-											.get(j2).getActivity());
-									// loop between T.get(a1) and T.get(a2)
-									m_net.addPlace("loop1_p1_" + a1 + "-" + a2,
-											"loop1_p1_" + a1 + "-" + a2, 0);
-									m_net.addPlace("loop1_p2_" + a1 + "-" + a2,
-											"loop1_p2_" + a1 + "-" + a2, 0);
-									m_net.addArc("loop1_a1_" + a1 + "-" + a2,
-											T.get(a1), "loop1_p1_" + a1 + "-"
-													+ a2);
-									m_net.addArc("loop1_a2_" + a1 + "-" + a2,
-											"loop1_p1_" + a1 + "-" + a2,
-											T.get(a2));
-									m_net.addArc("loop1_a3_" + a1 + "-" + a2,
-											T.get(a2), "loop1_p2_" + a1 + "-"
-													+ a2);
-									m_net.addArc("loop1_a4_" + a1 + "-" + a2,
-											"loop1_p2_" + a1 + "-" + a2,
-											T.get(a1));
-								}
-							}
+						int a1 = T.indexOf(case_first.get(i).getActivity());
+						if (isIn(case_first, T.get(a1))) {
+							int a2 = T.indexOf(case_first.get(i + 1).getActivity());
+							// loop between T.get(a1) and T.get(a2)
+							net.addPlace("loop1_p1_" + a1 + "-" + a2,
+									"loop1_p1_" + a1 + "-" + a2, 0);
+							net.addPlace("loop1_p2_" + a1 + "-" + a2,
+									"loop1_p2_" + a1 + "-" + a2, 0);
+							net.addArc("loop1_a1_" + a1 + "-" + a2,
+									T.get(a1), "loop1_p1_" + a1 + "-"
+											+ a2);
+							net.addArc("loop1_a2_" + a1 + "-" + a2,
+									"loop1_p1_" + a1 + "-" + a2,
+									T.get(a2));
+							net.addArc("loop1_a3_" + a1 + "-" + a2,
+									T.get(a2), "loop1_p2_" + a1 + "-"
+											+ a2);
+							net.addArc("loop1_a4_" + a1 + "-" + a2,
+									"loop1_p2_" + a1 + "-" + a2,
+									T.get(a1));
 						}
 					}
 				}
@@ -460,27 +281,27 @@ public class AlphaMiner {
 		} // end loops
 
 		// construction of alpha(W)
-
-		PrintWriter writer;
-		try {
-			writer = new PrintWriter(m_netFile, "UTF-8");
-			writer.println(m_net.toPNML());
-			writer.close();
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			System.out
-					.println("The file "
-							+ m_netFile
-							+ " cannot be created/opened or does not have the UTF-8 encoding.");
-			e.printStackTrace();
-			System.exit(6);
-		}
+		return net;
 	}
 
-	public void alphaWorkflow(List<Trace> logs, int merge_type, boolean loops) {
-		String WF_file = "gen\\workflow.xpdl";
-		m_workflow.addProcess(new archives.workflow.Process("pr_archives",
+
+	/**
+	 * Build a workflow that represents the situations
+	 * described in the log file, following the
+	 * alpha algorithm
+	 * 
+	 * under construction and testing
+	 * 
+	 * @param logs log data
+	 * @param merge_type "parameter" of the alpha algorithm 0 : generalization, 1 : specialization, 2 : average
+	 * @param loops enable or disable loops of size 0 and 1
+	 * @return a workflow meant to represent the behavior of each resource
+	 */
+	public static Workflow workflow(List<Trace> logs, int merge_type, boolean loops) {
+		Workflow workflow = new Workflow("wf_test", "wf_test");
+		workflow.addProcess(new archives.workflow.Process("pr_archives",
 				"pr_archives"));
-		m_workflow
+		workflow
 				.addPool(new Pool("po_archives", "po_archives", "pr_archives"));
 
 		ArrayList<String> caseID = new ArrayList<String>(); // list of the
@@ -498,9 +319,9 @@ public class AlphaMiner {
 			}
 		}
 
+		// we handle each resources separately
 		for (String r : resources) {
-			// sort the log by case for the current resource, and store it into
-			// new_log
+			// gather the log lines which have the same caseID
 			ArrayList<ArrayList<Trace>> new_log = new ArrayList<ArrayList<Trace>>();
 			for (int c = 0; c < caseID.size(); c++)
 				new_log.add(new ArrayList<Trace>());
@@ -510,11 +331,9 @@ public class AlphaMiner {
 					new_log.get(caseID.indexOf(t.getCaseID())).add(t);
 			}
 
-			ArrayList<String> T = new ArrayList<String>(); // list of the
-															// transitions of
-															// the petri net
+			ArrayList<String> T = new ArrayList<String>();
 
-			m_workflow.get_pool(0).addLane(new Lane(r));
+			workflow.get_pool(0).addLane(new Lane(r));
 			// construction of Tw
 			for (Trace t : logs) {
 				if (r.equals(t.getSender())) {
@@ -677,37 +496,37 @@ public class AlphaMiner {
 			for (int i = 0; i < T.size(); i++) {
 				for (int j = i; j < T.size(); j++) {
 					if (Xw[i][j] != 0) {
-						m_workflow.get_process(0).addActivity(new ActivityLane(r + "_" + T.get(i), T.get(i), r));
-						m_workflow.get_process(0).addActivity(new ActivityLane(r + "_" + T.get(j), T.get(j), r));
+						workflow.get_process(0).addActivity(new ActivityLane(r + "_" + T.get(i), T.get(i), r));
+						workflow.get_process(0).addActivity(new ActivityLane(r + "_" + T.get(j), T.get(j), r));
 					}
 				}
 			}
 
 			// construction of Ti
-			m_workflow.get_process(0).addActivity(new ActivityStartLane(r+"_start_", r));
+			workflow.get_process(0).addActivity(new ActivityStartLane(r+"_start_", r));
 			for (int c=0; c<new_log.size(); c++) {
 				if (!new_log.get(c).isEmpty())
-					m_workflow.get_process(0).addFlow(new Flow("f"+c+r+"_start_", r+"_start_", r+"_"+new_log.get(c).get(0).getActivity()));
+					workflow.get_process(0).addFlow(new Flow("f"+c+r+"_start_", r+"_start_", r+"_"+new_log.get(c).get(0).getActivity()));
 			}
 
 			// construction of To
-			m_workflow.get_process(0).addActivity(new ActivityEndLane(r+"_end_", r));
+			workflow.get_process(0).addActivity(new ActivityEndLane(r+"_end_", r));
 			for (int c=0; c<new_log.size(); c++) {
 				if (!new_log.get(c).isEmpty())
-					m_workflow.get_process(0).addFlow(new Flow("f"+c+r+"_end_", r+"_"+new_log.get(c).get(new_log.get(c).size()-1).getActivity(), r+"_end_"));
+					workflow.get_process(0).addFlow(new Flow("f"+c+r+"_end_", r+"_"+new_log.get(c).get(new_log.get(c).size()-1).getActivity(), r+"_end_"));
 			}
 
 			// construction of Pw
 
 			// construction of Fw
-			Y.addFlows(T, r);
+			workflow = Y.addFlows(workflow, T, r);
 
 			// construction of loops
 			if (loops) {
 				// loops of size 0
 				for (int i = 0; i < T.size(); i++) {
 					if (loop0[i] == 1) {
-						m_workflow.get_process(0).addFlow(
+						workflow.get_process(0).addFlow(
 								new Flow("out_loop0_" + i, T.get(i), T.get(i)));
 					}
 				}
@@ -721,10 +540,10 @@ public class AlphaMiner {
 								int a2 = T.indexOf(case_first.get(i + 1)
 										.getActivity());
 								// loop between T.get(a1) and T.get(a2)
-								m_workflow.get_process(0).addFlow(
+								workflow.get_process(0).addFlow(
 										new Flow("loop1_a1_" + a1 + "-" + a2, T
 												.get(a1), T.get(a2)));
-								m_workflow.get_process(0).addFlow(
+								workflow.get_process(0).addFlow(
 										new Flow("loop1_a2_" + a1 + "-" + a2, T
 												.get(a2), T.get(a1)));
 							}
@@ -735,19 +554,6 @@ public class AlphaMiner {
 		} // end loops
 
 		// construction of alpha(W)
-
-		PrintWriter writer;
-		try {
-			writer = new PrintWriter(WF_file, "UTF-8");
-			writer.println(m_workflow.toXPDL());
-			writer.close();
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			System.out
-					.println("The file "
-							+ WF_file
-							+ " cannot be created/opened or does not have the UTF-8 encoding.");
-			e.printStackTrace();
-			System.exit(6);
-		}
+		return workflow;
 	}
 }

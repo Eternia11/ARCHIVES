@@ -1,12 +1,13 @@
-/* Author : Alan BENIER */
-
 package archives.main;
 
 import java.util.ArrayList;
 
+import archives.alphaminer.AlphaMiner;
 import archives.graph.Graph;
 import archives.log.Trace;
+import archives.petrinet.PetriNet;
 import archives.tools.Tools;
+import archives.workflow.Workflow;
 
 /**
  * 
@@ -22,6 +23,10 @@ class Main {
 	private static Graph m_informGraph = null;											// graph of resources' interaction
 	private static ArrayList<ArrayList<String>> m_delegateChain = null;					// list of series of activities associated with list of resources to who the activities have been delegated
 	private static ArrayList<String> m_IE_rules = null;									// list of relations between "inform" and "execute" cases
+	private static PetriNet m_net = null;												// petri net resulting of the Alpha Algorithm
+	private static Workflow m_workflow = null;											// workflow describing the log file
+	private final static String m_netFile = "gen\\petri.pnml";							// export path of the petri net
+	private final static String m_wfFile = "gen\\workflow.xpdl";						// export path of the workflow
 
 	public static void main(String[] args) {
 		m_traces = Tools.readLogFile(m_csvFile); // read the log file
@@ -36,9 +41,11 @@ class Main {
 		for (int i = 0; i < m_IE_rules.size(); i++)
 			System.out.println(m_IE_rules.get(i));
 		long startTime = System.nanoTime(); // timer
-		Tools.runAlphaMiner(m_traces, 2, false); // alpha algorithm
+		m_net = AlphaMiner.petriNet(m_traces, 2, false); // alpha algorithm
 		long endTime = System.nanoTime(); // timer
+		Tools.exportToPNML(m_net, m_netFile);
 		System.out.println("Alpha Algorithm took "+(endTime - startTime)/1000000 + " ms"); // print the time of execution of the Alpha Algorithm
-		Tools.alphaWorkflow(m_traces); // my test of workflow
+		m_workflow = AlphaMiner.workflow(m_traces, 2, false); // my test of workflow
+		Tools.exportToXPDL(m_workflow, m_wfFile);
 	}
 }
