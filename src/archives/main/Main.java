@@ -3,6 +3,7 @@ package archives.main;
 import java.util.ArrayList;
 
 import archives.alphaminer.AlphaMiner;
+import archives.archives.Archive;
 import archives.graph.Graph;
 import archives.log.Trace;
 import archives.petrinet.PetriNet;
@@ -27,10 +28,11 @@ class Main {
 	private static Workflow m_workflow = null;											// workflow describing the log file
 	private final static String m_netFile = "gen\\petri.pnml";							// export path of the petri net
 	private final static String m_wfFile = "gen\\workflow.xpdl";						// export path of the workflow
+	private final static String m_dateFormat = "dd/MM/yyyy HH:mm";
 
 	public static void main(String[] args) {
 		m_traces = Tools.readLogFile(m_csvFile); // read the log file
-		m_informGraph = Tools.buildPerformativeGraph(m_traces, "inform"); // build a hierarchical graph of the resources of the log file
+		/*m_informGraph = Tools.buildPerformativeGraph(m_traces, "inform"); // build a hierarchical graph of the resources of the log file
 		m_delegateGraph = Tools.buildPerformativeGraph(m_traces, "delegate"); // build a graph of interactions between the resources of the log file
 		Tools.buildClusterList(m_delegateGraph); // color the nodes of the hierarchy graph finding simple clusters
 		Tools.exportToGraphml(m_informGraph, m_informGraphFileName); // export the interactions graph
@@ -46,6 +48,8 @@ class Main {
 		Tools.exportToPNML(m_net, m_netFile);
 		System.out.println("Alpha Algorithm took "+(endTime - startTime)/1000000 + " ms"); // print the time of execution of the Alpha Algorithm
 		m_workflow = AlphaMiner.workflow(m_traces, 2, false); // my test of workflow
-		Tools.exportToXPDL(m_workflow, m_wfFile);
+		Tools.exportToXPDL(m_workflow, m_wfFile);*/
+		
+		Archive archive = new Archive(m_traces, m_dateFormat);
 	}
 }
