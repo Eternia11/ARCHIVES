@@ -66,7 +66,13 @@ public class Archive {
 			a_activity = getActivity(activity);
 			
 			// create the occurrence and link everything
-			o_occurrence = new Occurrence(a_activity, r_sender, r_receiver, performative, caseID, timestamp, dateFormat);
+			try {
+				o_occurrence = new Occurrence(a_activity, r_sender, r_receiver, performative, caseID, timestamp, dateFormat);
+			} catch (OccurrenceException e) {
+				e.printStackTrace();
+				System.out.println("Something went wrong during the creation of the archive.");
+				System.exit(1);
+			}
 			m_occurrences.add(o_occurrence);
 			
 			if ((r_receiver == null) || (r_sender == null) || (a_activity == null) || (o_occurrence == null)) {

@@ -35,8 +35,9 @@ public class Occurrence {
 	 * @param caseID caseID of the line
 	 * @param timestamp timestamp of the line
 	 * @param dateFormat date format of the timestamp
+	 * @throws OccurrenceException when cannot create an occurrence
 	 */
-	public Occurrence(Activity activity, Resource sender, Resource receiver, String performative, String caseID, String timestamp, String dateFormat) {
+	public Occurrence(Activity activity, Resource sender, Resource receiver, String performative, String caseID, String timestamp, String dateFormat) throws OccurrenceException {
 		m_activity = activity;
 		m_sender = sender;
 		m_receiver = receiver;
@@ -49,7 +50,7 @@ public class Occurrence {
 			System.out.println("Error. Could not read the date at line "
 					+ ". Please check out the log file.");
 			e.printStackTrace();
-			System.exit(1);
+			throw new OccurrenceException("Error during creation of the occurrence, please check out the date in the log file and the dateFormat in the source code.");
 		}
 	}
 
