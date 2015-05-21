@@ -51,5 +51,6 @@ class Main {
 		Tools.exportToXPDL(m_workflow, m_wfFile);*/
 		
 		Archive archive = new Archive(m_traces, m_dateFormat);
+		System.out.println(archive.toString());
 	}
 }

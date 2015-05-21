@@ -109,4 +109,31 @@ public class Resource {
 		}
 		return false;
 	}
+
+	/**
+	 * toString overload
+	 */
+	public String toString() {
+		String ret = "Resource<" + m_name + ", [";
+
+		if (!m_asSender.isEmpty()) {
+			ret += m_asSender.get(0).get_name();
+		}
+		for (int i = 1; i < m_asSender.size(); i++) {
+			ret += ", " + m_asSender.get(i).get_name();
+		}
+
+		ret += "], [";
+
+		if (!m_asReceiver.isEmpty()) {
+			ret += m_asReceiver.get(0).get_name();
+		}
+		for (int i = 1; i < m_asReceiver.size(); i++) {
+			ret += ", " + m_asReceiver.get(i).get_name();
+		}
+
+		ret += "]>";
+
+		return ret;
+	}
 }

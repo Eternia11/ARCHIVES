@@ -187,4 +187,28 @@ public class Archive {
 		}
 		return null;
 	}
+
+	/**
+	 * toString overload
+	 */
+	public String toString() {
+		String ret = "Archive :";
+		
+		ret += "\n\tResources :";
+		for (Resource r : m_resources) {
+			ret += "\n\t\t" + r.toString();
+		}
+		
+		ret += "\n\tActivities :";
+		for (Activity a : m_activities) {
+			ret += "\n\t\t" + a.toString();
+		}
+		
+		ret += "\n\tOccurrences :";
+		for (Occurrence o : m_occurrences) {
+			ret += "\n\t\t" + o.toString();
+		}
+		
+		return ret;
+	}
 }

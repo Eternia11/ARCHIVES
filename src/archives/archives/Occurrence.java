@@ -108,4 +108,11 @@ public class Occurrence {
 		return m_timestamp;
 	}
 
+	/**
+	 * toString overload
+	 */
+	public String toString() {
+		return "Occurrence<" + m_activity.get_name() + ", " + m_sender.get_name() + ", " + m_receiver.get_name()
+				+ ", " + m_performative + ", " + m_caseID + ", " + m_timestamp.toString() + ">";
+	}
 }

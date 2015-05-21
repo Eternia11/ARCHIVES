@@ -39,9 +39,16 @@ public class OccurrenceException extends Exception{
 	}
 
 	/**
+	 * toString overload
+	 */
+	public String toString() {
+		return this.exception;
+	}
+
+	/**
 	 * Print the reason for the exception on stderr
 	 */
 	public void printStackTrace() {
-		System.err.println(exception);
+		System.err.println(toString());
 	}
 }

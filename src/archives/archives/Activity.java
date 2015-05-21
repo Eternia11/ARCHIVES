@@ -107,4 +107,31 @@ public class Activity {
 		}
 		return false;
 	}
+
+	/**
+	 * toString overload
+	 */
+	public String toString() {
+		String ret = "Activity<" + m_name + ", [";
+
+		if (!m_senders.isEmpty()) {
+			ret += m_senders.get(0).get_name();
+		}
+		for (int i = 1; i < m_senders.size(); i++) {
+			ret += ", " + m_senders.get(i).get_name();
+		}
+
+		ret += "], [";
+
+		if (!m_receivers.isEmpty()) {
+			ret += m_receivers.get(0).get_name();
+		}
+		for (int i = 1; i < m_receivers.size(); i++) {
+			ret += ", " + m_receivers.get(i).get_name();
+		}
+
+		ret += "]>";
+
+		return ret;
+	}
 }
