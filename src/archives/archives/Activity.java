@@ -8,9 +8,10 @@ import java.util.ArrayList;
  * @author Alan BENIER
  */
 public class Activity {
-	private String m_name;								// name of the activity
-	private ArrayList<Resource> m_senders = null;		// resources appearing as sender in the lines where appears the activity
-	private ArrayList<Resource> m_receivers = null;		// resources appearing as resources in the lines where appears the activity
+	private String m_name;									// name of the activity
+	private ArrayList<Resource> m_senders = null;			// resources appearing as sender in the lines where appears the activity
+	private ArrayList<Resource> m_receivers = null;			// resources appearing as resources in the lines where appears the activity
+	private ArrayList<Occurrence> m_occurrences = null;		// occurrences in which the activity appear
 
 	/**
 	 * Default Constructor
@@ -20,10 +21,11 @@ public class Activity {
 	public Activity() {
 		m_senders = new ArrayList<Resource>();
 		m_receivers = new ArrayList<Resource>();
+		m_occurrences = new ArrayList<Occurrence>();
 	}
 
 	/**
-	 * Create an activity with no linked resource
+	 * Create an activity with no linked resource nor linked occurrence
 	 * 
 	 * @param name name of the activity
 	 */
@@ -31,6 +33,7 @@ public class Activity {
 		m_name = name;
 		m_senders = new ArrayList<Resource>();
 		m_receivers = new ArrayList<Resource>();
+		m_occurrences = new ArrayList<Occurrence>();
 	}
 
 	/**
@@ -61,13 +64,23 @@ public class Activity {
 	}
 
 	/**
+	 * Getter
+	 * 
+	 * @return the list of occurrences in which the activity appear
+	 */
+	public ArrayList<Occurrence> get_occurrences() {
+		return m_occurrences;
+	}
+
+	/**
 	 * Link a resource to this activity as sender of this activity
 	 * After checking that is not already the case
 	 * 
 	 * @param sender resource to link
 	 */
 	public void addSender(Resource sender) {
-		m_senders.add(sender);
+		if (!containsSender(sender.get_name()))
+			m_senders.add(sender);
 	}
 
 	/**
@@ -77,7 +90,8 @@ public class Activity {
 	 * @param receiver resource to link
 	 */
 	public void addReceiver(Resource receiver) {
-		m_receivers.add(receiver);
+		if (!containsReceiver(receiver.get_name()))
+			m_receivers.add(receiver);
 	}
 
 	/**
@@ -106,6 +120,16 @@ public class Activity {
 				return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Link an occurrence to this activity
+	 * No verification
+	 * 
+	 * @param occurrence occurrence to link
+	 */
+	public void addOccurrence(Occurrence occurrence) {
+		m_occurrences.add(occurrence);
 	}
 
 	/**

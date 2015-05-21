@@ -11,6 +11,7 @@ public class Resource {
 	private String m_name = "";								// name of the resource
 	private ArrayList<Activity> m_asSender = null;			// activities of the lines where the resource appear as sender in the archive
 	private ArrayList<Activity> m_asReceiver = null;		// activities of the lines where the resource appear as receiver in the archive
+	private ArrayList<Occurrence> m_occurrences = null;		// occurrences in which the resource appear
 
 	/**
 	 * Default Constructor
@@ -20,10 +21,11 @@ public class Resource {
 	public Resource() {
 		m_asSender = new ArrayList<Activity>();
 		m_asReceiver = new ArrayList<Activity>();
+		m_occurrences = new ArrayList<Occurrence>();
 	}
 
 	/**
-	 * Create a resource with no linked activity
+	 * Create a resource with no linked activity nor linked occurrence
 	 * 
 	 * @param name name of the resource
 	 */
@@ -31,6 +33,7 @@ public class Resource {
 		m_name = name;
 		m_asSender = new ArrayList<Activity>();
 		m_asReceiver = new ArrayList<Activity>();
+		m_occurrences = new ArrayList<Occurrence>();
 	}
 
 	/**
@@ -58,6 +61,15 @@ public class Resource {
 	 */
 	public ArrayList<Activity> get_asReceiver() {
 		return m_asReceiver;
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return the list of occurrences in which the resource appear
+	 */
+	public ArrayList<Occurrence> get_occurrences() {
+		return m_occurrences;
 	}
 
 	/**
@@ -108,6 +120,16 @@ public class Resource {
 				return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Link an occurrence to this resource
+	 * No verification
+	 * 
+	 * @param occurrence occurrence to link
+	 */
+	public void addOccurrence(Occurrence occurrence) {
+		m_occurrences.add(occurrence);
 	}
 
 	/**

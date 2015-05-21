@@ -80,10 +80,16 @@ public class Archive {
 				System.exit(1);
 			}
 			
+			// link activity to the resources
 			r_sender.addActivityAsSender(a_activity);
 			r_receiver.addActivityAsReceiver(a_activity);
+			// link the resources to the activity
 			a_activity.addSender(r_sender);
 			a_activity.addReceiver(r_receiver);
+			// link the occurrence to the activity and the resources
+			r_sender.addOccurrence(o_occurrence);
+			r_receiver.addOccurrence(o_occurrence);
+			a_activity.addOccurrence(o_occurrence);
 		}
 	}
 
@@ -193,20 +199,51 @@ public class Archive {
 	 */
 	public String toString() {
 		String ret = "Archive :";
-		
+
 		ret += "\n\tResources :";
 		for (Resource r : m_resources) {
 			ret += "\n\t\t" + r.toString();
 		}
-		
+
 		ret += "\n\tActivities :";
 		for (Activity a : m_activities) {
 			ret += "\n\t\t" + a.toString();
 		}
-		
+
 		ret += "\n\tOccurrences :";
 		for (Occurrence o : m_occurrences) {
 			ret += "\n\t\t" + o.toString();
+		}
+
+		return ret;
+	}
+
+	public ArrayList<Resource> onlyDelegatedAsReceiver() {
+		// resources who have only delegated actions as they are receiver
+		ArrayList<Resource> ret = new ArrayList<Resource>();
+		
+		for (Resource r : m_resources) {
+			boolean ODAR = false;
+			
+			if (!r.get_asReceiver().isEmpty()) {
+				ODAR = true;
+				
+				for (Occurrence o : r.get_occurrences()) {
+					if ((o.get_receiver() == r) && (!o.get_performative().equals("delegate"))) {
+						ODAR = false;
+						break;
+					}
+				}
+			}
+			
+			if (ODAR) {
+				ret.add(r);
+			}
+		}
+		
+		System.out.println("\n\n\n\n\n\n\n\n\nonlyDelegatedAsReceiver :");
+		for (Resource r : ret) {
+			System.out.println("\t" + r.toString());
 		}
 		
 		return ret;

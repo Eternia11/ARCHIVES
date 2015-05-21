@@ -50,7 +50,11 @@ class Main {
 		m_workflow = AlphaMiner.workflow(m_traces, 2, false); // my test of workflow
 		Tools.exportToXPDL(m_workflow, m_wfFile);*/
 		
+		long startTime = System.nanoTime();
 		Archive archive = new Archive(m_traces, m_dateFormat);
+		long endTime = System.nanoTime();
+		System.out.println("Took "+(endTime - startTime)/1000000 + " ms");
 		System.out.println(archive.toString());
+		archive.onlyDelegatedAsReceiver();
 	}
 }
