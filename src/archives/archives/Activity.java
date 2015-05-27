@@ -11,7 +11,8 @@ public class Activity {
 	private String m_name;									// name of the activity
 	private ArrayList<Resource> m_senders = null;			// resources appearing as sender in the lines where appears the activity
 	private ArrayList<Resource> m_receivers = null;			// resources appearing as resources in the lines where appears the activity
-	private ArrayList<Occurrence> m_occurrences = null;		// occurrences in which the activity appear
+	private ArrayList<Occurrence> m_occurrences = null;		// occurrences in which the activity appears
+	private ArrayList<String> m_performative = null;		// performatives of the occurrences where the activity appears in the archive
 
 	/**
 	 * Default Constructor
@@ -22,10 +23,12 @@ public class Activity {
 		m_senders = new ArrayList<Resource>();
 		m_receivers = new ArrayList<Resource>();
 		m_occurrences = new ArrayList<Occurrence>();
+		m_performative = new ArrayList<String>();
 	}
 
 	/**
-	 * Create an activity with no linked resource nor linked occurrence
+	 * Create an activity with no linked resource
+	 * nor linked occurrence nor linked performative
 	 * 
 	 * @param name name of the activity
 	 */
@@ -34,6 +37,7 @@ public class Activity {
 		m_senders = new ArrayList<Resource>();
 		m_receivers = new ArrayList<Resource>();
 		m_occurrences = new ArrayList<Occurrence>();
+		m_performative = new ArrayList<String>();
 	}
 
 	/**
@@ -70,6 +74,15 @@ public class Activity {
 	 */
 	public ArrayList<Occurrence> get_occurrences() {
 		return m_occurrences;
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return the list of performatives of the occurrences where the activity appears in the archive
+	 */
+	public ArrayList<String> get_performatives() {
+		return m_performative;
 	}
 
 	/**
@@ -130,6 +143,31 @@ public class Activity {
 	 */
 	public void addOccurrence(Occurrence occurrence) {
 		m_occurrences.add(occurrence);
+		addSender(occurrence.get_sender());
+		addReceiver(occurrence.get_receiver());
+		addPerformative(occurrence.get_performative());
+	}
+
+	/**
+	 * Link a performative to the activity
+	 * After checking that is not already the case
+	 * 
+	 * @param performative performative to link
+	 */
+	public void addPerformative(String performative) {
+		if (!containsPerformative(performative))
+			m_performative.add(performative);
+	}
+
+	/**
+	 * Check if an performative is already
+	 * linked to this activity
+	 * 
+	 * @param performative name of the performative to check
+	 * @return true if the performative is already linked
+	 */
+	public boolean containsPerformative(String performative) {
+		return m_performative.contains(performative);
 	}
 
 	/**

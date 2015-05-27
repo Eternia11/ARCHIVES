@@ -80,15 +80,9 @@ public class Archive {
 				System.exit(1);
 			}
 			
-			// link activity to the resources
-			r_sender.addActivityAsSender(a_activity);
-			r_receiver.addActivityAsReceiver(a_activity);
-			// link the resources to the activity
-			a_activity.addSender(r_sender);
-			a_activity.addReceiver(r_receiver);
 			// link the occurrence to the activity and the resources
-			r_sender.addOccurrence(o_occurrence);
-			r_receiver.addOccurrence(o_occurrence);
+			r_sender.addOccurrenceAsSender(o_occurrence);
+			r_receiver.addOccurrenceAsReceiver(o_occurrence);
 			a_activity.addOccurrence(o_occurrence);
 		}
 	}
@@ -218,25 +212,17 @@ public class Archive {
 		return ret;
 	}
 
+	/**
+	 * Simple test to use the Archive class
+	 * 
+	 * @return the list of resources of the archives who have only activity with "delegate" performative
+	 */
 	public ArrayList<Resource> onlyDelegatedAsReceiver() {
 		// resources who have only delegated actions as they are receiver
 		ArrayList<Resource> ret = new ArrayList<Resource>();
 		
 		for (Resource r : m_resources) {
-			boolean ODAR = false;
-			
-			if (!r.get_asReceiver().isEmpty()) {
-				ODAR = true;
-				
-				for (Occurrence o : r.get_occurrences()) {
-					if ((o.get_receiver() == r) && (!o.get_performative().equals("delegate"))) {
-						ODAR = false;
-						break;
-					}
-				}
-			}
-			
-			if (ODAR) {
+			if ((r.get_p_asReceiver().size() == 1)&&(r.containsPerformativeAsReceiver("delegate"))) {
 				ret.add(r);
 			}
 		}
