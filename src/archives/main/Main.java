@@ -57,5 +57,6 @@ class Main {
 		System.out.println(archive.toString());
 		archive.onlyDelegatedAsReceiver();
 		archive.clusterResources();
+		archive.test();
 	}
 }

@@ -244,10 +244,10 @@ public class Archive {
 	 */
 	public ArrayList<ArrayList<Resource>> clusterResources() {
 		ArrayList<ArrayList<Resource>> ret = new ArrayList<ArrayList<Resource>>();
-		
+
 		for (Resource r : m_resources) {
 			boolean in_cluster = false;
-			
+
 			// we check if the resource is not already in a cluster
 			for (ArrayList<Resource> cluster : ret) {
 				for (Resource r_cluster : cluster) {
@@ -255,11 +255,12 @@ public class Archive {
 						in_cluster = true;
 				}
 			}
-			
-			// then if it is not in a cluster, we create a new cluster and store all the similar resources in it
+
+			// then if it is not in a cluster, we create a new cluster and store
+			// all the similar resources in it
 			if (!in_cluster) {
 				ArrayList<Resource> cluster = new ArrayList<Resource>();
-				
+
 				for (Resource r_other : m_resources) {
 					if ((r.get_a_asReceiver().containsAll(r_other.get_a_asReceiver()))
 							&& (r_other.get_a_asReceiver().containsAll(r.get_a_asReceiver()))
@@ -267,21 +268,110 @@ public class Archive {
 							&& (r_other.get_a_asSender().containsAll(r.get_a_asSender())))
 						cluster.add(r_other);
 				}
-				
-				
+
 				ret.add(cluster);
+			}
+		}
+
+		System.out.println("\n\n\n\n\n\n\n\n");
+		int i = 1;
+		for (ArrayList<Resource> cluster : ret) {
+			System.out.print("Cluster " + i + " :   [");
+			for (Resource r_cluster : cluster)
+				System.out.print(", " + r_cluster.get_name());
+			i++;
+			System.out.println("]");
+		}
+
+		return ret;
+	}
+
+	public void test() {
+		int nb_occ = m_occurrences.size();
+		int nb_act = m_activities.size();
+		int nb_res = m_resources.size();
+		int a_count[] = new int[nb_act];
+		Activity best_act[] = new Activity[nb_res];
+		
+		for (Occurrence o : m_occurrences) {
+			a_count[m_activities.indexOf(o.get_activity())]++;
+		}
+		
+		System.out.println("\n\n\n\n\n\n\n");
+		for (int i=0; i<nb_act; i++) {
+			System.out.println(m_activities.get(i).get_name() + "\t\t\t\t" + a_count[i] + " times");
+		}
+		
+		System.out.println("\n\n\n\n\n\n\n");
+		for (int k=0; k<nb_res; k++) {
+			Resource r = m_resources.get(k);
+			double r_count[] = new double[nb_act];
+			for (double i : r_count) {
+				i = 0.;
+			}
+			for (Occurrence o_sender : r.get_o_asSender()) {
+				Activity act = o_sender.get_activity();
+				int act_index = m_activities.indexOf(act);
+				
+				r_count[act_index] = 1/a_count[act_index];
+			}
+			for (Occurrence o_receiver : r.get_o_asReceiver()) {
+				Activity act = o_receiver.get_activity();
+				int act_index = m_activities.indexOf(act);
+				
+				r_count[act_index] = 1/(0.9999*a_count[act_index]);
+			}
+			
+			double max = r_count[0];
+			int indexOf_max = 0;
+			
+			for (int i=0; i<nb_act; i++) {
+				if (r_count[i] > max) {
+					max = r_count[i];
+					indexOf_max = i;
+				}
+			}
+			
+			best_act[k] = m_activities.get(indexOf_max);
+			
+			System.out.println(r.get_name() + "\t\t\t" + best_act[k].get_name());
+		}
+		
+		ArrayList<ArrayList<Resource>> cluster_list = new ArrayList<ArrayList<Resource>>();
+		
+		for (int i=0; i<nb_res; i++) {
+			Resource r = m_resources.get(i);
+			boolean in_cluster = false;
+
+			// we check if the resource is not already in a cluster
+			for (ArrayList<Resource> cluster : cluster_list) {
+				for (Resource r_cluster : cluster) {
+					if (r.get_name().equals(r_cluster.get_name()))
+						in_cluster = true;
+				}
+			}
+
+			// then if it is not in a cluster, we create a new cluster and store
+			// all the similar resources in it
+			if (!in_cluster) {
+				ArrayList<Resource> cluster = new ArrayList<Resource>();
+				for (int j=0; j<nb_res; j++) {
+					Resource r_other = m_resources.get(j);
+					if (best_act[i] == best_act[j])
+						cluster.add(r_other);
+				}
+				cluster_list.add(cluster);
 			}
 		}
 		
 		System.out.println("\n\n\n\n\n\n\n\n");
 		int i = 1;
-		for (ArrayList<Resource> cluster : ret) {
-			System.out.println("\nCluster " + i + " :");
+		for (ArrayList<Resource> cluster : cluster_list) {
+			System.out.print("Cluster " + i + " :   [");
 			for (Resource r_cluster : cluster)
-				System.out.println("\n\t" + r_cluster.toString());
+				System.out.print(", " + r_cluster.get_name());
 			i++;
+			System.out.println("]");
 		}
-		
-		return ret;
 	}
 }
