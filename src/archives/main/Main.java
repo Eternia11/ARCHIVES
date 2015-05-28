@@ -56,5 +56,6 @@ class Main {
 		System.out.println("Took "+(endTime - startTime)/1000000 + " ms");
 		System.out.println(archive.toString());
 		archive.onlyDelegatedAsReceiver();
+		archive.clusterResources();
 	}
 }

@@ -234,4 +234,54 @@ public class Archive {
 		
 		return ret;
 	}
+
+	/**
+	 * Build a list of clusters of resources
+	 * Two resources are in the same cluster iff
+	 * they have the same linked activities
+	 * 
+	 * @return the list of clusters, each cluster is a list of resources
+	 */
+	public ArrayList<ArrayList<Resource>> clusterResources() {
+		ArrayList<ArrayList<Resource>> ret = new ArrayList<ArrayList<Resource>>();
+		
+		for (Resource r : m_resources) {
+			boolean in_cluster = false;
+			
+			// we check if the resource is not already in a cluster
+			for (ArrayList<Resource> cluster : ret) {
+				for (Resource r_cluster : cluster) {
+					if (r.get_name().equals(r_cluster.get_name()))
+						in_cluster = true;
+				}
+			}
+			
+			// then if it is not in a cluster, we create a new cluster and store all the similar resources in it
+			if (!in_cluster) {
+				ArrayList<Resource> cluster = new ArrayList<Resource>();
+				
+				for (Resource r_other : m_resources) {
+					if ((r.get_a_asReceiver().containsAll(r_other.get_a_asReceiver()))
+							&& (r_other.get_a_asReceiver().containsAll(r.get_a_asReceiver()))
+							&& (r.get_a_asSender().containsAll(r_other.get_a_asSender()))
+							&& (r_other.get_a_asSender().containsAll(r.get_a_asSender())))
+						cluster.add(r_other);
+				}
+				
+				
+				ret.add(cluster);
+			}
+		}
+		
+		System.out.println("\n\n\n\n\n\n\n\n");
+		int i = 1;
+		for (ArrayList<Resource> cluster : ret) {
+			System.out.println("\nCluster " + i + " :");
+			for (Resource r_cluster : cluster)
+				System.out.println("\n\t" + r_cluster.toString());
+			i++;
+		}
+		
+		return ret;
+	}
 }
