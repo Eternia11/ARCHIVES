@@ -58,5 +58,6 @@ class Main {
 		archive.onlyDelegatedAsReceiver();
 		archive.clusterResources();
 		archive.test();
+		archive.test_performative();
 	}
 }

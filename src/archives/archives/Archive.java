@@ -302,7 +302,6 @@ public class Archive {
 			System.out.println(m_activities.get(i).get_name() + "\t\t\t\t" + a_count[i] + " times");
 		}
 		
-		System.out.println("\n\n\n\n\n\n\n");
 		for (int k=0; k<nb_res; k++) {
 			Resource r = m_resources.get(k);
 			double r_count[] = new double[nb_act];
@@ -319,7 +318,7 @@ public class Archive {
 				Activity act = o_receiver.get_activity();
 				int act_index = m_activities.indexOf(act);
 				
-				r_count[act_index] = 1/(0.9999*a_count[act_index]);
+				r_count[act_index] = 1/(/*0.9999 * */a_count[act_index]);
 			}
 			
 			double max = r_count[0];
@@ -333,8 +332,6 @@ public class Archive {
 			}
 			
 			best_act[k] = m_activities.get(indexOf_max);
-			
-			System.out.println(r.get_name() + "\t\t\t" + best_act[k].get_name());
 		}
 		
 		ArrayList<ArrayList<Resource>> cluster_list = new ArrayList<ArrayList<Resource>>();
@@ -367,11 +364,99 @@ public class Archive {
 		System.out.println("\n\n\n\n\n\n\n\n");
 		int i = 1;
 		for (ArrayList<Resource> cluster : cluster_list) {
-			System.out.print("Cluster " + i + " :   [");
+			System.out.print("Cluster " + i + " :   [ ");
 			for (Resource r_cluster : cluster)
 				System.out.print(", " + r_cluster.get_name());
 			i++;
-			System.out.println("]");
+			System.out.println("]  --  " + best_act[m_resources.indexOf(cluster.get(0))].get_name());
+		}
+	}
+
+	public void test_performative() {
+		int nb_occ = m_occurrences.size();
+		int nb_perf = 3;
+		int delegate = 0;
+		int inform = 1;
+		int execute = 2;
+		int nb_res = m_resources.size();
+		String best_perf[] = new String[nb_res];
+		
+		for (int k=0; k<nb_res; k++) {
+			Resource r = m_resources.get(k);
+			int r_count[] = new int[nb_perf];
+			for (int i : r_count) {
+				i = 0;
+			}
+			for (Occurrence o_sender : r.get_o_asSender()) {
+				if (o_sender.get_performative().equals("delegate"))
+					r_count[delegate] ++;
+				else if (o_sender.get_performative().equals("inform")) 
+					r_count[inform] ++;
+				else
+					r_count[execute] ++;
+			}
+			for (Occurrence o_receiver : r.get_o_asReceiver()) {
+				if (o_receiver.get_performative().equals("delegate"))
+					r_count[delegate] ++;
+				else if (o_receiver.get_performative().equals("inform")) 
+					r_count[inform] ++;
+				else
+					r_count[execute] ++;
+			}
+			
+			double max = r_count[0];
+			int indexOf_max = 0;
+			
+			for (int i=0; i<nb_perf; i++) {
+				if (r_count[i] > max) {
+					max = r_count[i];
+					indexOf_max = i;
+				}
+			}
+			
+			if (indexOf_max == delegate)
+				best_perf[k] = "delegate";
+			else if (indexOf_max == inform) 
+				best_perf[k] = "inform";
+			else
+				best_perf[k] = "execute";
+		}
+		
+		ArrayList<ArrayList<Resource>> cluster_list = new ArrayList<ArrayList<Resource>>();
+		
+		for (int i=0; i<nb_res; i++) {
+			Resource r = m_resources.get(i);
+			boolean in_cluster = false;
+
+			// we check if the resource is not already in a cluster
+			for (ArrayList<Resource> cluster : cluster_list) {
+				for (Resource r_cluster : cluster) {
+					if (r.get_name().equals(r_cluster.get_name()))
+						in_cluster = true;
+				}
+			}
+
+			// then if it is not in a cluster, we create a new cluster and store
+			// all the similar resources in it
+			if (!in_cluster) {
+				ArrayList<Resource> cluster = new ArrayList<Resource>();
+				for (int j=0; j<nb_res; j++) {
+					Resource r_other = m_resources.get(j);
+					if (best_perf[i] == best_perf[j])
+						cluster.add(r_other);
+				}
+				cluster_list.add(cluster);
+			}
+		}
+		
+		System.out.println("\n\n\n\n\n\n\n\n");
+		int i = 1;
+		for (ArrayList<Resource> cluster : cluster_list) {
+			System.out.print("Cluster " + i + " :   [ ");
+			for (Resource r_cluster : cluster)
+				System.out.print(", " + r_cluster.get_name());
+			i++;
+			System.out.println("]  --  " + best_perf[m_resources.indexOf(cluster.get(0))]);
 		}
 	}
 }
